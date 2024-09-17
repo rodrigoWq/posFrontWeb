@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="registro_cliente.css">
+    <title>Registro de Clientes</title>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Registro de Clientes</h2>
+        <form action="#" method="POST">
+            <div class="form-group">
+                <label for="nombres">Nombres</label>
+                <input type="text" id="nombres" name="nombres" required>
+            </div>
+            <div class="form-group">
+                <label for="apellidos">Apellidos</label>
+                <input type="text" id="apellidos" name="apellidos" required>
+            </div>
+            <div class="form-group">
+                <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+                <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required>
+            </div>
+            <div class="form-group">
+                <label for="ci">CI (Cédula de Identidad)</label>
+                <input type="text" id="ci" name="ci" required>
+            </div>
+            <div class="form-group">
+                <label for="direccion">Dirección</label>
+                <input type="text" id="direccion" name="direccion" required>
+            </div>
+            <div class="form-group">
+                <label for="correo">Correo Electrónico</label>
+                <input type="email" id="correo" name="correo" required>
+            </div>
+            <div class="form-group">
+                <label for="celular">Celular</label>
+                <input type="tel" id="celular" name="celular" required>
+            </div>
+            <div class="form-group">
+                <label for="monto_credito">Monto de Crédito</label>
+                <input type="number" id="monto_credito" name="monto_credito" required>
+            </div>
+            <div class="button-group">
+                <button type="button" class="btn cancel">Cancelar</button>
+                <button type="submit" class="btn register">Registrar</button>
+                <button type="button" class="btn update">Actualizar</button>
+                <button type="button" class="btn delete">Eliminar</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

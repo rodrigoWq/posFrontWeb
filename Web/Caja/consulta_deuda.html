@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="consulta_deuda.css">
+    <title>Consulta de Saldo de Deuda</title>
+</head>
+<body>
+    <div class="debt-check-container">
+        <h2>Consulta de Saldo de Deuda</h2>
+        <form class="debt-check-form">
+            <div class="form-group-inline">
+                <label for="codigo_cliente">Código de Cliente:</label>
+                <input type="text" id="codigo_cliente" name="codigo_cliente" value="ABC123" readonly>
+            </div>
+            <div class="form-group-inline">
+                <label for="ci">Cédula de Identidad:</label>
+                <input type="text" id="ci" name="ci" value="5123456" readonly>
+            </div>
+            <div class="summary-group">
+                <div class="summary-item">
+                    <label>Deuda Total</label>
+                    <input type="text" value="$5,000.00" readonly>
+                </div>
+                <div class="summary-item">
+                    <label>Saldo Disponible</label>
+                    <input type="text" value="$2,000.00" readonly>
+                </div>
+                <div class="summary-item">
+                    <label>Crédito Utilizado</label>
+                    <input type="text" value="$3,000.00" readonly>
+                </div>
+            </div>
+        </form>
+
+        <table class="transaction-table">
+            <thead>
+                <tr>
+                    <th>Transacción</th>
+                    <th>Monto</th>
+                    <th>Fecha</th>
+                    <th>Cajero</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Compra a crédito</td>
+                    <td>$500.00</td>
+                    <td>2023-06-15</td>
+                    <td>Juan Pérez</td>
+                </tr>
+                <tr>
+                    <td>Pago de cuenta</td>
+                    <td>$200.00</td>
+                    <td>2023-07-01</td>
+                    <td>María Gómez</td>
+                </tr>
+                <tr>
+                    <td>Compra a crédito</td>
+                    <td>$300.00</td>
+                    <td>2023-07-20</td>
+                    <td>Carlos Rodríguez</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="button-group">
+            <button type="button" class="btn cancel">Cancelar</button>
+            <button type="button" class="btn pay">Cobrar Deuda</button>
+            <button type="button" class="btn consult">Consultar</button>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear/Editar Producto</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Crear/Editar Producto</h1>
+            <div class="form-actions">
+                <button type="button" class="cancel">Cancelar</button>
+                <button type="button" class="save">Guardar</button>
+            </div>
+        </div>
+        <form id="product-form">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" placeholder="Ingrese el nombre del producto">
+            </div>
+            <div class="form-group">
+                <label for="codigo">Código de Barras</label>
+                <input type="text" id="codigo" placeholder="Ingrese el código de barras">
+            </div>
+            <div class="form-group">
+                <label for="unidad">Unidad de Medida</label>
+                <select id="unidad">
+                    <option>Seleccione una unidad</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <input type="text" id="descripcion" placeholder="Ingrese la descripción del producto">
+            </div>
+            <div class="form-group">
+                <label for="categoria">Categoría</label>
+                <select id="categoria">
+                    <option>Seleccione una categoría</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="fecha">Fecha de Vencimiento</label>
+                <input type="date" id="fecha">
+            </div>
+            <div class="form-group">
+                <label for="precio-compra">Precio de Compra</label>
+                <input type="text" id="precio-compra" placeholder="Ingrese el precio de compra">
+            </div>
+            <div class="form-group">
+                <label for="precio-venta">Precio de Venta</label>
+                <input type="text" id="precio-venta" placeholder="Ingrese el precio de venta">
+            </div>
+            <div class="form-group">
+                <label for="tipo-descuento">Tipo de Descuento</label>
+                <select id="tipo-descuento">
+                    <option>Seleccione el tipo de descuento</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="valor-descuento">Valor de Descuento</label>
+                <input type="text" id="valor-descuento" placeholder="Ingrese el valor del descuento">
+            </div>
+            <div class="form-group">
+                <label for="cantidad">Cantidad Disponible</label>
+                <input type="text" id="cantidad" placeholder="Ingrese la cantidad disponible">
+            </div>
+            <div class="form-group">
+                <label for="cantidad-minima">Cantidad Mínima</label>
+                <input type="text" id="cantidad-minima" placeholder="Ingrese la cantidad mínima">
+            </div>
+            <div class="form-group">
+                <label for="alerta-vencimiento">Alerta por Vencimiento</label>
+                <select id="alerta-vencimiento">
+                    <option>Seleccione la alerta por vencimiento</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="alerta-cantidad">Alerta por Cantidad Mínima</label>
+                <select id="alerta-cantidad">
+                    <option>Seleccione la alerta por cantidad mínima</option>
+                </select>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Productos</title>
+    <link rel="stylesheet" href="inventario.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Barra de búsqueda -->
+        <div class="search-bar">
+            <input type="text" placeholder="Buscar productos...">
+            <button class="add-btn">+</button>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="content">
+            <!-- Productos Destacados -->
+            <div class="section featured-products">
+                <h2>Productos Destacados <span><a href="#">Ver todo</a></span></h2>
+                <div class="product-grid">
+                    <div class="product">
+                        <div class="product-image"></div>
+                        <p>Producto 1</p>
+                        <p>$19.99</p>
+                    </div>
+                    <div class="product">
+                        <div class="product-image"></div>
+                        <p>Producto 2</p>
+                        <p>$29.99</p>
+                    </div>
+                    <div class="product">
+                        <div class="product-image"></div>
+                        <p>Producto 3</p>
+                        <p>$39.99</p>
+                    </div>
+                    <div class="product">
+                        <div class="product-image"></div>
+                        <p>Producto 4</p>
+                        <p>$49.99</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alertas -->
+            <div class="section alerts">
+                <h2>Alertas <span><a href="#">Ver todo</a></span></h2>
+                <ul>
+                    <li class="alert alert-danger">
+                        <span>⚠️</span> Producto X está por agotarse <br>
+                        <small>Quedan solo 10 unidades en stock.</small>
+                    </li>
+                    <li class="alert alert-warning">
+                        <span>📅</span> Producto Y caduca pronto <br>
+                        <small>Caduca en 2 semanas.</small>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Acciones Rápidas -->
+            <div class="section quick-actions">
+                <h2>Acciones Rápidas</h2>
+                <button>Agregar Producto</button>
+                <button>Generar Reporte</button>
+                <button>Ver Alertas</button>
+                <button>Análisis</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

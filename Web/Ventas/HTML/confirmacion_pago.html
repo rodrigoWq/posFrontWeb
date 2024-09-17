@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/cofirmacion_pago.css">
+    <title>Confirmación de Pago</title>
+</head>
+<body>
+    <div class="confirmation-container">
+        <h2>Confirmación de Pago</h2>
+        <form class="confirmation-form">
+            <div class="form-group">
+                <label for="monto_pago">Monto del Pago:</label>
+                <input type="text" id="monto_pago" value="$250.00" >
+            </div>
+            <div class="form-group">
+                <label for="saldo_deuda">Saldo de la Deuda:</label>
+                <input type="text" id="saldo_deuda" value="$1,500.00" >
+            </div>
+            <div class="form-group">
+                <label for="credito_disponible">Crédito Disponible:</label>
+                <input type="text" id="credito_disponible" value="$3,000.00" >
+            </div>
+            <div class="form-group">
+                <label for="fecha_pago">Fecha de Pago:</label>
+                <input type="date" id="fecha_pago" value="2023-05-15" >
+            </div>
+            <div class="form-group">
+                <label for="fecha_proximo_pago">Fecha Próximo Pago:</label>
+                <input type="date" id="fecha_proximo_pago" value="2023-06-15" >
+            </div>
+            <div class="form-group">
+                <label for="nombre_cajero">Nombre del Cajero:</label>
+                <input type="text" id="nombre_cajero" value="Juan Pérez" >
+            </div>
+            <div class="button-group">
+                <button type="button" class="btn cancel">Cancelar</button>
+                <button type="button" class="btn confirm">Confirmar e Imprimir Ticket</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

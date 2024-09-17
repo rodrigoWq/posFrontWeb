@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoreo de Inventario</title>
+    <link rel="stylesheet" href="monitoreo_inventario.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Monitoreo de Inventario</h1>
+            <div class="header-buttons">
+                <button class="header-btn">Actualizar</button>
+                <button class="header-btn">Configurar Alertas</button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Estado del Inventario -->
+            <div class="inventory-status">
+                <h2>Estado del Inventario</h2>
+                <ul>
+                    <li>En Stock <span class="green">2,345</span></li>
+                    <li>Bajo Stock <span class="orange">125</span></li>
+                    <li>Agotado <span class="red">45</span></li>
+                </ul>
+            </div>
+
+            <!-- Alertas Activas -->
+            <div class="alerts">
+                <h2>Alertas Activas</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Alerta</th>
+                            <th>Umbral</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="product-image"></div>
+                                <span class="product-name">Producto A</span>
+                            </td>
+                            <td>Bajo Stock</td>
+                            <td>50</td>
+                            <td>
+                                <button>Actualizar</button>
+                                <button>Descartar</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-image"></div>
+                                <span class="product-name">Producto B</span>
+                            </td>
+                            <td>Agotado</td>
+                            <td>0</td>
+                            <td>
+                                <button>Actualizar</button>
+                                <button>Descartar</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-image"></div>
+                                <span class="product-name">Producto C</span>
+                            </td>
+                            <td>Bajo Stock</td>
+                            <td>75</td>
+                            <td>
+                                <button>Actualizar</button>
+                                <button>Descartar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Botones de acciones -->
+        <div class="action-buttons">
+            <button>Generar Reporte</button>
+            <button>Exportar a CSV</button>
+            <button>Exportar a PDF</button>
+        </div>
+
+        <!-- Información adicional -->
+        <div class="footer-info">
+            <p>Última actualización: 11/7/2024, 16:41:20</p>
+        </div>
+    </div>
+</body>
+</html>

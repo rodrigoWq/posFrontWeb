@@ -1,0 +1,115 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.form-actions button {
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    border: 2px solid transparent;
+}
+
+.form-actions .cancel {
+    background-color: #fff;
+    color: #333;
+    border: 2px solid rgba(51, 51, 51, 0.5); /* Borde más transparente */
+}
+
+.form-actions .save {
+    background-color: #333;
+    color: #fff;
+    border: 2px solid #333;
+}
+
+form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-group input[type="date"] {
+    font-family: Arial, sans-serif;
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 1024px) {
+    form {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-actions {
+        width: 100%;
+        justify-content: flex-end;
+        margin-top: 10px;
+    }
+
+    form {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-actions {
+        justify-content: space-between;
+    }
+
+    .form-actions button {
+        width: 48%;
+    }
+}
+/*CSS para crear / editar producto*/

@@ -1,0 +1,163 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-buttons {
+    display: flex;
+}
+
+.header-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.header-btn:hover {
+    background-color: #0056b3;
+}
+
+h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.inventory-status {
+    flex-basis: 30%;
+    background-color: #f1f1f1;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.inventory-status h2 {
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.inventory-status ul {
+    list-style: none;
+}
+
+.inventory-status li {
+    font-size: 16px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.green {
+    color: #28a745;
+}
+
+.orange {
+    color: #fd7e14;
+}
+
+.red {
+    color: #dc3545;
+}
+
+.alerts {
+    flex-basis: 65%;
+    background-color: #f1f1f1;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.alerts h2 {
+    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    text-align: left;
+    background-color: #e9ecef;
+    padding: 10px;
+}
+
+tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle; /* Ajusta verticalmente el contenido */
+}
+
+.product-image {
+    width: 40px;
+    height: 40px;
+    background-color: #ddd;
+    display: inline-block;
+    margin-right: 10px;
+    border-radius: 5px;
+    vertical-align: middle; /* Alinea la imagen al centro verticalmente */
+}
+
+.product-name {
+    vertical-align: middle;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.action-buttons button {
+    margin-right: 15px;
+}
+
+.footer-info {
+    text-align: right;
+    color: #6c757d;
+}

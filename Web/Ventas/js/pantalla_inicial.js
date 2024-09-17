@@ -1,5 +1,3 @@
-let ventasEnEspera = [];  // Variable global para ventas en espera
-
 document.addEventListener("DOMContentLoaded", function () {
     // Calcular el total cuando la página carga por primera vez
     calculateTotal();
@@ -38,51 +36,6 @@ function handleDelete(event) {
     if (confirmation) {
         row.remove(); // Eliminar la fila
         calculateTotal(); // Recalcular el total
-    }
-}
-
-// Función para obtener los productos de la tabla
-function obtenerProductosDeLaTabla() {
-    const filas = document.querySelectorAll('tbody tr');
-    const productos = [];
-
-    filas.forEach(fila => {
-        const codigo = fila.cells[1].textContent;
-        const nombre = fila.cells[2].textContent;
-        const cantidad = fila.cells[3].textContent;
-        const precio = fila.cells[4].textContent;
-
-        productos.push({
-            codigo: codigo,
-            nombre: nombre,
-            cantidad: cantidad,
-            precio: precio
-        });
-    });
-
-    return productos;
-}
-
-// Función para poner la venta en espera
-function ponerVentaEnEspera() {
-    const productosEnTabla = obtenerProductosDeLaTabla();
-
-    const confirmacion = confirm('¿Estás seguro de que deseas poner esta venta en espera?');
-    if (confirmacion && productosEnTabla.length > 0) {
-        ventasEnEspera.push({
-            productos: productosEnTabla,
-            fecha: new Date().toLocaleString()  // Guardamos la fecha y hora de la venta
-        });
-
-        actualizarListadoVentasEnEspera();
-        document.querySelector('tbody').innerHTML = '';
-        document.getElementById('totalAmount').textContent = '$0.00';
-
-        alert('Venta puesta en espera correctamente.');
-    } else if (!confirmacion) {
-        alert('Operación cancelada.');
-    } else {
-        alert('No hay productos en la venta actual.');
     }
 }
 
@@ -128,35 +81,6 @@ function eliminarVentaEnEspera(indiceVenta) {
     }
 }
 
-// Función para retomar una venta en espera
-function retomarVenta(indiceVenta) {
-    const venta = ventasEnEspera[indiceVenta];
-    const tbody = document.querySelector('tbody');
-
-    tbody.innerHTML = '';
-
-    venta.productos.forEach((producto, index) => {
-        const fila = document.createElement('tr');
-        fila.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${producto.codigo}</td>
-            <td>${producto.nombre}</td>
-            <td>${parseInt(producto.cantidad)}</td>
-            <td>$${parseFloat(producto.precio.replace('$', '')).toFixed(2)}</td>
-            <td>
-                <button class="btn btn-danger btn-sm btn-delete">
-                    <i class="bi bi-trash"></i>
-                </button>
-            </td>
-        `;
-        tbody.appendChild(fila);
-    });
-
-    assignDeleteButtons();  // Asignar la funcionalidad a los botones de eliminar
-    calculateTotal();  // Calcular el total de la venta retomada
-
-    alert('Venta retomada correctamente.');
-}
 
 // Función para asignar los eventos de eliminar a cada botón
 function assignDeleteButtons() {

@@ -58,10 +58,17 @@ function actualizarListadoVentasEnEspera() {
     listaVentas.innerHTML = '';
 
     ventasEnEspera.forEach((venta, index) => {
+
+        // Convertimos la fecha completa en un objeto Date para extraer tanto la fecha como la hora
+        const fechaCompleta = new Date(venta.fecha);
+        const fecha = fechaCompleta.toLocaleDateString();  // Extraer la fecha en formato local
+        const hora = fechaCompleta.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });  // Extraer la hora en formato de 2 dígitos
+
+
         const ventaItem = document.createElement('li');
         ventaItem.className = 'list-group-item d-flex justify-content-between align-items-center';
         ventaItem.innerHTML = `
-            Venta del ${venta.fecha}
+            Venta del ${fecha} a las ${hora}
             <div>
                 <button class="btn btn-primary btn-sm me-2" onclick="retomarVenta(${index})">Retomar</button>
                 <button class="btn btn-danger btn-sm" onclick="eliminarVentaEnEspera(${index})">Eliminar</button>
@@ -108,6 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(product => {
                 if (product) {
+                    console.log(product)
                     agregarProductoATabla(product, productQuantity);
                 } else {
                     alert('Producto no encontrado');

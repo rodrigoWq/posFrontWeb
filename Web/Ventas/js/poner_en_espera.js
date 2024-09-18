@@ -136,9 +136,11 @@ function retomarVenta(ventaId) {
             assignDeleteButtons();
             calculateTotal();  // Recalcular el total basado en los productos retomados
 
-            // Mostrar la información del cliente (opcional)
-            //document.getElementById('clientName').innerText = `${venta.nombre_cliente} ${venta.apellido_cliente}`;
-            //document.getElementById('clientDocument').innerText = `Documento: ${venta.documento}`;
+            // Cargar el RUC o CI del cliente en el campo correspondiente
+            const rucClienteInput = document.getElementById('rucCliente');
+            if (rucClienteInput) {
+                rucClienteInput.value = venta.documento;  // Cargar el RUC/CI del cliente
+            }
         })
         .catch(error => {
             console.error('Error al retomar la venta:', error);

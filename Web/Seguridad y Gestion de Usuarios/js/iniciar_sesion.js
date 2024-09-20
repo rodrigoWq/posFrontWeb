@@ -45,14 +45,38 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
         hasError = true;
     }
 
-    // Si no hay errores, validar credenciales
+    // Si no hay errores, hacer la solicitud al backend
     if (!hasError) {
-        if (username === "admin" && password === "12345") {
-            // Redirigir a la nueva pantalla (especifica la URL de destino)
-            window.location.href = "pantalla_inicio.html";
-        } else {
-            passwordError.textContent = "Usuario o contraseña incorrectos.";
+        const loginData = {
+            nombre_usuario: username,
+            password: password
+        };
+
+        fetch('https://apimocha.com/example122/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(loginData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.token) {
+                // Almacenar el token en localStorage o sessionStorage
+                localStorage.setItem('token', data.token);
+                alert(data.message)
+
+                // Redirigir a la nueva pantalla (especifica la URL de destino)
+                window.location.href = "../HTML/user_management.html";
+            } else {
+                passwordError.textContent = "Usuario o contraseña incorrectos.";
+                passwordError.classList.add("visible");
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            passwordError.textContent = "Ocurrió un error al intentar iniciar sesión.";
             passwordError.classList.add("visible");
-        }
+        });
     }
 });

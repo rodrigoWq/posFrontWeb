@@ -14,15 +14,14 @@
         </header>
         
         <div class="filter-section">
-            <input type="text" placeholder="Search by name...">
+            <input type="text" id="search-input" placeholder="Search by name...">
             <div class="filters">
-                <button>All Roles</button>
-                <button>Admin</button>
-                <button>Manager</button>
-                <button>User</button>
-                <button>All Statuses</button>
-                <button>Active</button>
-                <button>Inactive</button>
+                <button class="filter-role" data-role="all">All Roles</button>
+                <button class="filter-role" data-role="Admin">Admin</button>
+                <button class="filter-role" data-role="Manager">Manager</button>
+                <button class="filter-role" data-role="User">User</button>
+                <button class="filter-status" data-status="active">Active</button>
+                <button class="filter-status" data-status="inactive">Inactive</button>
             </div>
         </div>
         
@@ -80,5 +79,68 @@
             </tbody>
         </table>
     </div>
+    <div class="modal hidden" id="createUserModal">
+        <div class="modal-header">
+            <button class="close-button">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" />
+                </div>
+        
+                <div class="form-group">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" id="apellido" name="apellido" />
+                </div>
+        
+                <div class="form-group">
+                    <label for="email">Correo Electrónico</label>
+                    <input type="email" id="email" name="email" />
+                </div>
+        
+                <div class="form-group">
+                    <label for="telefono">Teléfono</label>
+                    <input type="tel" id="telefono" name="telefono" />
+                </div>
+        
+                <div class="form-group">
+                    <label for="puesto">Puesto</label>
+                    <input type="text" id="puesto" name="puesto" />
+                </div>
+        
+                <div class="form-group">
+                    <label for="direccion">Dirección</label>
+                    <input type="text" id="direccion" name="direccion" />
+                </div>
+        
+                <div class="form-group">
+                    <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+                    <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" />
+                </div>
+        
+                <div class="form-group">
+                    <label for="rol">Rol</label>
+                    <select id="rol" name="rol">
+                        <option value="administrador">Administrador</option>
+                        <option value="gerente">Gerente</option>
+                        <option value="cajero">Cajero</option>
+                    </select>
+                </div>
+        
+                <div class="form-group">
+                    <label for="estado">Estado</label>
+                    <div class="estado-buttons">
+                        <button type="button" class="estado" data-estado="activo">Activo</button>
+                        <button type="button" class="estado inactivo active" data-estado="inactivo">Inactivo</button>
+                    </div>
+                </div>                
+        
+                <button type="submit" class="submit-button">Crear</button>
+            </form>
+        </div>        
+    </div>
+    <script src="../js/crear_usuario.js"></script>
 </body>
 </html>

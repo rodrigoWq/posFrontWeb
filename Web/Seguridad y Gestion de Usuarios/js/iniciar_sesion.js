@@ -52,7 +52,7 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
             password: password
         };
 
-        fetch('https://apimocha.com/example122/api/auth/login', {
+        fetch(`https://apimocha.com/example122/api/auth/login/${loginData.nombre_usuario}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -62,8 +62,10 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
         .then(response => response.json())
         .then(data => {
             if (data.token) {
-                // Almacenar el token en localStorage o sessionStorage
+                console.log(data.rol_id)
+                // Almacenar el token y el rol_id en localStorage
                 localStorage.setItem('token', data.token);
+                localStorage.setItem('rol_id', data.rol_id);
                 alert(data.message)
 
                 // Redirigir a la nueva pantalla (especifica la URL de destino)

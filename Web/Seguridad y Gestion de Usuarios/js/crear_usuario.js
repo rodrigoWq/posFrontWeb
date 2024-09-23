@@ -40,11 +40,11 @@ document.querySelector("form").addEventListener("submit", function(event) {
     })
     .then(response => response.json())
     .then(data => {
-        if (data.message === "Usuario registrado") {
-            alert("Usuario registrado con éxito");
+        if (data.message) {
+            alert(data.message);
             window.location.href = "../../Ventas/HTML/pantalla_inicio.html"; // Redirigir a la lista de usuarios o una página de confirmación
         } else {
-            alert(data.message || "Error al registrar el usuario");
+            alert("Error al registrar el usuario");
         }
     })
     .catch(error => {

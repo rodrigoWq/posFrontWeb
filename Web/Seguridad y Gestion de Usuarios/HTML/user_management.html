@@ -10,7 +10,7 @@
     <div class="container">
         <header>
             <h1>User Management</h1>
-            <button class="create-user-btn">Create User</button>
+            <button class="admin-only create-user-btn ">Create User</button>
         </header>
         
         <div class="filter-section">
@@ -32,48 +32,48 @@
                     <th>Email</th>
                     <th>Role</th>
                     <th>Status</th>
-                    <th>Actions</th>
+                    <th class="admin-only">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>John Doe</td>
+                <tr data-usuario-id="1">
+                    <td >John Doe</td>
                     <td>john@example.com</td>
                     <td>Admin</td>
                     <td><span class="status active">Active</span></td>
                     <td>
-                        <button class="edit-btn">✏️</button>
-                        <button class="delete-btn">🗑️</button>
+                        <button class="edit-btn admin-only">✏️</button>
+                        <button class="delete-btn admin-only">🗑️</button>
                     </td>
                 </tr>
-                <tr>
+                <tr data-usuario-id="2">
                     <td>Jane Smith</td>
                     <td>jane@example.com</td>
                     <td>User</td>
                     <td><span class="status inactive">Inactive</span></td>
                     <td>
-                        <button class="edit-btn">✏️</button>
-                        <button class="delete-btn">🗑️</button>
+                        <button class="edit-btn admin-only">✏️</button>
+                        <button class="delete-btn admin-only">🗑️</button>
                     </td>
                 </tr>
-                <tr>
+                <tr data-usuario-id="3">
                     <td>Bob Johnson</td>
                     <td>bob@example.com</td>
                     <td>Manager</td>
                     <td><span class="status active">Active</span></td>
                     <td>
-                        <button class="edit-btn">✏️</button>
-                        <button class="delete-btn">🗑️</button>
+                        <button class="edit-btn admin-only">✏️</button>
+                        <button class="delete-btn admin-only">🗑️</button>
                     </td>
                 </tr>
-                <tr>
+                <tr data-usuario-id="4">
                     <td>Alice Williams</td>
                     <td>alice@example.com</td>
                     <td>User</td>
                     <td><span class="status inactive">Inactive</span></td>
                     <td>
-                        <button class="edit-btn">✏️</button>
-                        <button class="delete-btn">🗑️</button>
+                        <button class="edit-btn admin-only">✏️</button>
+                        <button class="delete-btn admin-only">🗑️</button>
                     </td>
                 </tr>
             </tbody>
@@ -141,6 +141,48 @@
             </form>
         </div>        
     </div>
+
+        <!-- Modal de edición -->
+    <div class="modal hidden" id="editUserModal">
+        <div class="modal-header">
+            <!-- Botón de cerrar para el modal de Editar Usuario -->
+            <button class="close-button" id="closeEditUserModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="editUserForm">
+                <div class="form-group">
+                    <label for="edit-name">Nombre</label>
+                    <input type="text" id="edit-name" name="name" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-email">Email</label>
+                    <input type="email" id="edit-email" name="email" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-role">Rol</label>
+                    <select id="edit-role" name="role">
+                        <option value="1">Admin</option>
+                        <option value="2">Manager</option>
+                        <option value="3">User</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-status">Estado</label>
+                    <select id="edit-status" name="status">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-button">Guardar</button>
+            </form>
+        </div>
+    </div>
+
     <script src="../js/crear_usuario.js"></script>
+    <script src="../js/roles_y_permisos.js"></script>
 </body>
 </html>

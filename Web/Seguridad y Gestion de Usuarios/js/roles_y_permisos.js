@@ -2,6 +2,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Obtener el token del usuario almacenado en localStorage
     const token = localStorage.getItem('token');
 
+    // URL de la página de login
+    const sessionManager = new SessionManager('../../Seguridad y Gestion de Usuarios/HTML/iniciar_session'); 
+    sessionManager.init(); // Iniciar verificación de sesión y manejo de historial
+    
+
     // Obtener todos los botones de editar
     const editButtons = document.querySelectorAll('.edit-btn');
     
@@ -34,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const currentEmail = row.querySelector('td:nth-child(2)').textContent; // Email actual
             const currentRole = row.querySelector('td:nth-child(3)').textContent; // Rol actual
             const currentStatus = row.querySelector('.status').classList.contains('active') ? 'active' : 'inactive'; // Estado actual
-            
+
             // Rellenar el formulario con los valores actuales del usuario
             editNameInput.value = currentName;
             editEmailInput.value = currentEmail;

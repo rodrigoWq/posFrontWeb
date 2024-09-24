@@ -1,17 +1,18 @@
-/* CSS general */
+/* Fondo con gradiente y imagen */
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(135deg, #6e8efb, #a777e3); /* Fondo gradiente */
+    background: linear-gradient(135deg, rgba(110, 142, 251, 0.9), rgba(167, 119, 227, 0.9)), url('https://via.placeholder.com/1500'); /* Imagen de fondo suave */
+    background-size: cover;
+    background-position: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
 }
 
-
-/* Animación de aparición del formulario */
+/* Animación del formulario */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -22,16 +23,24 @@ body {
         transform: translateY(0);
     }
 }
+
 /* Contenedor del formulario */
 .login-container {
     background-color: white;
-    padding: 2.5rem;
+    padding: 3rem;
     border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
     width: 100%;
     max-width: 400px;
     text-align: center;
-    animation: fadeIn 0.6s ease-in-out; /* Aplicamos la animación */
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Título del formulario */
+.login-title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #6e8efb;
 }
 
 /* Etiquetas */
@@ -43,23 +52,37 @@ label {
     color: #333;
 }
 
-/* Estilo de los inputs */
-input {
+/* Contenedor para los iconos */
+.input-container {
+    position: relative;
     width: 100%;
-    padding: 0.9rem;
+}
+
+.input-container i {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #6e8efb;
+}
+
+input {
+    width: 100%; /* Ajustar el ancho del input al contenedor */
+    padding: 0.9rem 1.5rem 0.9rem 2.5rem; /* Espacio interno ajustado */
     border: 1px solid #ddd;
     border-radius: 6px;
     font-size: 1rem;
     transition: all 0.3s ease;
+    box-sizing: border-box; /* Para evitar que el padding haga que sobresalga */
 }
 
 input:focus {
     border-color: #6e8efb;
-    box-shadow: 0 0 8px rgba(110, 142, 251, 0.5); /* Efecto suave al enfocar */
+    box-shadow: 0 0 8px rgba(110, 142, 251, 0.5);
     outline: none;
 }
 
-/* Botón de inicio de sesión mejorado */
+/* Botón de inicio de sesión */
 .login-btn {
     width: 100%;
     padding: 0.9rem;
@@ -70,13 +93,15 @@ input:focus {
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
 }
-/* Efecto hover con animación */
+
+/* Efecto hover */
 .login-btn:hover {
     background-color: #a777e3;
-    transform: scale(1.05); /* Efecto de agrandamiento suave */
+    transform: scale(1.05);
 }
+
 /* Mensajes de error */
 .error-message {
     color: red;
@@ -88,7 +113,7 @@ input:focus {
 
 .error-message.visible {
     opacity: 1;
-    transform: translateY(0); /* Aparece suavemente desde abajo */
+    transform: translateY(0);
 }
 
 /* Ajustes para dispositivos móviles */

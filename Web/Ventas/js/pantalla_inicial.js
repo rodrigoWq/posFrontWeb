@@ -1,4 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // URL de la página de login
+    const sessionManager = new SessionManager('../../Seguridad y Gestion de Usuarios/HTML/iniciar_session'); 
+    sessionManager.init(); // Iniciar verificación de sesión y manejo de historial
+    
     // Calcular el total cuando la página carga por primera vez
     calculateTotal();
 
@@ -164,3 +168,21 @@ function agregarProductoATabla(producto, cantidad) {
     // Asigna la funcionalidad de eliminar a los nuevos botones
     assignDeleteButtons();
 }
+//Cerrar Session
+document.addEventListener('DOMContentLoaded', function() {
+    const closeSessionBtn = document.getElementById('closeSessionBtn');
+
+    closeSessionBtn.addEventListener('click', function() {
+        // Mostrar advertencia para confirmar cierre de sesión
+        const confirmLogout = confirm('¿Estás seguro de que deseas cerrar sesión?');
+        
+        if (confirmLogout) {
+            // Eliminar token o cualquier información de sesión
+            localStorage.removeItem('token');
+            localStorage.removeItem('rol_id');
+            
+            // Redirigir al usuario a la pantalla de login
+            window.location.href = '../../Seguridad y Gestion de Usuarios/HTML/iniciar_session.html';
+        }
+    });
+});

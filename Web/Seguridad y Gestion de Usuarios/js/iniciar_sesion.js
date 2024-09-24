@@ -66,10 +66,16 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
                 // Almacenar el token y el rol_id en localStorage
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('rol_id', data.rol_id);
-                alert(data.message)
+                //alert(data.message)
 
-                // Redirigir a la nueva pantalla (especifica la URL de destino)
+            // Redirigir según el rol_id
+            if (data.rol_id == 1) {
+                // Si el rol_id es 1 (Admin), redirigir a user_management.html
                 window.location.href = "../HTML/user_management.html";
+            } else {
+                // Si el rol_id es diferente, redirigir a pantalla_inicio.html
+                window.location.href = "../../Ventas/HTML/pantalla_inicio.html";
+            }
             } else {
                 passwordError.textContent = "Usuario o contraseña incorrectos.";
                 passwordError.classList.add("visible");

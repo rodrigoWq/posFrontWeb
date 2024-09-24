@@ -21,18 +21,25 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Encabezado */
+/* Encabezado: Alineamos los botones más juntos */
 header {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto; /* Título a la izquierda y botones a la derecha */
     align-items: center;
     margin-bottom: 20px;
 }
-
 h1 {
     font-size: 24px;
     font-weight: bold;
 }
+
+/* Contenedor de los botones en el header */
+.header-buttons {
+    display: flex;
+    gap: 10px; /* Espacio entre los botones */
+    margin-left: auto; /* Alinear los botones a la derecha */
+}
+
 
 /* Botón de Crear Usuario */
 .create-user-btn {
@@ -272,4 +279,17 @@ table tbody tr:hover {
     .modal .modal-body {
         width: 90%;
     }
+}
+/* Botón de Volver a Pantalla Inicio */
+#goToInicio {
+    padding: 10px 20px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#goToInicio:hover {
+    background-color: #333;
 }

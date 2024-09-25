@@ -88,3 +88,11 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
         });
     }
 });
+// Código para cerrar sesión automáticamente si el usuario llega a la pantalla de inicio de sesión
+document.addEventListener('DOMContentLoaded', function() {
+    // Eliminar token o cualquier información de sesión
+    localStorage.removeItem('token');
+    localStorage.removeItem('rol_id');
+
+    console.log('Sesión cerrada automáticamente al llegar a la pantalla de inicio de sesión.');
+});

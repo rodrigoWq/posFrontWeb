@@ -13,7 +13,7 @@ document.getElementById('onHoldSalesModal').addEventListener('show.bs.modal', fu
 
 
 function obtenerVentasEnEspera() {
-    return fetch('https://apimocha.com/producttest/obtenerLista/pending/id=33')  // Reemplaza con la URL del backend
+    return fetch('https://apimocha.com/producttest/obtenerLista/pending/')  // Reemplaza con la URL del backend
         .then(response => response.json())
         .then(data => {
             return data.ventas;  // Suponiendo que el backend devuelve un array de ventas en "ventas"
@@ -104,9 +104,9 @@ function ponerVentaEnEspera() {
 }
 
 
-function retomarVenta(ventaId) {
+function retomarVenta(venta_id) {
     // Realizar la petición al backend para obtener los detalles de la venta en espera
-    fetch(`https://apimocha.com/example122/sales/pending/id=12356`)  // Reemplaza con la URL correcta
+    fetch(`https://apimocha.com/example122/sales/pending?venta_id=${venta_id}`)  // Reemplaza con la URL correcta
         .then(response => response.json())
         .then(data => {
             const venta = data;  // La respuesta completa de la venta

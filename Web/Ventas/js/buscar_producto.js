@@ -41,7 +41,7 @@ async function buscarProducto() {
     if (codigo) {
         // Si hay código, buscamos por código
         try {
-            const response = await fetch(`https://apimocha.com/posdespensav1/inventory/product/check/${codigo}`);
+            const response = await fetch(`http://localhost:3000/api/inventory/product/barcode/${codigo}`);
 
             if (!response.ok) {
                 throw new Error('Error al consultar el producto por código');
@@ -63,7 +63,7 @@ async function buscarProducto() {
         // Si no hay código pero hay nombre, buscamos por nombre
         try {
             // Supongamos que la API soporta búsqueda por nombre en esta URL
-            const response = await fetch(`https://apimocha.com/producttest/inventory/product/check/nombre=${encodeURIComponent(nombre)}`);
+            const response = await fetch(`http://localhost:3000/api/inventory/product/name/${encodeURIComponent(nombre)}`);
 
             if (!response.ok) {
                 throw new Error('Error al consultar el producto por nombre');

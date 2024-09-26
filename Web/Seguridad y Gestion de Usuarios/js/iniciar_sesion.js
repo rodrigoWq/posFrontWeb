@@ -48,11 +48,11 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
     // Si no hay errores, hacer la solicitud al backend
     if (!hasError) {
         const loginData = {
-            nombre_usuario: username,
+            usuario: username,
             password: password
         };
 
-        fetch(`https://apimocha.com/example122/api/auth/login/${loginData.nombre_usuario}`, {
+        fetch(`http://localhost:3000/api/auth/login/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

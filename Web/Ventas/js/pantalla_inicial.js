@@ -115,8 +115,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // Simular la obtención del producto del backend
-        fetch(`https://apimocha.com/producttest/inventory/product/check/codigo_barras=${productCode}`)
-            .then(response => response.json())
+        // Obtener el token desde el localStorage
+        const token = localStorage.getItem('token');
+
+        // Simular la obtención del producto del backend con el token en el header
+        fetch(`http://localhost:3000/api/inventory/product/barcode/${productCode}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // Aquí se añade el token en el header
+            }
+        }).then(response => response.json())
             .then(product => {
                 if (product) {
                     console.log(product)
@@ -152,7 +161,7 @@ function agregarProductoATabla(producto, cantidad) {
         <td>${producto.nombre}</td>
         <td>${cantidad}</td>
         <td>${producto.unidad_medida}</td>  <!-- Columna de Unidad de Medida -->
-        <td>$${producto.precio.toFixed(2)}</td>
+        <td>$${producto.precio}</td>
         <td>
             <button class="btn btn-danger btn-sm btn-delete">
                 <i class="bi bi-trash"></i>

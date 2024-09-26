@@ -211,7 +211,7 @@ async function confirmarVenta() {
         return;
     }
 
-    const montoTotal = calcularMontoTotal();
+    const montoTotal = calculateTotal();
     const fechaVenta = new Date().toISOString();
 
     const venta = {

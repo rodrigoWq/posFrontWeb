@@ -1,17 +1,15 @@
-/* Fondo con gradiente y imagen */
+/* Fondo blanco y texto negro */
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(135deg, rgba(110, 142, 251, 0.9), rgba(167, 119, 227, 0.9)), url('https://via.placeholder.com/1500'); /* Imagen de fondo suave */
-    background-size: cover;
-    background-position: center;
+    background-color: white; /* Cambiado a blanco */
+    color: black; /* Cambiado a negro */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
 }
-
 /* Animación del formulario */
 @keyframes fadeIn {
     from {
@@ -26,21 +24,20 @@ body {
 
 /* Contenedor del formulario */
 .login-container {
-    background-color: white;
+    background-color: white; /* Mantener blanco */
     padding: 3rem;
     border-radius: 12px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Sombra más ligera */
     width: 100%;
     max-width: 400px;
     text-align: center;
     animation: fadeIn 0.8s ease-in-out;
 }
-
 /* Título del formulario */
 .login-title {
     font-size: 1.8rem;
     margin-bottom: 1.5rem;
-    color: #6e8efb;
+    color: black; /* Texto negro */
 }
 
 /* Etiquetas */
@@ -49,7 +46,7 @@ label {
     margin-bottom: 0.5rem;
     font-size: 1rem;
     font-weight: bold;
-    color: #333;
+    color: black; /* Texto negro */
 }
 
 /* Contenedor para los iconos */
@@ -58,12 +55,13 @@ label {
     width: 100%;
 }
 
+/* Contenedor para los iconos */
 .input-container i {
     position: absolute;
     top: 50%;
     left: 10px;
     transform: translateY(-50%);
-    color: #6e8efb;
+    color: black; /* Cambiar color de iconos a negro */
 }
 
 input {
@@ -86,8 +84,8 @@ input:focus {
 .login-btn {
     width: 100%;
     padding: 0.9rem;
-    background-color: #6e8efb;
-    color: white;
+    background-color: black; /* Botón negro */
+    color: white; /* Texto blanco */
     border: none;
     border-radius: 6px;
     font-size: 1rem;
@@ -98,10 +96,9 @@ input:focus {
 
 /* Efecto hover */
 .login-btn:hover {
-    background-color: #a777e3;
+    background-color: gray; /* Cambiar color de hover */
     transform: scale(1.05);
 }
-
 /* Mensajes de error */
 .error-message {
     color: red;

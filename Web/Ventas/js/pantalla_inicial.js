@@ -195,3 +195,76 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// Función para confirmar la venta
+async function confirmarVenta() {
+    const productosEnTabla = obtenerProductosDeLaTabla();
+    const rucCliente = document.getElementById('rucCliente').value;
+
+    if (!rucCliente) {
+        alert('Por favor, ingresa el RUC o CI del cliente.');
+        return;
+    }
+
+    if (productosEnTabla.length === 0) {
+        alert('No hay productos en la venta actual.');
+        return;
+    }
+
+    const montoTotal = calcularMontoTotal();
+    const fechaVenta = new Date().toISOString();
+
+    const venta = {
+        cliente_id: rucCliente,  // Suponiendo que el RUC o CI es el ID del cliente
+        items_venta: productosEnTabla.map(producto => ({
+            producto_id: producto.codigo,
+            cantidad: producto.cantidad,
+            precio: parseFloat(producto.precio)
+        })),
+        monto_total: montoTotal,
+        fecha_venta: fechaVenta
+    };
+
+    try {
+        // Enviar la venta al backend mediante POST
+        const response = await fetch('/api/sales', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`  // Asegúrate de enviar el token si es necesario
+            },
+            body: JSON.stringify(venta)
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            alert('Venta confirmada correctamente.');
+
+            // Limpiar la tabla y el total
+            document.querySelector('tbody').innerHTML = '';
+            document.getElementById('totalAmount').textContent = '$0.00';
+        } else {
+            const errorData = await response.json();
+            alert('Error al confirmar la venta: ' + errorData.message);
+        }
+    } catch (error) {
+        console.error('Error al confirmar la venta:', error);
+        alert('Error al confirmar la venta.');
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Asignar el evento click al botón "Confirmar Venta" usando su id
+    const confirmSaleBtn = document.getElementById('confirmSaleBtn');
+    confirmSaleBtn.addEventListener('click', confirmarVenta);
+
+    // Capturar la tecla F12 para confirmar la venta
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'F12') {
+            event.preventDefault();  // Prevenir que el navegador abra la consola de desarrollo
+            event.stopPropagation(); // Detener la propagación del evento
+            confirmarVenta();  // Llamar a la función de confirmar venta
+        }
+    });
+});
+

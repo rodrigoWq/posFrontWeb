@@ -1,0 +1,118 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 28px;
+    color: #333;
+}
+
+/* Formulario */
+.formulario-compra {
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-right: 15px;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+/* Botón Agregar Producto */
+.boton-agregar {
+    margin-top: 20px;
+    text-align: center;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.productos-compra {
+    margin-top: 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+table th,
+table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.total-compra {
+    display: flex;
+    justify-content: space-between; /* Distribuir el total y el botón a los extremos */
+    align-items: center;
+    margin-top: 20px;
+}
+
+.total-info {
+    display: flex;
+    gap: 5px; /* Espacio entre "Total Compra:" y el monto */
+}
+
+
+#paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#paginacion button {
+    margin: 0 10px;
+}
+
+button#registrarCompraBtn {
+    background-color: #28a745;
+}
+
+button#registrarCompraBtn:hover {
+    background-color: #218838;
+}

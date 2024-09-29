@@ -101,3 +101,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+document.addEventListener('DOMContentLoaded', function() {
+    const registrarCompraBtn = document.getElementById('registrarCompraBtn');
+
+    const navigationManager = new NavigationManager();
+
+
+    // Agregar evento de clic al botón "Registrar Compra"
+    registrarCompraBtn.addEventListener('click', function() {
+        // Redireccionar a pantalla_inicial.html
+        navigationManager.navigateTo('../../Ventas/HTML/pantalla_inicio.html');
+    });
+});
+
+

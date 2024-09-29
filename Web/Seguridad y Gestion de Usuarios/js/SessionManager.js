@@ -28,7 +28,10 @@ class SessionManager {
         window.onpageshow = (event) => {
             if (event.persisted || window.performance && window.performance.navigation.type === 2) {
                 // Si se detecta una navegación "hacia atrás"
-                this.redirectToLogin();
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    this.redirectToLogin(); // Solo redirigir al login si no hay sesión
+                }
             }
         };
     }
@@ -65,6 +68,8 @@ class NavigationManager {
             this.loadInicioContent();
         } else if (url.includes('user_management.html')) {
             this.loadUserManagementContent();
+        } else if (url.includes('compras.html')) {
+            this.loadComprasContent();
         } else {
             console.error('Página no encontrada.');
         }
@@ -81,11 +86,15 @@ class NavigationManager {
         // Aquí cargamos el contenido de User Management (puede ser dinámico)
         window.location.href = '../HTML/user_management.html';
     }
+    loadComprasContent() {
+        // Aquí cargamos el contenido de Compras (puede ser dinámico)
+        window.location.href = '../../Compras/HTML/compras.html';
+    } 
 }
 
 // Inicializar el SessionManager y NavigationManager
 document.addEventListener('DOMContentLoaded', function() {
-    const sessionManager = new SessionManager('../HTML/iniciar_session.html');
+    const sessionManager = new SessionManager('../../Seguridad y Gestion de Usuarios/HTML/iniciar_session.html');
     sessionManager.init(); // Verificar la sesión
 
     const navigationManager = new NavigationManager();

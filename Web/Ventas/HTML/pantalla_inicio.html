@@ -203,12 +203,15 @@
     <script>
         // Cargar el contenido de navbar.html en el div con id "navbar-container"
         document.addEventListener('DOMContentLoaded', function () {
+            
             fetch('navbar.html')
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById('navbar-container').innerHTML = data;
                 })
                 .catch(error => console.error('Error cargando la barra de navegación:', error));
+
+
         });
     </script>
 </body>

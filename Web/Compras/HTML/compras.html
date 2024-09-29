@@ -93,18 +93,17 @@
             </div>
         </section>
     </div>
-
+    <script src="../../Seguridad y Gestion de Usuarios/js/SessionManager.js"></script>
     <script src="../js/compras.js"></script>
     <script>
-        // Cargar el contenido de navbar.html en el div con id "navbar-container"
-        document.addEventListener('DOMContentLoaded', function () {
-            fetch('../../Ventas/HTML/navbar.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('navbar-container').innerHTML = data;
-                })
-                .catch(error => console.error('Error cargando la barra de navegación:', error));
+        // Inicializar el SessionManager y NavigationManager en Compras
+        document.addEventListener('DOMContentLoaded', function() {
+            const sessionManager = new SessionManager('../../Seguridad y Gestion de Usuarios/HTML/iniciar_session.html');
+            sessionManager.init(); // Verificar la sesión
+
+            const navigationManager = new NavigationManager();
         });
     </script>
+    <script></script>
 </body>
 </html>

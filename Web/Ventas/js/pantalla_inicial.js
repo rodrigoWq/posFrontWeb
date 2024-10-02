@@ -227,7 +227,7 @@ async function confirmarVenta() {
 
     try {
         // Enviar la venta al backend mediante POST
-        const response = await fetch('/api/sales', {
+        const response = await fetch('http://localhost:3000/api/sales', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

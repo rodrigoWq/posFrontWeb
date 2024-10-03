@@ -32,4 +32,19 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Egresos Varios:', data);
         // Aquí puedes hacer la llamada a tu backend con fetch
     });
+
+
+        // Cobros de Facturas
+    document.getElementById('guardarCobroFacturas').addEventListener('click', () => {
+        const monto = document.getElementById('montoCobroFacturas').value;
+        const cliente = document.getElementById('clienteCobroFacturas').value;
+        const factura = document.getElementById('facturaCobroFacturas').value;
+
+        const data = { monto, cliente, factura };
+
+        console.log('Cobros de Facturas:', data);
+        // Aquí podrías hacer la llamada al backend
+    });
+    
+    
 });

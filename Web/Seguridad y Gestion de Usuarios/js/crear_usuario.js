@@ -4,24 +4,28 @@ document.querySelector("form").addEventListener("submit", function(event) {
     // Obtener los valores de los campos del formulario
     const nombre = document.getElementById("nombre").value.trim();
     const apellido = document.getElementById("apellido").value.trim();
-    const email = document.getElementById("email").value.trim();
     const telefono = document.getElementById("telefono").value.trim();
-    const puesto = document.getElementById("puesto").value.trim();
-    const direccion = document.getElementById("direccion").value.trim();
-    const fecha_nacimiento = document.getElementById("fecha_nacimiento").value.trim();
+    const contraseña = document.getElementById("contraseña").value.trim();
+    const confirmarContraseña = document.getElementById("confirmar-contraseña").value.trim();
     const rol = document.getElementById("rol").value;
     const estado = document.querySelector(".estado.active").dataset.estado;
 
     // Validaciones básicas
-    if (!nombre || !apellido || !email || !telefono || !puesto || !direccion || !fecha_nacimiento || !rol || !estado) {
+    if (!nombre || !apellido || !telefono || !contraseña || !confirmarContraseña || !rol || !estado) {
         alert("Por favor, completa todos los campos.");
+        return;
+    }
+
+    // Validar que la contraseña y la confirmación coincidan
+    if (contraseña !== confirmarContraseña) {
+        alert("Las contraseñas no coinciden.");
         return;
     }
 
     // Crear el objeto de datos para enviar al backend
     const userData = {
         nombre_usuario: nombre,  // Puedes ajustar este campo según lo que pida tu backend
-        password: "defaultPassword",  // Define cómo manejar la contraseña, aquí es un valor por defecto
+        password: contraseña,  // Usar la contraseña ingresada
         rol_id: obtenerIdRol(rol), // Convertir el rol a su respectivo ID
         estado: estado  // Activo o inactivo
     };

@@ -229,11 +229,11 @@ async function confirmarVenta() {
 
         if (response.ok) {
             const data = await response.json();
-            alert('Venta confirmada correctamente.');
+            //alert('Venta confirmada correctamente.');
 
             // Limpiar la tabla y el total
-            document.querySelector('tbody').innerHTML = '';
-            document.getElementById('totalAmount').textContent = '$0.00';
+            //document.querySelector('tbody').innerHTML = '';
+            //document.getElementById('totalAmount').textContent = '$0.00';
         } else {
             const errorData = await response.json();
             alert('Error al confirmar la venta: ' + errorData.message);
@@ -259,3 +259,57 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    const confirmSaleBtn = document.getElementById('confirmSaleBtn');
+    const finalizarVentaBtn = document.getElementById('finalizarVentaBtn');
+    const montoRecibidoInput = document.getElementById('montoRecibido');
+    const vueltoClienteInput = document.getElementById('vueltoCliente');
+
+    // Mostrar el modal con los datos de la venta y cliente
+    confirmSaleBtn.addEventListener('click', function() {
+        // Obtener el texto del total
+        const totalText = document.querySelector('#totalAmount').textContent.replace('$', '').trim();
+        
+        // Convertir a número
+        const total = parseFloat(totalText);
+    
+        // Verificar si el total es un número válido
+        if (!isNaN(total)) {
+            document.getElementById('modalMontoTotal').textContent = `$${total.toFixed(2)}`;
+        } else {
+            console.error('El valor del total es inválido:', totalText);
+            alert('No se puede calcular el total de la venta.');
+        }
+    
+        const rucCliente = document.getElementById('rucCliente').value;  // Obtener el RUC del cliente
+        const nombreCliente = "Nombre del Cliente"; // Simular el nombre del cliente
+    
+        // Cargar los datos en el modal
+        document.getElementById('modalNombreCliente').textContent = nombreCliente;
+        document.getElementById('modalRUCCliente').textContent = rucCliente;
+    
+        // Mostrar el modal
+        const confirmarVentaModal = new bootstrap.Modal(document.getElementById('confirmarVentaModal'));
+        confirmarVentaModal.show();
+    });
+    
+
+    // Calcular el vuelto cuando el usuario ingresa el monto recibido
+    montoRecibidoInput.addEventListener('input', function() {
+        const montoRecibido = parseFloat(montoRecibidoInput.value);
+        const totalVenta = parseFloat(document.getElementById('modalMontoTotal').textContent.replace('$', ''));
+
+        if (!isNaN(montoRecibido) && montoRecibido >= totalVenta) {
+            const vuelto = montoRecibido - totalVenta;
+            vueltoClienteInput.value = `$${vuelto.toFixed(2)}`;
+        } else {
+            vueltoClienteInput.value = '';
+        }
+    });
+
+    // Al hacer clic en "Finalizar Venta"
+    finalizarVentaBtn.addEventListener('click', function() {
+        alert('Venta finalizada correctamente.');
+        // Aquí puedes agregar la funcionalidad para imprimir ticket o factura en el futuro
+    });
+});

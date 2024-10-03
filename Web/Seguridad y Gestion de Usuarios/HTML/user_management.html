@@ -33,7 +33,7 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Email</th>
+                    <th>Teléfono</th> <!-- Cambiado de Email a Teléfono -->
                     <th>Role</th>
                     <th>Status</th>
                     <th class="admin-only">Actions</th>
@@ -41,8 +41,8 @@
             </thead>
             <tbody>
                 <tr data-usuario-id="1">
-                    <td >John Doe</td>
-                    <td>john@example.com</td>
+                    <td>John Doe</td>
+                    <td>123-456-7890</td> <!-- Ahora muestra el teléfono -->
                     <td>Admin</td>
                     <td><span class="status active">Active</span></td>
                     <td>
@@ -52,7 +52,7 @@
                 </tr>
                 <tr data-usuario-id="2">
                     <td>Jane Smith</td>
-                    <td>jane@example.com</td>
+                    <td>098-765-4321</td> <!-- Ahora muestra el teléfono -->
                     <td>User</td>
                     <td><span class="status inactive">Inactive</span></td>
                     <td>
@@ -60,28 +60,10 @@
                         <button class="delete-btn admin-only">🗑️</button>
                     </td>
                 </tr>
-                <tr data-usuario-id="3">
-                    <td>Bob Johnson</td>
-                    <td>bob@example.com</td>
-                    <td>Manager</td>
-                    <td><span class="status active">Active</span></td>
-                    <td>
-                        <button class="edit-btn admin-only">✏️</button>
-                        <button class="delete-btn admin-only">🗑️</button>
-                    </td>
-                </tr>
-                <tr data-usuario-id="4">
-                    <td>Alice Williams</td>
-                    <td>alice@example.com</td>
-                    <td>User</td>
-                    <td><span class="status inactive">Inactive</span></td>
-                    <td>
-                        <button class="edit-btn admin-only">✏️</button>
-                        <button class="delete-btn admin-only">🗑️</button>
-                    </td>
-                </tr>
+                <!-- Más filas -->
             </tbody>
         </table>
+        
     </div>
     <div class="modal hidden" id="createUserModal">
         <div class="modal-header">
@@ -91,39 +73,19 @@
             <form>
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input type="text" id="nombre" name="nombre" />
+                    <input type="text" id="nombre" name="nombre" required />
                 </div>
-        
+    
                 <div class="form-group">
                     <label for="apellido">Apellido</label>
-                    <input type="text" id="apellido" name="apellido" />
+                    <input type="text" id="apellido" name="apellido" required />
                 </div>
-        
-                <div class="form-group">
-                    <label for="email">Correo Electrónico</label>
-                    <input type="email" id="email" name="email" />
-                </div>
-        
+    
                 <div class="form-group">
                     <label for="telefono">Teléfono</label>
                     <input type="tel" id="telefono" name="telefono" />
                 </div>
-        
-                <div class="form-group">
-                    <label for="puesto">Puesto</label>
-                    <input type="text" id="puesto" name="puesto" />
-                </div>
-        
-                <div class="form-group">
-                    <label for="direccion">Dirección</label>
-                    <input type="text" id="direccion" name="direccion" />
-                </div>
-        
-                <div class="form-group">
-                    <label for="fecha_nacimiento">Fecha de Nacimiento</label>
-                    <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" />
-                </div>
-        
+    
                 <div class="form-group">
                     <label for="rol">Rol</label>
                     <select id="rol" name="rol">
@@ -132,21 +94,32 @@
                         <option value="cajero">Cajero</option>
                     </select>
                 </div>
-        
+    
+                <div class="form-group">
+                    <label for="contraseña">Contraseña</label>
+                    <input type="password" id="contraseña" name="contraseña" required />
+                </div>
+    
+                <div class="form-group">
+                    <label for="confirmar-contraseña">Confirmar Contraseña</label>
+                    <input type="password" id="confirmar-contraseña" name="confirmar-contraseña" required />
+                </div>
+    
                 <div class="form-group">
                     <label for="estado">Estado</label>
                     <div class="estado-buttons">
                         <button type="button" class="estado" data-estado="activo">Activo</button>
                         <button type="button" class="estado inactivo active" data-estado="inactivo">Inactivo</button>
                     </div>
-                </div>                
-        
+                </div>
+    
                 <button type="submit" class="submit-button">Crear</button>
             </form>
-        </div>        
+        </div>
     </div>
+    
 
-        <!-- Modal de edición -->
+    <!-- Modal de edición -->
     <div class="modal hidden" id="editUserModal">
         <div class="modal-header">
             <!-- Botón de cerrar para el modal de Editar Usuario -->
@@ -157,11 +130,6 @@
                 <div class="form-group">
                     <label for="edit-name">Nombre</label>
                     <input type="text" id="edit-name" name="name" required />
-                </div>
-
-                <div class="form-group">
-                    <label for="edit-email">Email</label>
-                    <input type="email" id="edit-email" name="email" required />
                 </div>
 
                 <div class="form-group">
@@ -181,13 +149,25 @@
                     </select>
                 </div>
 
+                <div class="form-group">
+                    <label for="edit-password">Nueva Contraseña</label>
+                    <input type="password" id="edit-password" name="password" />
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-confirm-password">Confirmar Nueva Contraseña</label>
+                    <input type="password" id="edit-confirm-password" name="confirm-password" />
+                </div>
+
                 <button type="submit" class="submit-button">Guardar</button>
             </form>
         </div>
     </div>
 
+
     <script src="../js/crear_usuario.js"></script>
     <script src="../js/roles_y_permisos.js"></script>
-    <script  src="../js/SessionManager.js"></script>
+    <script src="../js/SessionManager.js"></script>
+    <script src="../js/user_management.js"></script>
 </body>
 </html>

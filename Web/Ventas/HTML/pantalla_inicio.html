@@ -42,15 +42,16 @@
                             <i class="bi bi-cart"></i> Compras
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../../Caja/HTML/caja.html">
-                            <i class="bi bi-cash-stack"></i> Caja
-                        </a>
-                    </li>
+
                     
                     <li class="nav-item">
                         <a class="nav-link" href="#">
                             <i class="bi bi-journal-text"></i> Reportes
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../Caja/HTML/caja.html">
+                            <i class="bi bi-cash-stack"></i> Caja
                         </a>
                     </li>
                 </ul>
@@ -215,6 +216,36 @@
         </div>
     </div>
 
+        <!-- Modal para Confirmar Venta -->
+    <div class="modal fade" id="confirmarVentaModal" tabindex="-1" aria-labelledby="confirmarVentaModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmarVentaModalLabel">Confirmar Venta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Monto Total:</strong> <span id="modalMontoTotal">$0.00</span></p>
+                    <p><strong>Nombre del Cliente:</strong> <span id="modalNombreCliente"></span></p>
+                    <p><strong>RUC/CI del Cliente:</strong> <span id="modalRUCCliente"></span></p>
+
+                    <div class="mb-3">
+                        <label for="montoRecibido" class="form-label">Monto Recibido</label>
+                        <input type="number" class="form-control" id="montoRecibido" placeholder="Ingresa el monto recibido">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="vueltoCliente" class="form-label">Vuelto</label>
+                        <input type="text" class="form-control" id="vueltoCliente" readonly>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" id="finalizarVentaBtn">Finalizar Venta</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Total y Acciones -->
     <div class="total-footer-section">

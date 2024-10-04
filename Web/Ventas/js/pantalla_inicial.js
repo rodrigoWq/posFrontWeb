@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     // URL de la página de login
-    const sessionManager = new SessionManager('../../Seguridad y Gestion de Usuarios/HTML/iniciar_session'); 
+    const sessionManager = new SessionManager('index.html'); 
     sessionManager.init(); // Iniciar verificación de sesión y manejo de historial
     
     // Calcular el total cuando la página carga por primera vez
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.removeItem('rol_id');
             
             // Redirigir al usuario a la pantalla de login
-            window.location.href = '../../Seguridad y Gestion de Usuarios/HTML/iniciar_session.html';
+            window.location.href = '../../index.html';
         }
     });
 });

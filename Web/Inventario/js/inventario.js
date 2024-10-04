@@ -115,3 +115,83 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+document.addEventListener('DOMContentLoaded', function() {
+    const listaFacturasProveedores = document.getElementById('listaFacturasProveedores');
+    const facturasProveedoresSection = document.querySelector('.facturas-proveedores'); // Obtener la sección completa
+
+    // Cargar facturas y proveedores guardados en localStorage
+    const pagosProveedores = JSON.parse(localStorage.getItem('pagosProveedores')) || [];
+
+    if (pagosProveedores.length === 0) {
+        facturasProveedoresSection.style.display = 'none'; // Ocultar la sección si no hay facturas/proveedores
+    } else {
+        facturasProveedoresSection.style.display = 'block'; // Mostrar la sección si hay facturas/proveedores
+
+        pagosProveedores.forEach((pago, index) => {
+            const item = document.createElement('li');
+            item.classList.add('list-group-item');
+            item.innerHTML = `
+                Factura: ${pago.factura}, Proveedor: ${pago.proveedor}, Fecha: ${pago.fechaHora}
+                <button class="btn btn-primary btn-sm float-end me-2 seleccionarBtn" data-index="${index}">
+                    Seleccionar
+                </button>
+                <button class="btn btn-danger btn-sm float-end eliminarBtn" data-index="${index}">
+                    Eliminar
+                </button>
+            `;
+            listaFacturasProveedores.appendChild(item);
+        });
+    }
+
+    // Manejar el evento de clic en los botones de selección o eliminación
+    listaFacturasProveedores.addEventListener('click', function(event) {
+        const index = event.target.getAttribute('data-index');
+
+        if (event.target.classList.contains('seleccionarBtn')) {
+            const pagoSeleccionado = pagosProveedores[index];
+
+            // Prellenar los campos del formulario de compras
+            document.getElementById('nroFactura').value = pagoSeleccionado.factura;
+            document.getElementById('proveedor').value = pagoSeleccionado.proveedor;
+
+        }
+
+        if (event.target.classList.contains('eliminarBtn')) {
+            // Eliminar el pago seleccionado del array y actualizar el localStorage
+            pagosProveedores.splice(index, 1);
+            localStorage.setItem('pagosProveedores', JSON.stringify(pagosProveedores));
+
+            // Volver a cargar la lista actualizada
+            actualizarListadoFacturasProveedores();
+            alert('Elemento eliminado correctamente.');
+        }
+    });
+
+    // Función para recargar la lista después de eliminar un elemento
+    function actualizarListadoFacturasProveedores() {
+        listaFacturasProveedores.innerHTML = ''; // Limpiar la lista
+
+        if (pagosProveedores.length === 0) {
+            facturasProveedoresSection.style.display = 'none'; // Ocultar la sección si no hay más facturas/proveedores
+        } else {
+            facturasProveedoresSection.style.display = 'block'; // Asegurarse de que la sección esté visible
+
+            pagosProveedores.forEach((pago, index) => {
+                const item = document.createElement('li');
+                item.classList.add('list-group-item');
+                item.innerHTML = `
+                    Factura: ${pago.factura}, Proveedor: ${pago.proveedor}, Fecha: ${pago.fechaHora}
+                    <button class="btn btn-primary btn-sm float-end me-2 seleccionarBtn" data-index="${index}">
+                        Seleccionar
+                    </button>
+                    <button class="btn btn-danger btn-sm float-end eliminarBtn" data-index="${index}">
+                        Eliminar
+                    </button>
+                `;
+                listaFacturasProveedores.appendChild(item);
+            });
+        }
+    }
+});
+
+

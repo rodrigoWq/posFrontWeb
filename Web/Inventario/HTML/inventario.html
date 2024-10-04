@@ -3,70 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Productos</title>
+    <title>Compras</title>
     <link rel="stylesheet" href="../css/inventario.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
 </head>
 <body>
     <div class="container">
-        <!-- Barra de búsqueda -->
-        <div class="search-bar">
-            <input type="text" placeholder="Buscar productos...">
-            <button class="add-btn">+</button>
-        </div>
+        <header>
+            <h1>Registrar en Inventario</h1>
+        </header>
 
-        <!-- Contenido principal -->
-        <div class="content">
-            <!-- Productos Destacados -->
-            <div class="section featured-products">
-                <h2>Productos Destacados <span><a href="#">Ver todo</a></span></h2>
-                <div class="product-grid">
-                    <div class="product">
-                        <div class="product-image"></div>
-                        <p>Producto 1</p>
-                        <p>$19.99</p>
+        <section class="facturas-proveedores">
+            <h2>Facturas y Proveedores Guardados</h2>
+            <ul id="listaFacturasProveedores" class="list-group">
+                <!-- Aquí se mostrarán las facturas y proveedores guardados -->
+            </ul>
+        </section>
+        
+        <!-- Formulario para ingresar datos de la compra -->
+        <section class="formulario-compra">
+            <!--<h2>Datos de la Compra</h2> -->
+            <form id="formularioCompra">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nroFactura">Número de Factura</label>
+                        <input type="text" id="nroFactura" placeholder="Ingrese el número de factura" required>
                     </div>
-                    <div class="product">
-                        <div class="product-image"></div>
-                        <p>Producto 2</p>
-                        <p>$29.99</p>
+
+                    <div class="form-group">
+                        <label for="codigoProducto">Código de Producto</label>
+                        <input type="text" id="codigoProducto" placeholder="Ingrese el código de producto" required>
                     </div>
-                    <div class="product">
-                        <div class="product-image"></div>
-                        <p>Producto 3</p>
-                        <p>$39.99</p>
+
+                    <div class="form-group">
+                        <label for="nombreProducto">Nombre del Producto</label>
+                        <input type="text" id="nombreProducto" placeholder="Ingrese el nombre del producto" required>
                     </div>
-                    <div class="product">
-                        <div class="product-image"></div>
-                        <p>Producto 4</p>
-                        <p>$49.99</p>
+
+                    <div class="form-group">
+                        <label for="proveedor">Proveedor</label>
+                        <input type="text" id="proveedor" placeholder="Ingrese el nombre del proveedor" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cantidad">Cantidad</label>
+                        <input type="number" id="cantidad" min="1" placeholder="Cantidad" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="precioUnitario">Precio Unitario</label>
+                        <input type="number" id="precioUnitario" min="0.01" step="0.01" placeholder="Precio unitario" required>
                     </div>
                 </div>
+
+                <!-- Botón de agregar producto -->
+                <div class="form-group boton-agregar">
+                    <button type="button" id="agregarProductoBtn">
+                        <i class="bi bi-plus-circle"></i> Agregar Producto
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Tabla de productos añadidos -->
+        <section class="productos-compra">
+            <h2>Productos Añadidos</h2>
+            <table id="tablaProductos">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unitario</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="productosBody">
+                    <!-- Los productos añadidos se listarán aquí -->
+                </tbody>
+            </table>
+
+            <!-- Paginación -->
+            <div id="paginacion">
+                <button id="prevPage" disabled>Anterior</button>
+                <span id="paginaActual">Página 1</span>
+                <button id="nextPage" disabled>Siguiente</button>
             </div>
 
-            <!-- Alertas -->
-            <div class="section alerts">
-                <h2>Alertas <span><a href="#">Ver todo</a></span></h2>
-                <ul>
-                    <li class="alert alert-danger">
-                        <span>⚠️</span> Producto X está por agotarse <br>
-                        <small>Quedan solo 10 unidades en stock.</small>
-                    </li>
-                    <li class="alert alert-warning">
-                        <span>📅</span> Producto Y caduca pronto <br>
-                        <small>Caduca en 2 semanas.</small>
-                    </li>
-                </ul>
+            <!-- Total de la compra y botón de registrar -->
+            <div class="total-compra">
+                <div class="total-info">
+                    <span>Total Compra: </span>
+                    <span id="montoTotal">$0.00</span>
+                </div>
+                <button id="registrarCompraBtn">Guardar</button>
             </div>
-
-            <!-- Acciones Rápidas -->
-            <div class="section quick-actions">
-                <h2>Acciones Rápidas</h2>
-                <button>Agregar Producto</button>
-                <button>Generar Reporte</button>
-                <button>Ver Alertas</button>
-                <button>Análisis</button>
-            </div>
-        </div>
+        </section>
     </div>
+    <script src="../../Seguridad y Gestion de Usuarios/js/SessionManager.js"></script>
+    <script src="../js/inventario.js"></script>
+    <script>
+        // Inicializar el SessionManager y NavigationManager en Compras
+        document.addEventListener('DOMContentLoaded', function() {
+            const sessionManager = new SessionManager('../../Seguridad y Gestion de Usuarios/HTML/iniciar_session.html');
+            sessionManager.init(); // Verificar la sesión
+
+            const navigationManager = new NavigationManager();
+        });
+    </script>
+    <script></script>
 </body>
 </html>

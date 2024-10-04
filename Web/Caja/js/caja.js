@@ -48,3 +48,27 @@ document.addEventListener('DOMContentLoaded', () => {
     
     
 });
+document.getElementById('guardarPagoProveedor').addEventListener('click', function() {
+    const monto = document.getElementById('montoPagoProveedor').value;
+    const proveedor = document.getElementById('proveedorPagoProveedor').value;
+    const factura = document.getElementById('facturaPagoProveedor').value;
+
+    if (monto && proveedor && factura) {
+        const pagosProveedores = JSON.parse(localStorage.getItem('pagosProveedores')) || [];
+
+        // Añadir fecha y hora actual
+        const fechaHora = new Date().toLocaleString(); // Genera fecha y hora en formato local
+
+        // Guardar los datos del pago en localStorage
+        pagosProveedores.push({ monto, proveedor, factura, fechaHora });
+        localStorage.setItem('pagosProveedores', JSON.stringify(pagosProveedores));
+
+        alert('Pago guardado correctamente.');
+
+        // Opcional: limpiar los campos del formulario del modal
+        document.getElementById('formPagoProveedores').reset();
+    } else {
+        alert('Por favor, completa todos los campos.');
+    }
+});
+

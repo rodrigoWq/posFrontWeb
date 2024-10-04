@@ -1,12 +1,6 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
     font-family: Arial, sans-serif;
-    background-color: #f7f7f7;
+    background-color: #f4f4f4;
     padding: 20px;
 }
 
@@ -19,126 +13,106 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.search-bar {
-    display: flex;
-    align-items: center;
+header {
+    text-align: center;
     margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
 }
 
-.search-bar input {
-    flex-grow: 1;
-    padding: 10px;
-    border: none;
-    outline: none;
-}
-
-.search-bar button.add-btn {
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    font-size: 20px;
-    cursor: pointer;
-    margin-left: 10px;
-}
-
-.search-bar button.add-btn:hover {
-    background-color: #555;
-}
-
-.content {
-    display: flex;
-    justify-content: space-between;
-}
-
-.section {
-    flex: 1;
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin-right: 20px;
-}
-
-.section:last-child {
-    margin-right: 0;
-}
-
-.section h2 {
-    font-size: 18px;
-    margin-bottom: 15px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.section h2 span a {
-    font-size: 14px;
-    text-decoration: none;
+header h1 {
+    font-size: 28px;
     color: #333;
 }
 
-.product-grid {
+/* Formulario */
+.formulario-compra {
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-right: 15px;
+}
+
+.form-row {
     display: flex;
-    justify-content: space-between;
-    gap: 20px; /* Añade un espacio entre los productos */
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
-.product {
-    text-align: center;
-    padding: 5px; /* Añade un padding interno para el contenido del producto */
+.form-group label {
+    font-weight: bold;
 }
 
-.product-image {
-    width: 100px;
-    height: 100px;
-    background-color: #ddd;
-    margin-bottom: 10px;
-    border-radius: 8px;
-}
-
-.alerts ul {
-    list-style: none;
-}
-
-.alert {
-    margin-bottom: 15px;
-}
-
-.alert span {
-    font-size: 18px;
-    margin-right: 10px;
-}
-
-.alert small {
-    display: block;
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
     margin-top: 5px;
 }
 
-.alert-danger {
-    color: #dc3545;
+/* Botón Agregar Producto */
+.boton-agregar {
+    margin-top: 20px;
+    text-align: center;
 }
 
-.alert-warning {
-    color: #ffc107;
-}
-
-.quick-actions button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    background-color: #f1f1f1;
+button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
 }
 
-.quick-actions button:hover {
-    background-color: #ddd;
+button:hover {
+    background-color: #0056b3;
+}
+
+.productos-compra {
+    margin-top: 30px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+table th,
+table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.total-compra {
+    display: flex;
+    justify-content: space-between; /* Distribuir el total y el botón a los extremos */
+    align-items: center;
+    margin-top: 20px;
+}
+
+.total-info {
+    display: flex;
+    gap: 5px; /* Espacio entre "Total Compra:" y el monto */
+}
+
+
+#paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#paginacion button {
+    margin: 0 10px;
+}
+
+button#registrarCompraBtn {
+    background-color: #28a745;
+}
+
+button#registrarCompraBtn:hover {
+    background-color: #218838;
 }

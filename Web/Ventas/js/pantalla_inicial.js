@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     // URL de la página de login
-    const sessionManager = new SessionManager('index.html'); 
+    const sessionManager = new SessionManager('/index.html'); 
     sessionManager.init(); // Iniciar verificación de sesión y manejo de historial
     
     // Calcular el total cuando la página carga por primera vez

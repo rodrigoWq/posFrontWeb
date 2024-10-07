@@ -1,0 +1,32 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+.table {
+    margin-top: 20px;
+}
+
+.nav-tabs {
+    justify-content: center;
+}
+
+.tab-content {
+    margin-top: 20px;
+}
+
+.btn {
+    margin-top: 10px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+}

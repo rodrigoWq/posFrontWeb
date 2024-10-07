@@ -94,7 +94,7 @@ class NavigationManager {
 
 // Inicializar el SessionManager y NavigationManager
 document.addEventListener('DOMContentLoaded', function() {
-    const sessionManager = new SessionManager('index.html');
+    const sessionManager = new SessionManager('/index.html');
     sessionManager.init(); // Verificar la sesión
 
     const navigationManager = new NavigationManager();

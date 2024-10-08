@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const editUserForm = document.getElementById('editUserForm');
     const editNameInput = document.getElementById('edit-name');
     const editRoleSelect = document.getElementById('edit-role');
+    const userNameInput = document.getElementById('username');
     const editStatusSelect = document.getElementById('edit-status');
     const editPasswordInput = document.getElementById('edit-password'); // Campo para la nueva contraseña
     const editConfirmPasswordInput = document.getElementById('edit-confirm-password'); // Campo para confirmar contraseña
@@ -64,12 +65,14 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Obtener los datos del formulario
         const userData = {
-            usuario_id: currentUserId,
-            nombre: editNameInput.value,
-            rol_id: editRoleSelect.value,
-            status: editStatusSelect.value
+            nombre: nombreInput.value,
+            apellido: apellidoInput.value,
+            telefono: telefonoInput.value,
+            username: userNameInput.value,  // Agrega el username
+            rol_id: rolInput.value,
+            password: contraseñaInput.value
         };
-
+        
         // Validar si se ingresaron contraseñas
         const nuevaContraseña = editPasswordInput.value.trim();
         const confirmarContraseña = editConfirmPasswordInput.value.trim();

@@ -72,3 +72,131 @@ document.getElementById('guardarPagoProveedor').addEventListener('click', functi
     }
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    // Cargar proveedores existentes en el modal de pago a proveedores
+    function cargarProveedores() {
+        fetch('/api/proveedores')  // Cambia por tu endpoint
+            .then(response => response.json())
+            .then(proveedores => {
+                const proveedorSelect = document.getElementById('proveedorPagoProveedor');
+                proveedorSelect.innerHTML = '<option value="">Seleccionar proveedor</option>';
+                proveedores.forEach(proveedor => {
+                    const option = document.createElement('option');
+                    option.value = proveedor.id;
+                    option.textContent = proveedor.nombre;
+                    proveedorSelect.appendChild(option);
+                });
+            });
+    }
+
+    // Cuando se hace clic en "Registrar nuevo proveedor"
+    document.getElementById('registrarProveedorBtn').addEventListener('click', () => {
+        // Cerrar el modal de Pago a Proveedores antes de abrir el de Registrar Proveedor
+        const modalPagoProveedores = bootstrap.Modal.getInstance(document.getElementById('modalPagoProveedores'));
+        modalPagoProveedores.hide();  // Cerrar modal de Pago a Proveedores
+
+        // Abrir el modal de Registrar Proveedor
+        const modalRegistrarProveedor = new bootstrap.Modal(document.getElementById('modalRegistrarProveedor'));
+        modalRegistrarProveedor.show();
+    });
+
+     // Guardar proveedor
+    document.getElementById('guardarProveedor').addEventListener('click', () => {
+        const nombre = document.getElementById('nombreProveedor').value;
+        const telefono = document.getElementById('telefonoProveedor').value;
+        const direccion = document.getElementById('direccionProveedor').value;
+
+        // Llamada al backend para registrar un nuevo proveedor
+        fetch('/api/proveedores', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ nombre, telefono, direccion })
+        })
+        .then(response => response.json())
+        .then(nuevoProveedor => {
+            alert('Proveedor registrado exitosamente.');
+            // Actualizar el listado de proveedores
+            cargarProveedores();
+
+            // Cerrar el modal de Registrar Proveedor
+            const modalRegistrarProveedor = bootstrap.Modal.getInstance(document.getElementById('modalRegistrarProveedor'));
+            modalRegistrarProveedor.hide();
+
+            // Reabrir el modal de Pago a Proveedores después de registrar al proveedor
+            const modalPagoProveedores = new bootstrap.Modal(document.getElementById('modalPagoProveedores'));
+            modalPagoProveedores.show();
+        })
+        .catch(error => console.error('Error:', error));
+    });
+
+    // Cargar proveedores cuando se abra el modal de Pago a Proveedores
+    document.getElementById('modalPagoProveedores').addEventListener('shown.bs.modal', cargarProveedores);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Manejo del registro de nueva factura
+    document.getElementById('guardarFactura').addEventListener('click', () => {
+        const numeroFactura = document.getElementById('numeroFactura').value;
+        const fechaEmision = document.getElementById('fechaEmision').value;
+        const tipoFactura = document.getElementById('tipoFactura').value;
+        const iva = document.getElementById('iva').value;
+
+        // Validar los campos
+        if (!numeroFactura || !fechaEmision || !tipoFactura || !iva) {
+            alert('Por favor, completa todos los campos.');
+            return;
+        }
+
+        // Crear objeto de factura
+        const facturaData = {
+            numeroFactura,
+            fechaEmision,
+            tipoFactura,
+            iva
+        };
+
+        // Llamada al backend para registrar la factura
+        fetch('/api/facturas', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(facturaData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Factura registrada exitosamente.');
+
+            // Colocar el número de factura en el campo correspondiente en el modal de Pago a Proveedores
+            document.getElementById('facturaPagoProveedor').value = numeroFactura;
+            
+            // Cerrar el modal de Registrar Factura
+            const modalRegistrarFactura = bootstrap.Modal.getInstance(document.getElementById('modalRegistrarFactura'));
+            modalRegistrarFactura.hide();
+
+            // Reabrir el modal de Pago a Proveedores después de registrar la factura
+            const modalPagoProveedores = new bootstrap.Modal(document.getElementById('modalPagoProveedores'));
+            modalPagoProveedores.show();
+        })
+        .catch(error => {
+            console.error('Error al registrar la factura:', error);
+            alert('Error al registrar la factura.');
+        });
+    });
+
+    // Reabrir el modal de Pago a Proveedores cuando se cierra el modal de Registrar Proveedor
+    document.getElementById('modalRegistrarProveedor').addEventListener('hide.bs.modal', () => {
+        const modalPagoProveedores = new bootstrap.Modal(document.getElementById('modalPagoProveedores'));
+        modalPagoProveedores.show();
+    });
+
+    // Reabrir el modal de Pago a Proveedores cuando se cierra el modal de Registrar Factura
+    document.getElementById('modalRegistrarFactura').addEventListener('hide.bs.modal', () => {
+        const modalPagoProveedores = new bootstrap.Modal(document.getElementById('modalPagoProveedores'));
+        modalPagoProveedores.show();
+    });
+
+});
+

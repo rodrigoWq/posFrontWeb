@@ -52,12 +52,19 @@
                 <input type="number" class="form-control" id="montoPagoProveedor" required>
                 </div>
                 <div class="mb-3">
-                <label for="proveedorPagoProveedor" class="form-label">Proveedor</label>
-                <input type="text" class="form-control" id="proveedorPagoProveedor" required>
+                    <label for="proveedorPagoProveedor" class="form-label">Proveedor</label>
+                    <select class="form-control" id="proveedorPagoProveedor" required>
+                        <option value="">Seleccionar proveedor</option>
+                        <!-- Aquí se llenarán las opciones de proveedores existentes -->
+                    </select>
+                    <button type="button" class="btn btn-link" id="registrarProveedorBtn">Registrar nuevo proveedor</button>
                 </div>
                 <div class="mb-3">
                 <label for="facturaPagoProveedor" class="form-label">Número de Factura</label>
-                <input type="text" class="form-control" id="facturaPagoProveedor" required>
+                <input type="text" class="form-control" id="facturaPagoProveedor" readonly>
+                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#modalRegistrarFactura">
+                    Registrar Factura
+                </button>
                 </div>
             </form>
             </div>
@@ -66,6 +73,73 @@
             <button type="button" class="btn btn-primary" id="guardarPagoProveedor">Guardar</button>
             </div>
         </div>
+        </div>
+    </div>
+    <!-- Modal para registrar nuevo proveedor -->
+    <div class="modal fade" id="modalRegistrarProveedor" tabindex="-1" aria-labelledby="modalRegistrarProveedorLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalRegistrarProveedorLabel">Registrar Nuevo Proveedor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formRegistrarProveedor">
+                        <div class="mb-3">
+                            <label for="nombreProveedor" class="form-label">Razon Social</label>
+                            <input type="text" class="form-control" id="nombreProveedor" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="telefonoProveedor" class="form-label">Teléfono del Proveedor</label>
+                            <input type="text" class="form-control" id="telefonoProveedor" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="guardarProveedor">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal para registrar factura -->
+    <div class="modal fade" id="modalRegistrarFactura" tabindex="-1" aria-labelledby="modalRegistrarFacturaLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalRegistrarFacturaLabel">Registrar Nueva Factura</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formRegistrarFactura">
+                        <div class="mb-3">
+                            <label for="numeroFactura" class="form-label">Número de Factura</label>
+                            <input type="text" class="form-control" id="numeroFactura" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fechaEmision" class="form-label">Fecha de Emisión</label>
+                            <input type="date" class="form-control" id="fechaEmision" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tipoFactura" class="form-label">Tipo de Factura</label>
+                            <select class="form-control" id="tipoFactura" required>
+                                <option value="contado">Contado</option>
+                                <option value="credito">Crédito</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="iva" class="form-label">IVA (%)</label>
+                            <input type="number" class="form-control" id="iva" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="guardarFactura">Guardar Factura</button>
+                </div>
+            </div>
         </div>
     </div>
     

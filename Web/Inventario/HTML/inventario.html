@@ -25,13 +25,9 @@
             <!--<h2>Datos de la Compra</h2> -->
             <form id="formularioCompra">
                 <div class="form-row">
+                    
                     <div class="form-group">
-                        <label for="nroFactura">Número de Factura</label>
-                        <input type="text" id="nroFactura" placeholder="Ingrese el número de factura" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="codigoProducto">Código de Producto</label>
+                        <label for="codigoProducto">Código de Barra</label>
                         <input type="text" id="codigoProducto" placeholder="Ingrese el código de producto" required>
                     </div>
 
@@ -53,6 +49,12 @@
                     <div class="form-group">
                         <label for="precioUnitario">Precio Unitario</label>
                         <input type="number" id="precioUnitario" min="0.01" step="0.01" placeholder="Precio unitario" required>
+                    </div>
+
+                    <!-- Nuevo campo para registrar la fecha de vencimiento de lotes -->
+                    <div class="form-group">
+                        <label for="fechaVencimientoLote">Fecha de Vencimiento del Lote</label>
+                        <input type="date" id="fechaVencimientoLote" required>
                     </div>
                 </div>
 

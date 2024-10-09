@@ -11,3 +11,7 @@
 .card:hover {
     opacity: 0.9;
 }
+.iva-options {
+    display: flex;
+    gap: 15px; /* Espacio entre las opciones */
+}

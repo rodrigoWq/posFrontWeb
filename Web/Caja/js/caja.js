@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const numeroFactura = document.getElementById('numeroFactura').value;
         const fechaEmision = document.getElementById('fechaEmision').value;
         const tipoFactura = document.getElementById('tipoFactura').value;
-        const iva = document.getElementById('iva').value;
+        const iva = document.querySelector('input[name="iva"]:checked').value;
 
         // Validar los campos
         if (!numeroFactura || !fechaEmision || !tipoFactura || !iva) {

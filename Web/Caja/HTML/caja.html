@@ -130,9 +130,22 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="iva" class="form-label">IVA (%)</label>
-                            <input type="number" class="form-control" id="iva" required>
-                        </div>
+                            <label class="form-label">IVA (%)</label>
+                            <div class="iva-options"> <!-- Usando la clase CSS personalizada -->
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="iva" id="iva5" value="5" required>
+                                    <label class="form-check-label" for="iva5">5%</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="iva" id="iva10" value="10" required>
+                                    <label class="form-check-label" for="iva10">10%</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="iva" id="ivaExento" value="exento" required>
+                                    <label class="form-check-label" for="ivaExento">Exentas</label>
+                                </div>
+                            </div>
+                        </div>                                             
                     </form>
                 </div>
                 <div class="modal-footer">

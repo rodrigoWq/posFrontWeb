@@ -105,14 +105,18 @@
     <script src="../../Seguridad y Gestion de Usuarios/js/SessionManager.js"></script>
     <script src="../js/inventario.js"></script>
     <script>
-        // Inicializar el SessionManager y NavigationManager en Compras
         document.addEventListener('DOMContentLoaded', function() {
-            const sessionManager = new SessionManager('../../Seguridad y Gestion de Usuarios/HTML/iniciar_session.html');
-            sessionManager.init(); // Verificar la sesión
-
-            const navigationManager = new NavigationManager();
+            // Obtener el rol del usuario desde localStorage
+            const rolId = localStorage.getItem('rol_id'); // Supongamos que rol_id = 1 es Admin
+    
+            // Verificar si el rol no es de admin (rol_id diferente de 1)
+            if (rolId != 1) {
+                // Redirigir al usuario a la página de inicio si no es Admin
+                alert('No tienes permiso para acceder a esta página.');
+                window.location.href = '../../Ventas/HTML/pantalla_inicio.html'; // Ajusta la URL según tu estructura
+            }
         });
     </script>
-    <script></script>
+    
 </body>
 </html>

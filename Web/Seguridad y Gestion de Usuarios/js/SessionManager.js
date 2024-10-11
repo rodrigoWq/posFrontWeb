@@ -68,8 +68,8 @@ class NavigationManager {
             this.loadInicioContent();
         } else if (url.includes('/user_management.html')) {
             this.loadUserManagementContent();
-        } else if (url.includes('/compras.html')) {
-            this.loadComprasContent();
+        } else if (url.includes('/inventario.html')) {
+            this.loadInventarioContent();
         } else {
             console.error('Página no encontrada.');
         }
@@ -86,9 +86,9 @@ class NavigationManager {
         // Aquí cargamos el contenido de User Management (puede ser dinámico)
         window.location.href = '/Seguridad y Gestion de Usuarios/HTML/user_management.html';
     }
-    loadComprasContent() {
+    loadInventarioContent() {
         // Aquí cargamos el contenido de Compras (puede ser dinámico)
-        window.location.href = '../../Compras/HTML/compras.html';
+        window.location.href = '/Inventario/HTML/inventario.html';
     } 
 }
 

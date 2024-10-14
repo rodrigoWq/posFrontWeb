@@ -200,3 +200,101 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    // Función para obtener todas las facturas desde el backend y mostrarlas en el modal de Pago a Proveedores
+    function cargarFacturas() {
+        fetch('/api/facturas')  // Cambia por tu endpoint
+            .then(response => response.json())
+            .then(facturas => {
+                const facturaSelect = document.getElementById('facturaPagoProveedor');
+                facturaSelect.innerHTML = '';  // Limpiar el select de facturas
+                facturas.forEach(factura => {
+                    const option = document.createElement('option');
+                    option.value = factura.numeroFactura;
+                    option.textContent = `Factura ${factura.numeroFactura} - ${factura.fechaEmision}`;
+                    facturaSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error al cargar facturas:', error));
+    }
+
+    // Cuando se abra el modal de Pago a Proveedores, cargar las facturas
+    document.getElementById('modalPagoProveedores').addEventListener('shown.bs.modal', cargarFacturas);
+
+    // Guardar Pago a Proveedores
+    document.getElementById('guardarPagoProveedor').addEventListener('click', () => {
+        const monto = document.getElementById('montoPagoProveedor').value;
+        const proveedor = document.getElementById('proveedorPagoProveedor').value;
+        const factura = document.getElementById('facturaPagoProveedor').value;
+
+        if (monto && proveedor && factura) {
+            const data = { monto, proveedor, factura };
+
+            // Petición POST al backend para registrar el pago
+            fetch('/api/pagoProveedores', {  // Cambia por tu endpoint
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Pago registrado correctamente.');
+                // Opcional: limpiar los campos del formulario del modal
+                document.getElementById('formPagoProveedores').reset();
+            })
+            .catch(error => {
+                console.error('Error al registrar el pago:', error);
+                alert('Error al registrar el pago.');
+            });
+        } else {
+            alert('Por favor, completa todos los campos.');
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Simulador de facturas almacenadas
+    const facturasSimuladas = [
+        { numeroFactura: 'F001', fechaEmision: '2024-01-01' },
+        { numeroFactura: 'F002', fechaEmision: '2024-02-15' },
+        { numeroFactura: 'F003', fechaEmision: '2024-03-10' }
+    ];
+
+    // Función para simular la carga de facturas en el select del modal
+    function cargarFacturasSimuladas() {
+        const facturaSelect = document.getElementById('facturaPagoProveedor');
+        facturaSelect.innerHTML = '';  // Limpiar el select de facturas
+        facturasSimuladas.forEach(factura => {
+            const option = document.createElement('option');
+            option.value = factura.numeroFactura;
+            option.textContent = `Factura ${factura.numeroFactura} - ${factura.fechaEmision}`;
+            facturaSelect.appendChild(option);
+        });
+    }
+
+    // Evento para abrir el modal de Pago a Proveedores y cargar facturas simuladas
+    document.getElementById('modalPagoProveedores').addEventListener('shown.bs.modal', cargarFacturasSimuladas);
+
+    // Simular registro de pago a proveedores
+    document.getElementById('guardarPagoProveedor').addEventListener('click', () => {
+        const monto = document.getElementById('montoPagoProveedor').value;
+        const proveedor = document.getElementById('proveedorPagoProveedor').value;
+        const factura = document.getElementById('facturaPagoProveedor').value;
+
+        if (monto && proveedor && factura) {
+            // Simulación de datos enviados
+            const pagoData = { monto, proveedor, factura };
+
+            // Simular "envío" al backend (aquí solo mostramos una alerta)
+            console.log('Datos enviados:', pagoData);
+            alert(`Pago de $${monto} registrado para el proveedor ${proveedor}, Factura: ${factura}`);
+
+            // Limpiar el formulario después de registrar el pago
+            document.getElementById('formPagoProveedores').reset();
+            const modalPagoProveedores = bootstrap.Modal.getInstance(document.getElementById('modalPagoProveedores'));
+            modalPagoProveedores.hide();
+        } else {
+            alert('Por favor, completa todos los campos.');
+        }
+    });
+});

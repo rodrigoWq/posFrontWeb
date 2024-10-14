@@ -1,188 +1,191 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const productosPorPagina = 5;
-    let productos = [];
-    let paginaActual = 1;
-
-    const productosBody = document.getElementById('productosBody');
-    const prevPageBtn = document.getElementById('prevPage');
-    const nextPageBtn = document.getElementById('nextPage');
-    const paginaActualSpan = document.getElementById('paginaActual');
     const agregarProductoBtn = document.getElementById('agregarProductoBtn');
-    const montoTotalSpan = document.getElementById('montoTotal');
+    const productosBody = document.getElementById('productosBody');
+    const codigoProductoInput = document.getElementById('codigoProducto');
+    const cantidadInput = document.getElementById('cantidad');
+
+    // Captura de los campos de la factura o nota de remisión
+    const timbradoInput = document.getElementById('timbrado');
+    const rucInput = document.getElementById('ruc');
+    const razonSocialInput = document.getElementById('razonSocial');
+    const ivaInput = document.getElementById('iva');
+    const montoTotalInput = document.getElementById('montoTotalFactura');
+    const fechaFacturaInput = document.getElementById('fechaFactura');
+
+    let productos = [];
 
     // Evento para agregar producto
-    agregarProductoBtn.addEventListener('click', function() {
-        // Obtener los valores del formulario
-        const codigoBarra = document.getElementById('codigoProducto').value; // Cambiado a código de barra
-        const nombre = document.getElementById('nombreProducto').value;
-        const cantidad = document.getElementById('cantidad').value;
-        const precioUnitario = document.getElementById('precioUnitario').value;
-        const fechaVencimientoLote = document.getElementById('fechaVencimientoLote').value; // Fecha de vencimiento
+    agregarProductoBtn.addEventListener('click', async function() {
+        const codigoProducto = codigoProductoInput.value;
+        const cantidad = cantidadInput.value;
 
-        // Crear un nuevo producto
-        const nuevoProducto = {
-            codigoBarra: codigoBarra, // Usamos el nuevo nombre "codigoBarra"
-            nombre: nombre,
-            cantidad: parseFloat(cantidad),
-            precioUnitario: parseFloat(precioUnitario),
-            fechaVencimientoLote: fechaVencimientoLote // Almacenar la fecha de vencimiento
+        if (!codigoProducto || !cantidad) {
+            alert('Por favor, ingrese el código de producto y la cantidad.');
+            return;
+        }
+
+        try {
+            // Realizar la petición GET para obtener los datos del producto
+            const response = await fetch(`/api/productos/${codigoProducto}`);
+            if (response.ok) {
+                const producto = await response.json();
+                
+                // Verificar si el producto existe
+                if (producto) {
+                    // Mostrar los datos del producto en la tabla
+                    agregarProductoATabla(producto, cantidad);
+                    productos.push({ ...producto, cantidad: parseFloat(cantidad) });
+                } else {
+                    // Si no existe, abrir modal para registrar nuevo producto
+                    mostrarModalRegistroProducto(codigoProducto);
+                }
+            } else {
+                console.error('Producto no encontrado');
+                mostrarModalRegistroProducto(codigoProducto); // Mostrar modal si el producto no existe
+            }
+        } catch (error) {
+            console.error('Error al obtener los datos del producto:', error);
+        }
+    });
+
+    // Función para agregar el producto a la tabla
+    function agregarProductoATabla(producto, cantidad) {
+        const fila = `
+            <tr>
+                <td>${producto.codigo_barra}</td>
+                <td>${producto.nombre}</td>
+                <td>$${producto.precio_compra.toFixed(2)}</td>
+                <td>$${producto.precio_venta.toFixed(2)}</td>
+                <td>${cantidad}</td>
+                <td><button class="btn btn-danger btn-sm">Eliminar</button></td>
+            </tr>`;
+        productosBody.innerHTML += fila;
+    }
+
+    // Función para mostrar modal de registro de producto
+    function mostrarModalRegistroProducto(codigoProducto) {
+        const modalCodigoProducto = document.getElementById('codigoProductoModal');
+        modalCodigoProducto.value = codigoProducto; // Mostrar el código del producto en el modal
+        const modal = new bootstrap.Modal(document.getElementById('modalRegistroProducto'));
+        modal.show();
+    }
+
+    // Registro de nuevo producto desde el modal
+    const registrarProductoBtn = document.getElementById('registrarProductoBtn');
+    registrarProductoBtn.addEventListener('click', function() {
+        const codigoProducto = document.getElementById('codigoProductoModal').value;
+        const nombreProducto = document.getElementById('nombreProductoModal').value;
+        const categoriaProducto = document.getElementById('categoriaProductoModal').value;
+        const unidadMedida = document.getElementById('unidadMedidaModal').value;
+        const descripcionProducto = document.getElementById('descripcionProductoModal').value;
+        const precioCompra = document.getElementById('precioCompraModal').value;
+        const precioVenta = document.getElementById('precioVentaModal').value;
+        const vigenciaPrecio = document.getElementById('vigenciaPrecioModal').value || new Date().toISOString().split('T')[0]; // Fecha del día si no se selecciona
+
+        // Capturar lotes
+        const lotes = [];
+        const loteEntries = document.querySelectorAll('.lote-entry');
+        loteEntries.forEach((entry) => {
+            const cantidad = entry.querySelector('.cantidad-lote').value;
+            const fechaVencimiento = entry.querySelector('.fecha-vencimiento-lote').value;
+            lotes.push({ cantidad, fecha_vencimiento: fechaVencimiento });
+        });
+
+        // Validar que todos los campos están llenos
+        if (!nombreProducto || !precioCompra || !precioVenta || lotes.length === 0) {
+            alert('Por favor, complete todos los campos del producto y agregue al menos un lote.');
+            return;
+        }
+
+        const producto = {
+            codigo_barra: codigoProducto,
+            categoria: categoriaProducto,
+            unidad_medida: unidadMedida,
+            nombre: nombreProducto,
+            descripcion: descripcionProducto,
+            precio_compra: parseFloat(precioCompra),
+            precio_venta: parseFloat(precioVenta),
+            vigencia_precio: vigenciaPrecio,
+            lotes: lotes
         };
 
-        // Agregar el producto a la lista
-        productos.push(nuevoProducto);
-
-        // Actualizar la tabla con paginación
-        mostrarPagina(paginaActual);
-
-        // Actualizar el total de la compra
-        actualizarTotalCompra();
-    });
-
-    function mostrarPagina(pagina) {
-        const inicio = (pagina - 1) * productosPorPagina;
-        const fin = inicio + productosPorPagina;
-        const productosPagina = productos.slice(inicio, fin);
-
-        productosBody.innerHTML = '';
-
-        productosPagina.forEach((producto, index) => {
-            const fila = `<tr>
-                <td>${producto.codigoBarra}</td>
-                <td>${producto.nombre}</td>
-                <td>${producto.cantidad}</td>
-                <td>$${producto.precioUnitario.toFixed(2)}</td>
-                <td>${producto.fechaVencimientoLote}</td> <!-- Mostrar la fecha de vencimiento -->
-                <td><button class="delete-btn">🗑️</button></td>
-            </tr>`;
-            productosBody.innerHTML += fila;
+        // Realizar la petición POST para registrar el producto
+        fetch('/api/productos', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(producto),
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Producto registrado correctamente.');
+            const modal = bootstrap.Modal.getInstance(document.getElementById('modalRegistroProducto'));
+            modal.hide();
+        })
+        .catch(error => {
+            console.error('Error al registrar el producto:', error);
+            alert('Hubo un error al registrar el producto.');
         });
-
-        actualizarBotonesPaginacion();
-    }
-
-    function actualizarTotalCompra() {
-        const total = productos.reduce((sum, producto) => {
-            return sum + producto.cantidad * producto.precioUnitario;
-        }, 0);
-        montoTotalSpan.textContent = `$${total.toFixed(2)}`;
-    }
-
-    function actualizarBotonesPaginacion() {
-        paginaActualSpan.textContent = `Página ${paginaActual}`;
-
-        prevPageBtn.disabled = paginaActual === 1;
-
-        const totalPaginas = Math.ceil(productos.length / productosPorPagina);
-        nextPageBtn.disabled = paginaActual === totalPaginas;
-    }
-
-    prevPageBtn.addEventListener('click', function() {
-        if (paginaActual > 1) {
-            paginaActual--;
-            mostrarPagina(paginaActual);
-        }
     });
 
-    nextPageBtn.addEventListener('click', function() {
-        const totalPaginas = Math.ceil(productos.length / productosPorPagina);
-        if (paginaActual < totalPaginas) {
-            paginaActual++;
-            mostrarPagina(paginaActual);
-        }
-    });
-});
-
-document.addEventListener('DOMContentLoaded', function() {
+    // Función para registrar toda la compra
     const registrarCompraBtn = document.getElementById('registrarCompraBtn');
-
-    const navigationManager = new NavigationManager();
-
-
-    // Agregar evento de clic al botón "Registrar Compra"
     registrarCompraBtn.addEventListener('click', function() {
-        // Redireccionar a pantalla_inicial.html
-        navigationManager.navigateTo('../../Ventas/HTML/pantalla_inicio.html');
-    });
-});
+        // Capturar los datos de la factura y los productos agregados
+        const factura = {
+            timbrado: timbradoInput.value,
+            ruc: rucInput.value,
+            razon_social: razonSocialInput.value,
+            iva: parseFloat(ivaInput.value),
+            monto_total: parseFloat(montoTotalInput.value),
+            fecha: fechaFacturaInput.value,
+            productos: productos,
+        };
 
+        // Validar los campos de la factura antes de enviar
+        if (!factura.timbrado || !factura.ruc || !factura.razon_social || !factura.iva || !factura.monto_total || !factura.fecha || productos.length === 0) {
+            alert('Por favor, complete todos los campos de la factura y agregue productos.');
+            return;
+        }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const listaFacturasProveedores = document.getElementById('listaFacturasProveedores');
-    const facturasProveedoresSection = document.querySelector('.facturas-proveedores'); // Obtener la sección completa
-
-    // Cargar facturas y proveedores guardados en localStorage
-    const pagosProveedores = JSON.parse(localStorage.getItem('pagosProveedores')) || [];
-
-    if (pagosProveedores.length === 0) {
-        facturasProveedoresSection.style.display = 'none'; // Ocultar la sección si no hay facturas/proveedores
-    } else {
-        facturasProveedoresSection.style.display = 'block'; // Mostrar la sección si hay facturas/proveedores
-
-        pagosProveedores.forEach((pago, index) => {
-            const item = document.createElement('li');
-            item.classList.add('list-group-item');
-            item.innerHTML = `
-                Factura: ${pago.factura}, Proveedor: ${pago.proveedor}, Fecha: ${pago.fechaHora}
-                <button class="btn btn-primary btn-sm float-end me-2 seleccionarBtn" data-index="${index}">
-                    Seleccionar
-                </button>
-                <button class="btn btn-danger btn-sm float-end eliminarBtn" data-index="${index}">
-                    Eliminar
-                </button>
-            `;
-            listaFacturasProveedores.appendChild(item);
+        // Enviar los datos de la factura y los productos al servidor
+        fetch('/api/compras', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(factura),
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Compra registrada correctamente.');
+            // Puedes limpiar el formulario o redirigir al usuario después del registro
+        })
+        .catch(error => {
+            console.error('Error al registrar la compra:', error);
+            alert('Hubo un error al registrar la compra.');
         });
-    }
-
-    // Manejar el evento de clic en los botones de selección o eliminación
-    listaFacturasProveedores.addEventListener('click', function(event) {
-        const index = event.target.getAttribute('data-index');
-
-        if (event.target.classList.contains('seleccionarBtn')) {
-            const pagoSeleccionado = pagosProveedores[index];
-
-            // Prellenar los campos del formulario de compras
-            document.getElementById('nroFactura').value = pagoSeleccionado.factura;
-            document.getElementById('proveedor').value = pagoSeleccionado.proveedor;
-
-        }
-
-        if (event.target.classList.contains('eliminarBtn')) {
-            // Eliminar el pago seleccionado del array y actualizar el localStorage
-            pagosProveedores.splice(index, 1);
-            localStorage.setItem('pagosProveedores', JSON.stringify(pagosProveedores));
-
-            // Volver a cargar la lista actualizada
-            actualizarListadoFacturasProveedores();
-            alert('Elemento eliminado correctamente.');
-        }
     });
 
-    // Función para recargar la lista después de eliminar un elemento
-    function actualizarListadoFacturasProveedores() {
-        listaFacturasProveedores.innerHTML = ''; // Limpiar la lista
+    // Función para agregar un nuevo lote en el modal
+    const agregarLoteBtn = document.getElementById('agregarLoteBtn');
+    agregarLoteBtn.addEventListener('click', function() {
+        const lotesContainer = document.getElementById('lotesContainer');
+        const loteCounter = lotesContainer.querySelectorAll('.lote-entry').length + 1;
 
-        if (pagosProveedores.length === 0) {
-            facturasProveedoresSection.style.display = 'none'; // Ocultar la sección si no hay más facturas/proveedores
-        } else {
-            facturasProveedoresSection.style.display = 'block'; // Asegurarse de que la sección esté visible
-
-            pagosProveedores.forEach((pago, index) => {
-                const item = document.createElement('li');
-                item.classList.add('list-group-item');
-                item.innerHTML = `
-                    Factura: ${pago.factura}, Proveedor: ${pago.proveedor}, Fecha: ${pago.fechaHora}
-                    <button class="btn btn-primary btn-sm float-end me-2 seleccionarBtn" data-index="${index}">
-                        Seleccionar
-                    </button>
-                    <button class="btn btn-danger btn-sm float-end eliminarBtn" data-index="${index}">
-                        Eliminar
-                    </button>
-                `;
-                listaFacturasProveedores.appendChild(item);
-            });
-        }
-    }
+        const loteEntry = document.createElement('div');
+        loteEntry.classList.add('row', 'mb-3', 'lote-entry');
+        loteEntry.innerHTML = `
+            <div class="col">
+                <label for="cantidadLote${loteCounter}" class="form-label">Cantidad</label>
+                <input type="number" class="form-control cantidad-lote" id="cantidadLote${loteCounter}" required>
+            </div>
+            <div class="col">
+                <label for="fechaVencimientoLote${loteCounter}" class="form-label">Fecha de Vencimiento</label>
+                <input type="date" class="form-control fecha-vencimiento-lote" id="fechaVencimientoLote${loteCounter}" required>
+            </div>
+        `;
+        lotesContainer.appendChild(loteEntry);
+    });
 });
-
-

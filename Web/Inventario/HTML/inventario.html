@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compras</title>
     <link rel="stylesheet" href="../css/inventario.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
 </head>
 <body>
@@ -13,57 +13,64 @@
             <h1>Registrar en Inventario</h1>
         </header>
 
-        <section class="facturas-proveedores">
-            <h2>Facturas y Proveedores Guardados</h2>
-            <ul id="listaFacturasProveedores" class="list-group">
-                <!-- Aquí se mostrarán las facturas y proveedores guardados -->
-            </ul>
+        <!-- Formulario de Factura o Nota de Remisión -->
+        <section class="formulario-factura">
+            <form id="formularioFactura">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="timbrado">Timbrado</label>
+                        <input type="text" id="timbrado" placeholder="Ingrese el timbrado" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ruc">RUC</label>
+                        <input type="text" id="ruc" placeholder="Ingrese el RUC" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="razonSocial">Razón Social</label>
+                        <input type="text" id="razonSocial" placeholder="Ingrese la razón social" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="iva">IVA (%)</label>
+                        <input type="number" id="iva" min="0" max="100" step="0.01" placeholder="IVA %" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="montoTotal">Monto Total</label>
+                        <input type="number" id="montoTotalFactura" min="0.01" step="0.01" placeholder="Monto total" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fechaFactura">Fecha</label>
+                        <input type="date" id="fechaFactura" required>
+                    </div>
+                </div>
+            </form>
         </section>
-        
-        <!-- Formulario para ingresar datos de la compra -->
+
+        <!-- Formulario de productos -->
         <section class="formulario-compra">
-            <!--<h2>Datos de la Compra</h2> -->
             <form id="formularioCompra">
                 <div class="form-row">
-                    
                     <div class="form-group">
                         <label for="codigoProducto">Código de Barra</label>
-                        <input type="text" id="codigoProducto" placeholder="Ingrese el código de producto" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="nombreProducto">Nombre del Producto</label>
-                        <input type="text" id="nombreProducto" placeholder="Ingrese el nombre del producto" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="proveedor">Proveedor</label>
-                        <input type="text" id="proveedor" placeholder="Ingrese el nombre del proveedor" required>
+                        <input type="text" id="codigoProducto" class="form-control" placeholder="Ingrese el código de producto" required>
                     </div>
 
                     <div class="form-group">
                         <label for="cantidad">Cantidad</label>
-                        <input type="number" id="cantidad" min="1" placeholder="Cantidad" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="precioUnitario">Precio Unitario</label>
-                        <input type="number" id="precioUnitario" min="0.01" step="0.01" placeholder="Precio unitario" required>
-                    </div>
-
-                    <!-- Nuevo campo para registrar la fecha de vencimiento de lotes -->
-                    <div class="form-group">
-                        <label for="fechaVencimientoLote">Fecha de Vencimiento del Lote</label>
-                        <input type="date" id="fechaVencimientoLote" required>
+                        <input type="number" id="cantidad" class="form-control" min="1" placeholder="Cantidad" required>
                     </div>
                 </div>
 
                 <!-- Botón de agregar producto -->
                 <div class="form-group boton-agregar">
-                    <button type="button" id="agregarProductoBtn">
+                    <button type="button" id="agregarProductoBtn" class="btn btn-success">
                         <i class="bi bi-plus-circle"></i> Agregar Producto
                     </button>
-                </div>
+                </div>                
             </form>
         </section>
 
@@ -74,9 +81,10 @@
                 <thead>
                     <tr>
                         <th>Código</th>
-                        <th>Producto</th>
+                        <th>Nombre del Producto</th>
+                        <th>Precio Compra Vigente</th>
+                        <th>Precio Venta Vigente</th>
                         <th>Cantidad</th>
-                        <th>Precio Unitario</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -85,38 +93,104 @@
                 </tbody>
             </table>
 
-            <!-- Paginación -->
-            <div id="paginacion">
-                <button id="prevPage" disabled>Anterior</button>
-                <span id="paginaActual">Página 1</span>
-                <button id="nextPage" disabled>Siguiente</button>
-            </div>
-
-            <!-- Total de la compra y botón de registrar -->
-            <div class="total-compra">
-                <div class="total-info">
-                    <span>Total Compra: </span>
-                    <span id="montoTotal">$0.00</span>
-                </div>
-                <button id="registrarCompraBtn">Guardar</button>
+            <!-- Botón de registrar compra -->
+            <div class="form-group text-end mt-3">
+                <button id="registrarCompraBtn" class="btn btn-primary">Guardar</button>
             </div>
         </section>
     </div>
-    <script src="../../Seguridad y Gestion de Usuarios/js/SessionManager.js"></script>
-    <script src="../js/inventario.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Obtener el rol del usuario desde localStorage
-            const rolId = localStorage.getItem('rol_id'); // Supongamos que rol_id = 1 es Admin
-    
-            // Verificar si el rol no es de admin (rol_id diferente de 1)
-            if (rolId != 1) {
-                // Redirigir al usuario a la página de inicio si no es Admin
-                alert('No tienes permiso para acceder a esta página.');
-                window.location.href = '../../Ventas/HTML/pantalla_inicio.html'; // Ajusta la URL según tu estructura
-            }
-        });
-    </script>
-    
+
+    <!-- Modal para registrar un nuevo producto -->
+    <div class="modal fade" id="modalRegistroProducto" tabindex="-1" aria-labelledby="modalRegistroProductoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalRegistroProductoLabel">Registrar Nuevo Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formRegistroProducto">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="codigoProductoModal" class="form-label">Código de Barras / Código Producto</label>
+                                <input type="text" class="form-control" id="codigoProductoModal" readonly>
+                            </div>
+                            <div class="col">
+                                <label for="categoriaProductoModal" class="form-label">Categoría</label>
+                                <select id="categoriaProductoModal" class="form-select" required>
+                                    <option value="">Selecciona una categoría</option>
+                                    <option value="embolsado">Embolsado</option>
+                                    <option value="fiambres">Fiambres</option>
+                                    <option value="queso">Queso</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="unidadMedidaModal" class="form-label">Unidad de Medida</label>
+                                <input type="text" class="form-control" id="unidadMedidaModal" required placeholder="Ej. kg, litro, unidad">
+                            </div>
+                            <div class="col">
+                                <label for="nombreProductoModal" class="form-label">Nombre del Producto</label>
+                                <input type="text" class="form-control" id="nombreProductoModal" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="descripcionProductoModal" class="form-label">Descripción</label>
+                                <textarea class="form-control" id="descripcionProductoModal" rows="2" placeholder="Descripción del producto"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="precioCompraModal" class="form-label">Precio de Compra</label>
+                                <input type="number" class="form-control" id="precioCompraModal" required>
+                            </div>
+                            <div class="col">
+                                <label for="precioVentaModal" class="form-label">Precio de Venta</label>
+                                <input type="number" class="form-control" id="precioVentaModal" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="vigenciaPrecioModal" class="form-label">Vigencia del Precio</label>
+                                <input type="date" class="form-control" id="vigenciaPrecioModal">
+                                <small class="form-text text-muted">Déjalo vacío para usar la fecha del día.</small>
+                            </div>
+                        </div>
+
+                        <!-- Lotes -->
+                        <div id="lotesContainer">
+                            <h5 class="mb-3">Lotes</h5>
+                            <div class="row mb-3 lote-entry">
+                                <div class="col">
+                                    <label for="cantidadLote1" class="form-label">Cantidad</label>
+                                    <input type="number" class="form-control cantidad-lote" id="cantidadLote1" required>
+                                </div>
+                                <div class="col">
+                                    <label for="fechaVencimientoLote1" class="form-label">Fecha de Vencimiento</label>
+                                    <input type="date" class="form-control fecha-vencimiento-lote" id="fechaVencimientoLote1" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <button type="button" id="agregarLoteBtn" class="btn btn-secondary">Agregar Lote</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="registrarProductoBtn">Registrar Producto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/inventario2.js"></script>
 </body>
 </html>

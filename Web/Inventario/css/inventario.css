@@ -24,12 +24,14 @@ header h1 {
 }
 
 /* Formulario */
-.formulario-compra {
+.formulario-compra,
+.formulario-factura {
     margin-bottom: 30px;
 }
 
 .form-group {
     margin-right: 15px;
+    flex: 1;
 }
 
 .form-row {
@@ -38,21 +40,38 @@ header h1 {
     gap: 15px;
 }
 
+/* Organizamos los inputs en dos columnas */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    width: calc(50% - 15px); /* Ajusta el ancho para que ocupe 2 columnas */
+}
+
 .form-group label {
     font-weight: bold;
+    margin-bottom: 5px;
 }
 
 .form-group input {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     font-size: 16px;
-    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
 }
 
-/* Botón Agregar Producto */
 .boton-agregar {
-    margin-top: 20px;
-    text-align: center;
+    display: flex;           /* Utilizamos flexbox */
+    justify-content: center;  /* Centrar el botón horizontalmente */
+    margin-top: 20px;         /* Añade un margen superior para separar el botón de los inputs */
+    margin-left: 250px;
+}
+
+#agregarProductoBtn {
+    padding: 10px 20px;       /* Ajusta el tamaño del botón */
+    font-size: 16px;          /* Tamaño de la fuente más grande */
 }
 
 button {
@@ -68,6 +87,7 @@ button:hover {
     background-color: #0056b3;
 }
 
+/* Tabla de productos */
 .productos-compra {
     margin-top: 30px;
 }
@@ -85,9 +105,10 @@ table td {
     border-bottom: 1px solid #ddd;
 }
 
+/* Total de la compra */
 .total-compra {
     display: flex;
-    justify-content: space-between; /* Distribuir el total y el botón a los extremos */
+    justify-content: space-between;
     align-items: center;
     margin-top: 20px;
 }
@@ -98,21 +119,16 @@ table td {
 }
 
 
-#paginacion {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-}
-
-#paginacion button {
-    margin: 0 10px;
-}
-
 button#registrarCompraBtn {
     background-color: #28a745;
 }
 
 button#registrarCompraBtn:hover {
     background-color: #218838;
+}
+
+#registrarCompraBtn {
+    
+    margin-top: 20px;
+    margin-left: auto;
 }

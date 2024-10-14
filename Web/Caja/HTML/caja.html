@@ -60,12 +60,15 @@
                     <button type="button" class="btn btn-link" id="registrarProveedorBtn">Registrar nuevo proveedor</button>
                 </div>
                 <div class="mb-3">
-                <label for="facturaPagoProveedor" class="form-label">Número de Factura</label>
-                <input type="text" class="form-control" id="facturaPagoProveedor" readonly>
-                <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#modalRegistrarFactura">
-                    Registrar Factura
-                </button>
-                </div>
+                    <label for="facturaPagoProveedor" class="form-label">Número de Factura</label>
+                    <select class="form-control" id="facturaPagoProveedor">
+                        <option value="">Seleccionar factura</option>
+                        <!-- Aquí se llenarán las opciones de facturas existentes -->
+                    </select>
+                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#modalRegistrarFactura">
+                        Registrar Factura
+                    </button>
+                </div>                
             </form>
             </div>
             <div class="modal-footer">

@@ -128,3 +128,57 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.hide();
     });
 });
+document.addEventListener('DOMContentLoaded', function() {
+    const lotesContainer = document.getElementById('lotesContainer');
+    const agregarLoteBtn = document.getElementById('agregarLoteBtn');
+
+    let loteCounter = 1;  // Contador para los lotes
+
+    // Evento para agregar un nuevo lote
+    agregarLoteBtn.addEventListener('click', function() {
+        loteCounter++;
+        const loteEntry = document.createElement('div');
+        loteEntry.classList.add('row', 'mb-3', 'lote-entry');
+        loteEntry.innerHTML = `
+            <div class="col">
+                <label for="cantidadLote${loteCounter}" class="form-label">Cantidad</label>
+                <input type="number" class="form-control cantidad-lote" id="cantidadLote${loteCounter}" required>
+            </div>
+            <div class="col">
+                <label for="fechaVencimientoLote${loteCounter}" class="form-label">Fecha de Vencimiento</label>
+                <input type="date" class="form-control fecha-vencimiento-lote" id="fechaVencimientoLote${loteCounter}" required>
+            </div>
+        `;
+        lotesContainer.appendChild(loteEntry);
+    });
+
+    // Función para capturar los datos de los lotes
+    function capturarLotes() {
+        const lotes = [];
+        const loteEntries = document.querySelectorAll('.lote-entry');
+        
+        loteEntries.forEach((entry, index) => {
+            const cantidad = entry.querySelector(`.cantidad-lote`).value;
+            const fechaVencimiento = entry.querySelector(`.fecha-vencimiento-lote`).value;
+            if (cantidad && fechaVencimiento) {
+                lotes.push({
+                    cantidad: parseFloat(cantidad),
+                    fecha_vencimiento: fechaVencimiento
+                });
+            }
+        });
+
+        return lotes; // Devuelve un arreglo con todos los lotes
+    }
+
+    // Al registrar el producto, capturar los datos de los lotes
+    document.getElementById('registrarProductoBtn').addEventListener('click', function() {
+        const lotes = capturarLotes();
+
+        // Aquí puedes enviar los datos de los lotes junto con el producto al backend
+        console.log('Lotes capturados:', lotes);
+
+        // Simular registro del producto y lotes en el backend
+        alert('Producto y lotes registrados exitosamente.');
+    });
+});

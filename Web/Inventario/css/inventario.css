@@ -13,6 +13,38 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Mejoramos el espaciado en los campos del modal */
+.modal-body .form-control {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+/* Añadir un margen inferior a cada input para mejorar el espaciado */
+.modal-body .mb-3 {
+    margin-bottom: 1rem;
+}
+
+/* Estilo adicional para mejorar la apariencia del modal */
+.modal-body {
+    padding: 20px;
+}
+
+/* Mejoramos la visibilidad del modal en general */
+.modal-header, .modal-footer {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Botones del modal */
+.modal-footer button {
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+
 header {
     text-align: center;
     margin-bottom: 20px;
@@ -131,4 +163,9 @@ button#registrarCompraBtn:hover {
     
     margin-top: 20px;
     margin-left: auto;
+}
+.iva-container {
+    
+    padding-top: 10px; /* Mantiene el padding inferior */
+    
 }

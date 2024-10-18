@@ -1,4 +1,92 @@
 // caja.js
+// Simulación de facturas cargadas desde el inventario
+const facturas = [
+    {
+        numero: 'F001',
+        proveedor: 'Proveedor A',
+        monto: 1000
+    },
+    {
+        numero: 'F002',
+        proveedor: 'Proveedor B',
+        monto: 1500
+    },
+    {
+        numero: 'F003',
+        proveedor: 'Proveedor C',
+        monto: 2000
+    }
+];
+
+
+// Simulación de facturas pendientes de cobro
+const facturasCobrar = [
+    {
+        numero: 'C001',
+        cliente: 'Cliente X',
+        monto: 1200
+    },
+    {
+        numero: 'C002',
+        cliente: 'Cliente Y',
+        monto: 1800
+    },
+    {
+        numero: 'C003',
+        cliente: 'Cliente Z',
+        monto: 2500
+    }
+];
+
+// Cargar facturas en el select al abrir el modal
+document.getElementById('modalCobrosFacturas').addEventListener('shown.bs.modal', function () {
+    const facturaSelect = document.getElementById('facturaCobroFacturas');
+    facturaSelect.innerHTML = '<option value="">Seleccionar factura</option>'; // Resetear opciones
+    facturasCobrar.forEach(factura => {
+        const option = document.createElement('option');
+        option.value = factura.numero;
+        option.textContent = factura.numero;
+        facturaSelect.appendChild(option);
+    });
+});
+
+// Manejar el cambio de selección de factura
+document.getElementById('facturaCobroFacturas').addEventListener('change', function () {
+    const facturaSeleccionada = facturasCobrar.find(factura => factura.numero === this.value);
+    if (facturaSeleccionada) {
+        document.getElementById('clienteCobroFacturas').value = facturaSeleccionada.cliente;
+        document.getElementById('montoCobroFacturas').value = facturaSeleccionada.monto;
+    } else {
+        document.getElementById('clienteCobroFacturas').value = '';
+        document.getElementById('montoCobroFacturas').value = '';
+    }
+});
+
+
+
+// Cargar facturas en el select al abrir el modal
+document.getElementById('modalPagoProveedores').addEventListener('shown.bs.modal', function () {
+    const facturaSelect = document.getElementById('facturaPagoProveedor');
+    facturaSelect.innerHTML = '<option value="">Seleccionar factura</option>'; // Resetear opciones
+    facturas.forEach(factura => {
+        const option = document.createElement('option');
+        option.value = factura.numero;
+        option.textContent = factura.numero;
+        facturaSelect.appendChild(option);
+    });
+});
+
+// Manejar el cambio de selección de factura
+document.getElementById('facturaPagoProveedor').addEventListener('change', function () {
+    const facturaSeleccionada = facturas.find(factura => factura.numero === this.value);
+    if (facturaSeleccionada) {
+        document.getElementById('proveedorPagoProveedor').value = facturaSeleccionada.proveedor;
+        document.getElementById('montoPagoProveedor').value = facturaSeleccionada.monto;
+    } else {
+        document.getElementById('proveedorPagoProveedor').value = '';
+        document.getElementById('montoPagoProveedor').value = '';
+    }
+});
 
 // Definición de los endpoints de la API
 const API_ENDPOINTS = {

@@ -36,45 +36,41 @@
         </div>
     </div>
 
-
-        <!-- Modal Pago a Proveedores -->
+    <!-- Modal Pago a Proveedores -->
     <div class="modal fade" id="modalPagoProveedores" tabindex="-1" aria-labelledby="modalPagoProveedoresLabel" aria-hidden="true">
         <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="modalPagoProveedoresLabel">Pago a Proveedores</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-            <form id="formPagoProveedores">
-                <div class="mb-3">
-                <label for="montoPagoProveedor" class="form-label">Monto</label>
-                <input type="number" class="form-control" id="montoPagoProveedor" required>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalPagoProveedoresLabel">Pago a Proveedores</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="mb-3">
-                    <label for="proveedorPagoProveedor" class="form-label">Proveedor</label>
-                    <select class="form-control" id="proveedorPagoProveedor" required>
-                        <option value="">Seleccionar proveedor</option>
-                        <!-- Aquí se llenarán las opciones de proveedores existentes -->
-                    </select>
+                <div class="modal-body">
+                    <form id="formPagoProveedores">
+                        <div class="mb-3">
+                            <label for="facturaPagoProveedor" class="form-label">Número de Factura</label>
+                            <select class="form-control" id="facturaPagoProveedor" required>
+                                <option value="">Seleccionar factura</option>
+                                <!-- Aquí se llenarán las opciones de facturas existentes -->
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="proveedorPagoProveedor" class="form-label">Proveedor</label>
+                            <input type="text" class="form-control" id="proveedorPagoProveedor" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="montoPagoProveedor" class="form-label">Monto</label>
+                            <input type="number" class="form-control" id="montoPagoProveedor" readonly>
+                        </div>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <label for="facturaPagoProveedor" class="form-label">Número de Factura</label>
-                    <select class="form-control" id="facturaPagoProveedor">
-                        <option value="">Seleccionar factura</option>
-                        <!-- Aquí se llenarán las opciones de facturas existentes -->
-                    </select>
-                   
-                </div>                
-            </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="guardarPagoProveedor">Guardar</button>
+                </div>
             </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-primary" id="guardarPagoProveedor">Guardar</button>
-            </div>
-        </div>
         </div>
     </div>
+
     <!-- Modal para registrar nuevo proveedor -->
     <div class="modal fade" id="modalRegistrarProveedor" tabindex="-1" aria-labelledby="modalRegistrarProveedorLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -223,16 +219,19 @@
                 <div class="modal-body">
                     <form id="formCobrosFacturas">
                         <div class="mb-3">
-                            <label for="montoCobroFacturas" class="form-label">Monto</label>
-                            <input type="number" class="form-control" id="montoCobroFacturas" required>
+                            <label for="facturaCobroFacturas" class="form-label">Número de Factura</label>
+                            <select class="form-control" id="facturaCobroFacturas" required>
+                                <option value="">Seleccionar factura</option>
+                                <!-- Aquí se llenarán las opciones de facturas existentes -->
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="clienteCobroFacturas" class="form-label">Cliente</label>
-                            <input type="text" class="form-control" id="clienteCobroFacturas" required>
+                            <input type="text" class="form-control" id="clienteCobroFacturas" readonly>
                         </div>
                         <div class="mb-3">
-                            <label for="facturaCobroFacturas" class="form-label">Número de Factura</label>
-                            <input type="text" class="form-control" id="facturaCobroFacturas" required>
+                            <label for="montoCobroFacturas" class="form-label">Monto</label>
+                            <input type="number" class="form-control" id="montoCobroFacturas" readonly>
                         </div>
                     </form>
                 </div>
@@ -243,6 +242,7 @@
             </div>
         </div>
     </div>
+
 
   
 

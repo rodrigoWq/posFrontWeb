@@ -1,109 +1,115 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/inventario.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
-    <link rel="icon" href="data:,">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Registrar en Inventario</h1>
-        </header>
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <title>Registrar en Inventario</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="../css/inventario.css">
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+            <link rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+            <link rel="icon" href="data:,">
+        </head>
+        <body>
+        <div class="container mt-5">
+            <header class="mb-4">
+                <h1 class="text-center">Registrar en Inventario</h1>
+            </header>
 
-        <div class="mt-3 mb-3 text-end">
-            <a href="#" data-bs-toggle="modal" data-bs-target="#modalComprobante" class="btn btn-link d-inline">Registrar Comprobante</a>
-            <a href="#" data-bs-toggle="modal" data-bs-target="#modalProveedor" class="btn btn-link d-inline">Registrar Proveedor</a>
-        </div>
-        
+            <div class="d-flex justify-content-end mb-4">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#modalComprobante" class="btn btn-link me-3"><i
+                        class="bi bi-receipt"></i> Registrar Comprobante</a>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#modalProveedor" class="btn btn-link"><i
+                        class="bi bi-person-plus"></i> Registrar Proveedor</a>
+            </div>
 
-        <!-- Formulario de productos -->
-        <section class="formulario-compra">
-            <form id="formularioCompra">
-                <div class="row">
-                    <!-- Primera columna -->
-                    <div class="col-md-6 mb-3">
-                        <label for="codigoProducto">Código de Barra</label>
-                        <input type="text" id="codigoProducto" class="form-control" placeholder="Ingrese el código de producto" required>
-                    </div>
-                
-                    <div class="col-md-6 mb-3">
-                        <label for="cantidad">Cantidad</label>
-                        <input type="number" id="cantidad" class="form-control" min="1" placeholder="Cantidad" required>
-                    </div>
-                
-                    <!-- Segunda fila -->
-                    <div class="col-md-6 mb-3">
-                        <label for="precioCompra">Precio de Compra</label>
-                        <input type="number" id="precioCompra" class="form-control" placeholder="Precio de Compra" required>
-                    </div>
-                
-                    <div class="col-md-6 mb-3">
-                        <label for="precioVenta">Precio de Venta</label>
-                        <input type="number" id="precioVenta" class="form-control" placeholder="Precio de Venta" required>
-                    </div>
-                
-                    <!-- Tercera fila -->
-                    <div class="col-md-6 mb-3">
-                        <label for="vigenciaPrecio">Vigencia del Precio</label>
-                        <input type="date" id="vigenciaPrecio" class="form-control">
-                        <small class="form-text text-muted">Déjalo vacío para usar la fecha del día.</small>
-                    </div>
-                
-                    <div class="col-md-6 mb-3 iva-container">
-                        <label for="ivaProducto" style="padding-left: 0px;">IVA</label><br>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="ivaOptions" id="iva10" value="10" required>
-                            <label class="form-check-label" for="iva10">10%</label>
+            <!-- Formulario de productos -->
+            <section class="formulario-compra mb-5">
+                <form id="formularioCompra">
+                    <div class="row g-3">
+                        <!-- Código de Barra -->
+                        <div class="col-md-6">
+                            <label for="codigoProducto" class="form-label">Código de Barra</label>
+                            <input type="text" id="codigoProducto" class="form-control" placeholder="Ingrese el código de producto"
+                                required>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="ivaOptions" id="iva5" value="5">
-                            <label class="form-check-label" for="iva5">5%</label>
+
+                        <!-- Precio de Compra -->
+                        <div class="col-md-6">
+                            <label for="precioCompra" class="form-label">Precio de Compra</label>
+                            <input type="number" id="precioCompra" class="form-control" placeholder="Precio de Compra" required>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="ivaOptions" id="ivaExento" value="exento">
-                            <label class="form-check-label" for="ivaExento">Exentas</label>
+
+                        <!-- Precio de Venta -->
+                        <div class="col-md-6">
+                            <label for="precioVenta" class="form-label">Precio de Venta</label>
+                            <input type="number" id="precioVenta" class="form-control" placeholder="Precio de Venta" required>
+                        </div>
+
+                        <!-- Vigencia del Precio -->
+                        <div class="col-md-6">
+                            <label for="vigenciaPrecio" class="form-label">Vigencia del Precio</label>
+                            <input type="date" id="vigenciaPrecio" class="form-control">
+                            <small class="form-text text-muted">Déjalo vacío para usar la fecha del día.</small>
+                        </div>
+
+                        <!-- IVA -->
+                        <div class="col-md-12">
+                            <div class="text-start">
+                                <label class="form-label me-2">IVA:</label>
+                                <div class="d-inline-block">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="ivaOptions" id="iva10" value="10" required>
+                                        <label class="form-check-label" for="iva10">10%</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="ivaOptions" id="iva5" value="5">
+                                        <label class="form-check-label" for="iva5">5%</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="ivaOptions" id="ivaExento" value="exento">
+                                        <label class="form-check-label" for="ivaExento">Exentas</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    <!-- Lotes -->
+                    <div id="lotesContainer" class="mt-4">
+                        <h5>Lotes</h5>
+                        <div class="row mb-3 lote-entry">
+                            <div class="col-md-6">
+                                <label for="cantidadLote1" class="form-label">Cantidad</label>
+                                <input type="number" class="form-control cantidad-lote" id="cantidadLote1" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fechaVencimientoLote1" class="form-label">Fecha de Vencimiento</label>
+                                <input type="date" class="form-control fecha-vencimiento-lote" id="fechaVencimientoLote1" required>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <button type="button" id="agregarLoteBtn" class="btn btn-secondary"><i
+                                    class="bi bi-plus-circle"></i> Agregar Lote
+                            </button>
                         </div>
                     </div>
-                </div>
-                         
 
-                <!-- Lotes -->
-                <div id="lotesContainer" class="mt-3">
-                    <h5>Lotes</h5>
-                    <div class="row mb-3 lote-entry">
-                        <div class="col">
-                            <label for="cantidadLote1" class="form-label">Cantidad</label>
-                            <input type="number" class="form-control cantidad-lote" id="cantidadLote1" required>
-                        </div>
-                        <div class="col">
-                            <label for="fechaVencimientoLote1" class="form-label">Fecha de Vencimiento</label>
-                            <input type="date" class="form-control fecha-vencimiento-lote" id="fechaVencimientoLote1" required>
-                        </div>
+                    <!-- Botón de agregar producto -->
+                    <div class="text-center mt-4">
+                        <button type="button" id="agregarProductoBtn" class="btn btn-success">
+                            <i class="bi bi-cart-plus"></i> Agregar Producto
+                        </button>
                     </div>
-                </div>
+                </form>
+            </section>
 
-                <div class="mb-3">
-                    <button type="button" id="agregarLoteBtn" class="btn btn-secondary">Agregar Lote</button>
-                </div>
-
-                <!-- Botón de agregar producto -->
-                <div class="form-group boton-agregar mt-3">
-                    <button type="button" id="agregarProductoBtn" class="btn btn-success">
-                        <i class="bi bi-plus-circle"></i> Agregar Producto
-                    </button>
-                </div>                
-            </form>
-        </section>
-
-        <!-- Tabla de productos añadidos -->
-        <section class="productos-compra">
-            <h2>Productos Añadidos</h2>
-            <table id="tablaProductos">
-                <thead>
+            <!-- Tabla de productos añadidos -->
+            <section class="productos-compra mb-5">
+                <h2 class="mb-4">Productos Añadidos</h2>
+                <table id="tablaProductos" class="table table-striped">
+                    <thead>
                     <tr>
                         <th>Código</th>
                         <th>Nombre del Producto</th>
@@ -112,134 +118,17 @@
                         <th>Cantidad</th>
                         <th>Acciones</th>
                     </tr>
-                </thead>
-                <tbody id="productosBody">
+                    </thead>
+                    <tbody id="productosBody">
                     <!-- Los productos añadidos se listarán aquí -->
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
 
-            <!-- Botón de registrar compra -->
-            <div class="form-group text-end mt-3">
-                <button id="registrarCompraBtn" class="btn btn-primary">Guardar</button>
-            </div>
-        </section>
-    </div>
-
-    <!-- Modal para registrar comprobante -->
-    <div class="modal fade" id="modalComprobante" tabindex="-1" aria-labelledby="modalComprobanteLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalComprobanteLabel">Registrar Comprobante</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <!-- Botón de registrar compra -->
+                <div class="text-end mt-4">
+                    <button id="registrarCompraBtn" class="btn btn-primary"><i class="bi bi-save"></i> Guardar</button>
                 </div>
-                <div class="modal-body">
-                    <form id="formularioComprobante">
-                        <div class="row">
-                            <!-- Primera columna -->
-                            <div class="col-md-6 mb-3">
-                                <label for="nroComprobante">Nro de Comprobante</label>
-                                <input type="text" id="nroComprobante" class="form-control" placeholder="Ingrese el número de comprobante" required>
-                            </div>
-                
-                            <div class="col-md-6 mb-3">
-                                <label for="tipoComprobante">Tipo de Comprobante</label>
-                                <select id="tipoComprobante" class="form-select" required>
-                                    <option value="factura">Factura</option>
-                                    <option value="nota_remision">Nota de Remisión</option>
-                                </select>
-                            </div>
-                
-                            <!-- Segunda fila -->
-                            <div class="col-md-6 mb-3">
-                                <label for="timbrado">Timbrado</label>
-                                <input type="text" id="timbrado" class="form-control" placeholder="Ingrese el timbrado" required>
-                            </div>
-                
-                            <div class="col-md-6 mb-3">
-                                <label for="ruc">RUC</label>
-                                <input type="text" id="ruc" class="form-control" placeholder="Ingrese el RUC" required>
-                            </div>
-                
-                            <!-- Tercera fila -->
-                            <div class="col-md-6 mb-3">
-                                <label for="razonSocial">Razón Social</label>
-                                <input type="text" id="razonSocial" class="form-control" placeholder="Ingrese la razón social" required>
-                            </div>
-                
-                            <div class="col-md-6 mb-3">
-                                <label for="iva">IVA Total</label>
-                                <input type="number" id="iva" class="form-control" placeholder="Ingrese el total del IVA" required>
-                            </div>
-                
-                            <!-- Cuarta fila -->
-                            <div class="col-md-6 mb-3">
-                                <label for="montoTotal">Monto Total</label>
-                                <input type="number" id="montoTotalFactura" class="form-control" min="0.01" step="0.01" placeholder="Monto total" readonly>
-                            </div>
-                
-                            <div class="col-md-6 mb-3">
-                                <label for="fechaFactura">Fecha</label>
-                                <input type="date" id="fechaFactura" class="form-control" required>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                
-                
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Guardar Comprobante</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-        <!-- Modal para registrar comprobante -->
-        <div class="modal fade" id="modalComprobante" tabindex="-1" aria-labelledby="modalComprobanteLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalComprobanteLabel">Registrar Comprobante</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Tu formulario para registrar comprobante, sin cambios -->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary">Guardar Comprobante</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-        <!-- Modal para registrar proveedor -->
-        <div class="modal fade" id="modalProveedor" tabindex="-1" aria-labelledby="modalProveedorLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalProveedorLabel">Registrar Proveedor</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="formularioProveedor">
-                            <div class="mb-3">
-                                <label for="nombreProveedor" class="form-label">Nombre o Razón Social</label>
-                                <input type="text" id="nombreProveedor" class="form-control" placeholder="Ingrese el nombre o razón social" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="telefonoProveedor" class="form-label">Teléfono</label>
-                                <input type="tel" id="telefonoProveedor" class="form-control" placeholder="Ingrese el número de teléfono" required>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="guardarProveedorBtn">Guardar Proveedor</button>
-                    </div>
-                </div>
-            </div>
+            </section>
         </div>
 
         <!-- Modal para registrar nuevo producto en columnas -->

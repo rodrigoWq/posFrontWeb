@@ -59,9 +59,21 @@ function abrirModalRegistroProducto(codigoProducto) {
     // Poner el código en el campo correspondiente en el modal
     document.getElementById('codigoProductoModal').value = codigoProducto;
 
-    // Abrir el modal
-    const modalRegistroProducto = new bootstrap.Modal(document.getElementById('modalRegistroProducto'));
-    modalRegistroProducto.show();
+    // Abrir el modal con opciones para asegurar que el backdrop esté definido
+    const modalRegistroProductoEl = document.getElementById('modalRegistroProducto');
+
+    // Verificamos que el modal exista
+    if (modalRegistroProductoEl) {
+        const options = {
+            backdrop: true,  // También puedes usar 'static' si prefieres que no se cierre al hacer clic fuera
+            keyboard: true   // Permitir el cierre del modal al presionar 'Esc'
+        };
+
+        const modalRegistroProducto = new bootstrap.Modal(modalRegistroProductoEl, options);
+        modalRegistroProducto.show();
+    } else {
+        console.error('No se encontró el modal con el ID "modalRegistroProducto".');
+    }
 }
 
 // Evento para guardar el nuevo producto desde el modal
@@ -72,7 +84,6 @@ document.getElementById('registrarProductoBtn').addEventListener('click', functi
     const categoria = document.getElementById('categoriaProductoModal').value;
     const unidadMedida = document.getElementById('unidadMedidaModal').value.trim();
     const descripcion = document.getElementById('descripcionProductoModal').value.trim();
-
 
     // Crear el nuevo producto
     const nuevoProducto = {
@@ -104,31 +115,24 @@ document.getElementById('registrarProductoBtn').addEventListener('click', functi
         radio.checked = false;
     });
 
-    // Opcional: Si tienes un campo para el nombre en el formulario principal
-    // document.getElementById('nombreProducto').value = nombre;
-
     alert('Producto registrado exitosamente. Complete los datos restantes.');
 });
 
 // Opcional: Evento para manejar el botón "Agregar Producto"
 document.getElementById('agregarProductoBtn').addEventListener('click', function () {
     // Aquí puedes agregar la lógica para agregar el producto a la tabla de productos añadidos
-    // Validar que todos los campos necesarios estén completos
-
     const codigoProducto = document.getElementById('codigoProducto').value.trim();
     const precioCompra = document.getElementById('precioCompra').value.trim();
     const precioVenta = document.getElementById('precioVenta').value.trim();
     const vigenciaPrecio = document.getElementById('vigenciaPrecio').value;
     const ivaSeleccionado = document.querySelector('input[name="ivaOptions"]:checked');
 
-
     // Obtener la información de los lotes
     const lotes = [];
     const loteEntries = document.querySelectorAll('.lote-entry');
-    loteEntries.forEach((lote, index) => {
+    loteEntries.forEach((lote) => {
         const cantidad = lote.querySelector('.cantidad-lote').value.trim();
         const fechaVencimiento = lote.querySelector('.fecha-vencimiento-lote').value;
-
 
         lotes.push({
             cantidad: parseInt(cantidad),
@@ -149,7 +153,7 @@ document.getElementById('agregarProductoBtn').addEventListener('click', function
     // Limpiar el formulario
     document.getElementById('formularioCompra').reset();
 
-    // Opcional: Limpiar los lotes existentes y dejar solo uno
+    // Limpiar los lotes existentes y dejar solo uno
     document.getElementById('lotesContainer').innerHTML = `
         <h5>Lotes</h5>
         <div class="row mb-3 lote-entry">
@@ -163,13 +167,14 @@ document.getElementById('agregarProductoBtn').addEventListener('click', function
             </div>
         </div>
         <div class="text-end">
-            <button type="button" id="agregarLoteBtn" class="btn btn-secondary"><i
-                    class="bi bi-plus-circle"></i> Agregar Lote
+            <button type="button" id="agregarLoteBtn" class="btn btn-secondary">
+                <i class="bi bi-plus-circle"></i> Agregar Lote
             </button>
         </div>
     `;
 });
 
+// Función para agregar el producto a la tabla
 function agregarProductoATabla(producto) {
     const tablaBody = document.getElementById('productosBody');
     const fila = document.createElement('tr');
@@ -202,7 +207,6 @@ function agregarProductoATabla(producto) {
     fila.querySelector('.eliminar-producto-btn').addEventListener('click', function () {
         fila.remove();
     });
-
 
     tablaBody.appendChild(fila);
 }

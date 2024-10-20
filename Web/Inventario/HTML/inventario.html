@@ -28,10 +28,21 @@
                 <form id="formularioCompra">
                     <div class="row g-3">
                         <!-- Código de Barra -->
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="codigoProducto" class="form-label">Código de Barra</label>
-                            <input type="text" id="codigoProducto" class="form-control" placeholder="Ingrese el código de producto"
-                                required>
+                            <input type="text" id="codigoProducto" class="form-control" placeholder="Ingrese el código de producto" required>
+                        </div>
+
+                        <!-- Cantidad -->
+                        <div class="col-md-4">
+                            <label for="cantidadProducto" class="form-label">Cantidad</label>
+                            <input type="number" id="cantidadProducto" class="form-control" placeholder="Ingrese la cantidad" required>
+                        </div>
+
+                        <!-- Fecha de Vencimiento -->
+                        <div class="col-md-4">
+                            <label for="fechaVencimientoProducto" class="form-label">Fecha de Vencimiento</label>
+                            <input type="date" id="fechaVencimientoProducto" class="form-control" required>
                         </div>
 
                         <!-- Precio de Compra -->
@@ -54,56 +65,34 @@
                         </div>
 
                         <!-- IVA -->
-                        <div class="col-md-12">
-                            <div class="text-start">
-                                <label class="form-label me-2">IVA:</label>
-                                <div class="d-inline-block">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="ivaOptions" id="iva10" value="10" required>
-                                        <label class="form-check-label" for="iva10">10%</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="ivaOptions" id="iva5" value="5">
-                                        <label class="form-check-label" for="iva5">5%</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="ivaOptions" id="ivaExento" value="exento">
-                                        <label class="form-check-label" for="ivaExento">Exentas</label>
-                                    </div>
+                        <div class="col-md-6 ps-4 pt-1">
+                            <label for="ivaOptions" class="form-label">IVA</label>
+                            <div class="d-flex">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="ivaOptions" id="iva10" value="10" required>
+                                    <label class="form-check-label" for="iva10">10%</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="ivaOptions" id="iva5" value="5">
+                                    <label class="form-check-label" for="iva5">5%</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="ivaOptions" id="ivaExento" value="exento">
+                                    <label class="form-check-label" for="ivaExento">Exentas</label>
                                 </div>
                             </div>
                         </div>
 
-
-
-                    <!-- Lotes -->
-                    <div id="lotesContainer" class="mt-4">
-                        <h5>Lotes</h5>
-                        <div class="row mb-3 lote-entry">
-                            <div class="col-md-6">
-                                <label for="cantidadLote1" class="form-label">Cantidad</label>
-                                <input type="number" class="form-control cantidad-lote" id="cantidadLote1" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="fechaVencimientoLote1" class="form-label">Fecha de Vencimiento</label>
-                                <input type="date" class="form-control fecha-vencimiento-lote" id="fechaVencimientoLote1" required>
-                            </div>
-                        </div>
-                        <div class="text-end">
-                            <button type="button" id="agregarLoteBtn" class="btn btn-secondary"><i
-                                    class="bi bi-plus-circle"></i> Agregar Lote
+                        <!-- Botón de agregar producto -->
+                        <div class="text-center mt-4">
+                            <button type="button" id="agregarProductoBtn" class="btn btn-success">
+                                <i class="bi bi-cart-plus"></i> Agregar Producto
                             </button>
                         </div>
                     </div>
-
-                    <!-- Botón de agregar producto -->
-                    <div class="text-center mt-4">
-                        <button type="button" id="agregarProductoBtn" class="btn btn-success">
-                            <i class="bi bi-cart-plus"></i> Agregar Producto
-                        </button>
-                    </div>
                 </form>
             </section>
+
 
             <!-- Tabla de productos añadidos -->
             <section class="productos-compra mb-5">
@@ -155,15 +144,40 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="categoriaProductoModal" class="form-label">Categoría</label>
                                     <select id="categoriaProductoModal" class="form-select">
-                                        <option value="embolsado">Embolsado</option>
-                                        <option value="fiambres">Fiambres</option>
-                                        <option value="queso">Queso</option>
-                                        <!-- Agrega más opciones según sea necesario -->
+                                        <option value="Bebidas">Bebidas</option>
+                                        <option value="Fideos y pastas">Fideos y pastas</option>
+                                        <option value="Embutidos">Embutidos</option>
+                                        <option value="Lácteos">Lácteos</option>
+                                        <option value="Panadería">Panadería</option>
+                                        <option value="Snacks">Snacks</option>
+                                        <option value="Congelados">Congelados</option>
+                                        <option value="Frutas y verduras">Frutas y verduras</option>
+                                        <option value="Productos de higiene personal">Productos de higiene personal</option>
+                                        <option value="Cuidado del hogar">Cuidado del hogar</option>
+                                        <option value="Carnes">Carnes</option>
+                                        <option value="Conservas">Conservas</option>
+                                        <option value="Salsas y aderezos">Salsas y aderezos</option>
+                                        <option value="Confitería">Confitería</option>
+                                        <option value="Productos para mascotas">Productos para mascotas</option>
+                                        <option value="Cereales y granos">Cereales y granos</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="unidadMedidaModal" class="form-label">Unidad de Medida</label>
-                                    <input type="text" id="unidadMedidaModal" class="form-control" placeholder="Unidad de medida">
+                                    <select id="unidadMedidaModal" class="form-select">
+                                        <option value="kilogramo">Kilogramo</option>
+                                        <option value="gramo">Gramo</option>
+                                        <option value="litro">Litro</option>
+                                        <option value="mililitro">Mililitro</option>
+                                        <option value="metro">Metro</option>
+                                        <option value="centímetro">Centímetro</option>
+                                        <option value="unidad">Unidad</option>
+                                        <option value="paquete">Paquete</option>
+                                        <option value="caja">Caja</option>
+                                        <option value="botella">Botella</option>
+                                        <option value="lata">Lata</option>
+                                        <option value="sobre">Sobre</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="mb-3">
@@ -179,6 +193,7 @@
                 </div>
             </div>
         </div>
+
 
            <!-- Modal para registrar comprobante -->
         <div class="modal fade" id="modalComprobante" tabindex="-1" aria-labelledby="modalComprobanteLabel" aria-hidden="true">

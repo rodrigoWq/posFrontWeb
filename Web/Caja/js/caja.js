@@ -1,22 +1,3 @@
-// caja.js
-// Simulación de facturas cargadas desde el inventario
-const facturas = [
-    {
-        numero: 'F001',
-        proveedor: 'Proveedor A',
-        monto: 1000
-    },
-    {
-        numero: 'F002',
-        proveedor: 'Proveedor B',
-        monto: 1500
-    },
-    {
-        numero: 'F003',
-        proveedor: 'Proveedor C',
-        monto: 2000
-    }
-];
 
 
 // Simulación de facturas pendientes de cobro
@@ -37,6 +18,93 @@ const facturasCobrar = [
         monto: 2500
     }
 ];
+document.addEventListener('DOMContentLoaded', function () {
+    // Inicialmente ocultar el campo de Número de Factura
+    const campoNumeroFactura = document.getElementById('campoNumeroFactura');
+    if (campoNumeroFactura) {
+        campoNumeroFactura.style.display = 'none';
+    }
+
+    // Agregar evento al select de tipo de documento
+    const tipoDocumento = document.getElementById('tipoDocumento');
+    if (tipoDocumento) {
+        tipoDocumento.addEventListener('change', function() {
+            const tipoDocumentoValue = this.value;
+            if (tipoDocumentoValue === 'nota_remision') {
+                // Ocultar el campo de Número de Factura
+                if (campoNumeroFactura) {
+                    campoNumeroFactura.style.display = 'none';
+                }
+                // Mostrar el modal para datos adicionales
+                const modalNotaRemision = new bootstrap.Modal(document.getElementById('modalDatosNotaRemision'));
+                modalNotaRemision.show();
+            } else if (tipoDocumentoValue === 'factura') {
+                // Mostrar el campo de Número de Factura
+                if (campoNumeroFactura) {
+                    campoNumeroFactura.style.display = 'block';
+                }
+            } else {
+                // Si no hay selección, ocultar el campo de Número de Factura
+                if (campoNumeroFactura) {
+                    campoNumeroFactura.style.display = 'none';
+                }
+            }
+        });
+    }
+
+    // Guardar los datos de la Nota de Remisión
+    const guardarDatosNotaRemision = document.getElementById('guardarDatosNotaRemision');
+    if (guardarDatosNotaRemision) {
+        guardarDatosNotaRemision.addEventListener('click', function() {
+            const nroComprobante = document.getElementById('nroComprobante').value;
+            const timbrado = document.getElementById('timbrado').value;
+            const ruc = document.getElementById('ruc').value;
+
+            if (nroComprobante && timbrado && ruc) {
+                // Aquí puedes manejar el almacenamiento de los datos o asignarlos a campos ocultos
+                const modalNotaRemision = bootstrap.Modal.getInstance(document.getElementById('modalDatosNotaRemision'));
+                modalNotaRemision.hide();
+            } else {
+                alert('Por favor, completa todos los campos.');
+            }
+        });
+    }
+
+    // Cargar facturas en el select al abrir el modal
+    const modalCobrosFacturas = document.getElementById('modalCobrosFacturas');
+    if (modalCobrosFacturas) {
+        modalCobrosFacturas.addEventListener('shown.bs.modal', function () {
+            const facturaSelect = document.getElementById('facturaCobroFacturas');
+            if (facturaSelect) {
+                facturaSelect.innerHTML = '<option value="">Seleccionar factura</option>'; // Resetear opciones
+                facturasCobrar.forEach(factura => {
+                    const option = document.createElement('option');
+                    option.value = factura.numero;
+                    option.textContent = factura.numero;
+                    facturaSelect.appendChild(option);
+                });
+            }
+        });
+    }
+
+    // Manejar el cambio de selección de factura
+    const facturaCobroFacturas = document.getElementById('facturaCobroFacturas');
+    if (facturaCobroFacturas) {
+        facturaCobroFacturas.addEventListener('change', function () {
+            const facturaSeleccionada = facturasCobrar.find(factura => factura.numero === this.value);
+            if (facturaSeleccionada) {
+                document.getElementById('clienteCobroFacturas').value = facturaSeleccionada.cliente;
+                document.getElementById('montoCobroFacturas').value = facturaSeleccionada.monto;
+            } else {
+                document.getElementById('clienteCobroFacturas').value = '';
+                document.getElementById('montoCobroFacturas').value = '';
+            }
+        });
+    }
+
+    // Inicializar otras funcionalidades similares
+    // ...
+});
 
 // Cargar facturas en el select al abrir el modal
 document.getElementById('modalCobrosFacturas').addEventListener('shown.bs.modal', function () {
@@ -64,29 +132,8 @@ document.getElementById('facturaCobroFacturas').addEventListener('change', funct
 
 
 
-// Cargar facturas en el select al abrir el modal
-document.getElementById('modalPagoProveedores').addEventListener('shown.bs.modal', function () {
-    const facturaSelect = document.getElementById('facturaPagoProveedor');
-    facturaSelect.innerHTML = '<option value="">Seleccionar factura</option>'; // Resetear opciones
-    facturas.forEach(factura => {
-        const option = document.createElement('option');
-        option.value = factura.numero;
-        option.textContent = factura.numero;
-        facturaSelect.appendChild(option);
-    });
-});
 
-// Manejar el cambio de selección de factura
-document.getElementById('facturaPagoProveedor').addEventListener('change', function () {
-    const facturaSeleccionada = facturas.find(factura => factura.numero === this.value);
-    if (facturaSeleccionada) {
-        document.getElementById('proveedorPagoProveedor').value = facturaSeleccionada.proveedor;
-        document.getElementById('montoPagoProveedor').value = facturaSeleccionada.monto;
-    } else {
-        document.getElementById('proveedorPagoProveedor').value = '';
-        document.getElementById('montoPagoProveedor').value = '';
-    }
-});
+
 
 // Definición de los endpoints de la API
 const API_ENDPOINTS = {
@@ -122,14 +169,6 @@ const CajaApp = (() => {
             cargarFacturas();
         });
 
-        // Evento para abrir el modal de registrar proveedor
-        document.getElementById('registrarProveedorBtn').addEventListener('click', () => {
-            const modalPagoProveedores = bootstrap.Modal.getInstance(document.getElementById('modalPagoProveedores'));
-            modalPagoProveedores.hide();
-
-            const modalRegistrarProveedor = new bootstrap.Modal(document.getElementById('modalRegistrarProveedor'));
-            modalRegistrarProveedor.show();
-        });
     }
 
     async function handleGuardarPagoProveedor() {
@@ -420,6 +459,8 @@ const CajaApp = (() => {
         init
     };
 })();
+
+
 
 // Inicializar la aplicación
 CajaApp.init();

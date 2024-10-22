@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Carga de Factura</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="factura.css">
+</head>
+<body>
+
+    <div class="container mt-5">
+        <h1 class="text-center">Formulario de Carga de Factura</h1>
+
+        <form>
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label for="ruc" class="form-label">RUC</label>
+                    <input type="text" class="form-control" id="ruc" name="ruc" placeholder="RUC del proveedor">
+                </div>
+                <div class="col-md-6">
+                    <label for="razon_social" class="form-label">Nombre o Razón Social</label>
+                    <input type="text" class="form-control" id="razon_social" name="razon_social" placeholder="Nombre o razón social">
+                </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label for="fecha_emision" class="form-label">Fecha de Emisión</label>
+                    <input type="date" class="form-control" id="fecha_emision" name="fecha_emision">
+                </div>
+                <div class="col-md-6">
+                    <label for="timbrado" class="form-label">Timbrado</label>
+                    <input type="text" class="form-control" id="timbrado" name="timbrado" placeholder="Número de timbrado">
+                </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label for="nro_factura" class="form-label">N° de Factura</label>
+                    <input type="text" class="form-control" id="nro_factura" name="nro_factura" placeholder="Número de factura">
+                </div>
+                <div class="col-md-6">
+                    <label for="condicion_venta" class="form-label">Condición de Venta</label>
+                    <input type="text" class="form-control" id="condicion_venta" name="condicion_venta" placeholder="Contado o Crédito">
+                </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-12">
+                    <label for="direccion" class="form-label">Dirección</label>
+                    <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección del cliente">
+                </div>
+            </div>
+
+            <h3>Detalles de Productos</h3>
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Descripción</th>
+                        <th>Cantidad</th>
+                        <th>Valor Unitario</th>
+                        <th>Exenta</th>
+                        <th>5%</th>
+                        <th>10%</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="form-control" placeholder="Código"></td>
+                        <td><input type="text" class="form-control" placeholder="Descripción"></td>
+                        <td><input type="number" class="form-control" placeholder="Cantidad"></td>
+                        <td><input type="number" class="form-control" placeholder="Valor Unitario"></td>
+                        <td><input type="number" class="form-control" placeholder="Exenta"></td>
+                        <td><input type="number" class="form-control" placeholder="5%"></td>
+                        <td><input type="number" class="form-control" placeholder="10%"></td>
+                    </tr>
+                    <!-- Puedes añadir más filas según sea necesario -->
+                </tbody>
+            </table>
+
+            <div class="d-grid gap-2 mb-3">
+                <button type="button" class="btn btn-secondary">Agregar Producto</button>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label for="total_factura" class="form-label">Total Factura</label>
+                    <input type="text" class="form-control" id="total_factura" name="total_factura" placeholder="Total a Pagar">
+                </div>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label for="iva_5" class="form-label">Liquidación del IVA 5%</label>
+                    <input type="number" class="form-control" id="iva_5" placeholder="IVA 5%">
+                </div>
+                <div class="col-md-6">
+                    <label for="iva_10" class="form-label">Liquidación del IVA 10%</label>
+                    <input type="number" class="form-control" id="iva_10" placeholder="IVA 10%">
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-success">Guardar Factura</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

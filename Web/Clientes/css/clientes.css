@@ -2,31 +2,40 @@ body {
     font-family: Arial, sans-serif;
 }
 
-h1, h2 {
+h1 {
     text-align: center;
+}
+
+.filter-section {
+    margin-bottom: 20px;
+}
+
+.filters .btn {
+    margin-right: 10px;
 }
 
 .table {
     margin-top: 20px;
 }
 
-.nav-tabs {
-    justify-content: center;
+.modal-header {
+    background-color: #007bff;
+    color: white;
 }
 
-.tab-content {
-    margin-top: 20px;
+.header-buttons {
+    display: flex;
+    justify-content: flex-end;
 }
 
-.btn {
-    margin-top: 10px;
+
+/* Alineación del campo de búsqueda a la izquierda */
+.d-flex.justify-content-start {
+    justify-content: flex-start !important;
 }
 
-.form-group {
-    margin-bottom: 15px;
-}
-
-.error-message {
-    color: red;
-    font-size: 0.9rem;
+/* Color verde para el botón de registrar cliente */
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
 }

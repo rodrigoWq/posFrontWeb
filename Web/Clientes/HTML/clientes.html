@@ -6,125 +6,91 @@
     <title>Gestión de Clientes</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/clientes.css">
+    <link rel="icon" href="data:,">
 </head>
 <body>
 
     <div class="container mt-5">
-        <h1 class="text-center mb-4">Gestión de Clientes</h1>
-
-        <ul class="nav nav-tabs mb-4" id="clientTabs" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="clientes-normales-tab" data-bs-toggle="tab" href="#clientes-normales" role="tab" aria-controls="clientes-normales" aria-selected="true">Clientes</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="clientes-credito-tab" data-bs-toggle="tab" href="#clientes-credito" role="tab" aria-controls="clientes-credito" aria-selected="false">Clientes Crédito</a>
-            </li>
-        </ul>
-
-        <div class="tab-content" id="clientTabsContent">
-            <!-- Clientes Normales -->
-            <div class="tab-pane fade show active" id="clientes-normales" role="tabpanel" aria-labelledby="clientes-normales-tab">
-                <h2>Registrar Cliente Normal</h2>
-                <form id="clientesNormalesForm" class="mb-4">
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="nombreNormal" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombreNormal" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="rucNormal" class="form-label">RUC / CI</label>
-                            <input type="text" class="form-control" id="rucNormal" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="telefonoNormal" class="form-label">Teléfono</label>
-                            <input type="tel" class="form-control" id="telefonoNormal">
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="direccionNormal" class="form-label">Dirección</label>
-                            <input type="text" class="form-control" id="direccionNormal">
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Registrar Cliente</button>
-                </form>
-
-                <!-- Tabla de Clientes Normales con paginación -->
-                <h2>Lista de Clientes Normales</h2>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>RUC / CI</th>
-                            <th>Teléfono</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="clientesNormalesBody">
-                        <!-- Los clientes normales serán listados aquí -->
-                    </tbody>
-                </table>
-                <nav>
-                    <ul class="pagination justify-content-center" id="paginacionNormales">
-                        <!-- Paginación de clientes normales -->
-                    </ul>
-                </nav>
+        <header class="d-flex justify-content-between align-items-center">
+            <h1>Gestión de Clientes</h1>
+            <div class="header-buttons">
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#clienteModal">Registrar Cliente</button>
             </div>
+        </header>
+        
+        <!-- Barra de Filtros -->
+        <div class="filter-section mt-4 mb-4">
+            <div class="d-flex justify-content-start mb-3">
+                <input type="text" id="search-input" class="form-control w-25" placeholder="Buscar por nombre...">
+            </div>
+            <div class="filters d-flex justify-content-end">
+                <button class="btn btn-outline-secondary me-2 filter-role" data-role="all">Todos los Tipos</button>
+                <button class="btn btn-outline-secondary me-2 filter-role" data-role="normal">Normal</button>
+                <button class="btn btn-outline-secondary me-2 filter-role" data-role="credito">Crédito</button>
+            </div>            
+        </div>                 
 
-            <!-- Clientes Crédito -->
-            <div class="tab-pane fade" id="clientes-credito" role="tabpanel" aria-labelledby="clientes-credito-tab">
-                <h2>Registrar Cliente Crédito</h2>
-                <form id="clientesCreditoForm" class="mb-4">
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="nombreCredito" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombreCredito" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="rucCredito" class="form-label">RUC / CI</label>
-                            <input type="text" class="form-control" id="rucCredito" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="telefonoCredito" class="form-label">Teléfono</label>
-                            <input type="tel" class="form-control" id="telefonoCredito">
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="saldoCredito" class="form-label">Linea de Credito</label>
-                            <input type="number" class="form-control" id="saldoCredito" min="0" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="direccionCredito" class="form-label">Dirección</label>
-                            <input type="text" class="form-control" id="direccionCredito">
-                        </div>
+        <!-- Tabla de Clientes -->
+        <h2>Lista de Clientes</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre y Apellido</th>
+                    <th>RUC / CI</th>
+                    <th>Teléfono</th>
+                    <th>Tipo</th>
+                    <th>Saldo</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="clientesBody">
+                <!-- Aquí se listarán los clientes -->
+            </tbody>
+        </table>
+
+        <!-- Modal para Registrar / Editar Cliente -->
+        <div class="modal fade" id="clienteModal" tabindex="-1" aria-labelledby="clienteModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="clienteModalLabel">Registrar Cliente</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <button type="submit" class="btn btn-primary">Registrar Cliente Crédito</button>
-                </form>
-
-                <!-- Tabla de Clientes Crédito con paginación -->
-                <h2>Lista de Clientes Crédito</h2>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>RUC / CI</th>
-                            <th>Teléfono</th>
-                            <th>Saldo</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="clientesCreditoBody">
-                        <!-- Los clientes crédito serán listados aquí -->
-                    </tbody>
-                </table>
-                <nav>
-                    <ul class="pagination justify-content-center" id="paginacionCredito">
-                        <!-- Paginación de clientes crédito -->
-                    </ul>
-                </nav>
+                    <div class="modal-body">
+                        <form id="clienteForm">
+                            <div class="mb-3">
+                                <label for="nombreCliente" class="form-label">Nombre y Apellido</label>
+                                <input type="text" class="form-control" id="nombreCliente" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="rucCliente" class="form-label">RUC / CI</label>
+                                <input type="text" class="form-control" id="rucCliente" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="telefonoCliente" class="form-label">Teléfono</label>
+                                <input type="tel" class="form-control" id="telefonoCliente">
+                            </div>
+                            <div class="mb-3">
+                                <label for="tipoCliente" class="form-label">Tipo de Cliente</label>
+                                <select class="form-select" id="tipoCliente" onchange="toggleSaldo()">
+                                    <option value="normal">Normal</option>
+                                    <option value="credito">Crédito</option>
+                                </select>
+                            </div>
+                            <div class="mb-3" id="saldoClienteContainer" style="display: none;">
+                                <label for="saldoCliente" class="form-label">Línea de Crédito</label>
+                                <input type="number" class="form-control" id="saldoCliente" min="0" step="0.01">
+                            </div>                                                                                              
+                            <button type="submit" class="btn btn-primary">Guardar Cliente</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../js/clientes.js"></script>
-    <script src ="../../Seguridad y Gestion de Usuarios/js/SessionManager.js"></script>
+    <script src="../js/clientes2.js"></script>
+    <script src="../../Seguridad y Gestion de Usuarios/js/SessionManager.js"></script>
 </body>
 </html>

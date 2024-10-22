@@ -131,10 +131,6 @@ document.getElementById('facturaCobroFacturas').addEventListener('change', funct
 });
 
 
-
-
-
-
 // Definición de los endpoints de la API
 const API_ENDPOINTS = {
     proveedores: '/api/proveedores',

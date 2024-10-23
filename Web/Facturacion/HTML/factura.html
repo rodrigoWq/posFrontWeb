@@ -6,7 +6,8 @@
     <title>Formulario de Carga de Factura</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="factura.css">
+    <link rel="stylesheet" href="../css/factura.css">
+    <link rel="icon" href="data:,">
 </head>
 <body>
 
@@ -43,9 +44,13 @@
                 </div>
                 <div class="col-md-6">
                     <label for="condicion_venta" class="form-label">Condición de Venta</label>
-                    <input type="text" class="form-control" id="condicion_venta" name="condicion_venta" placeholder="Contado o Crédito">
+                    <select class="form-control" id="condicion_venta" name="condicion_venta">
+                        <option value="contado">Contado</option>
+                        <option value="credito">Crédito</option>
+                    </select>
                 </div>
             </div>
+            
 
             <div class="row g-3 mb-3">
                 <div class="col-12">
@@ -55,6 +60,35 @@
             </div>
 
             <h3>Detalles de Productos</h3>
+            <div class="row g-3 mb-3">
+                <div class="col-md-2">
+                    <input type="text" class="form-control" id="codigo_producto" placeholder="Código">
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" id="descripcion_producto" placeholder="Descripción">
+                </div>
+                <div class="col-md-2">
+                    <input type="number" class="form-control" id="cantidad_producto" placeholder="Cantidad">
+                </div>
+                <div class="col-md-2">
+                    <input type="number" class="form-control" id="valor_unitario_producto" placeholder="Valor Unitario">
+                </div>
+                <div class="col-md-1">
+                    <input type="number" class="form-control" id="exenta_producto" placeholder="Exenta">
+                </div>
+                <div class="col-md-1">
+                    <input type="number" class="form-control" id="iva_5_producto" placeholder="5%">
+                </div>
+                <div class="col-md-1">
+                    <input type="number" class="form-control" id="iva_10_producto" placeholder="10%">
+                </div>
+            </div>
+
+            <div class="d-grid gap-2 mb-3">
+                <button type="button" class="btn btn-secondary" id="agregar_producto">Agregar Producto</button>
+            </div>
+
+            <h3>Productos Agregados</h3>
             <table class="table table-bordered mt-3">
                 <thead>
                     <tr>
@@ -67,23 +101,10 @@
                         <th>10%</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="text" class="form-control" placeholder="Código"></td>
-                        <td><input type="text" class="form-control" placeholder="Descripción"></td>
-                        <td><input type="number" class="form-control" placeholder="Cantidad"></td>
-                        <td><input type="number" class="form-control" placeholder="Valor Unitario"></td>
-                        <td><input type="number" class="form-control" placeholder="Exenta"></td>
-                        <td><input type="number" class="form-control" placeholder="5%"></td>
-                        <td><input type="number" class="form-control" placeholder="10%"></td>
-                    </tr>
-                    <!-- Puedes añadir más filas según sea necesario -->
+                <tbody id="tabla_productos">
+                    <!-- Aquí se agregarán los productos dinámicamente -->
                 </tbody>
             </table>
-
-            <div class="d-grid gap-2 mb-3">
-                <button type="button" class="btn btn-secondary">Agregar Producto</button>
-            </div>
 
             <div class="row g-3 mb-3">
                 <div class="col-md-6">
@@ -111,5 +132,7 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Enlace al archivo JS externo -->
+    <script src="../js/factura.js"></script>
 </body>
 </html>

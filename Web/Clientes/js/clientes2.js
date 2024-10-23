@@ -29,6 +29,11 @@ function renderClientes(filtrados = clientes) {
             <td>
                 <button class="btn btn-primary btn-sm" onclick="editarCliente(${index})">✏️</button>
                 <button class="btn btn-danger btn-sm" onclick="eliminarCliente(${index})">🗑️</button>
+                ${
+                    cliente.tipo === 'credito' 
+                    ? `<button class="btn btn-warning btn-sm">Línea de Crédito</button>` 
+                    : ''
+                }
             </td>
         `;
         tbody.appendChild(row);
@@ -80,24 +85,28 @@ function editarCliente(index) {
     modal.show();
 }
 
-// Función para buscar clientes por nombre y aplicar el filtro de tipo de cliente
+
+// Función para buscar clientes por nombre y RUC y aplicar el filtro de tipo de cliente
 function aplicarFiltros() {
     const searchInput = document.getElementById('search-input').value;
     const filtroTipo = document.querySelector('.filter-role.active') ? document.querySelector('.filter-role.active').getAttribute('data-role') : 'all';
 
-    // Filtrar clientes por nombre y tipo de cliente
+    // Filtrar clientes por nombre, RUC y tipo de cliente
     const filtrados = clientes.filter(cliente => {
         const nombreClienteNormalizado = normalizeString(cliente.nombre);
+        const rucClienteNormalizado = normalizeString(cliente.ruc);
         const searchQueryNormalizado = normalizeString(searchInput);
 
         const tipoCoincide = filtroTipo === 'all' || cliente.tipo === filtroTipo;
         const nombreCoincide = nombreClienteNormalizado.includes(searchQueryNormalizado);
+        const rucCoincide = rucClienteNormalizado.includes(searchQueryNormalizado);
 
-        return tipoCoincide && nombreCoincide;
+        return tipoCoincide && (nombreCoincide || rucCoincide);
     });
 
     renderClientes(filtrados); // Renderizar la tabla con los clientes filtrados
 }
+
 
 // Añadir eventos a los botones de filtros de tipo de cliente
 document.querySelectorAll('.filter-role').forEach(button => {

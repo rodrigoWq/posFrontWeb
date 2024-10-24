@@ -31,7 +31,7 @@
             <thead>
                 <tr>
                     <th>N° de Factura</th>
-                    <th>RUC Cliente</th>
+                    <th>RUC</th>
                     <th>Fecha</th>
                     <th>Monto Total</th>
                     <th>Acciones</th>
@@ -42,42 +42,12 @@
             </tbody>
         </table>
 
-        <!-- Modal para Registrar / Editar Factura -->
-        <div class="modal fade" id="facturaModal" tabindex="-1" aria-labelledby="facturaModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="facturaModalLabel">Registrar Factura</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="facturaForm">
-                            <div class="mb-3">
-                                <label for="numeroFactura" class="form-label">Número de Factura</label>
-                                <input type="text" class="form-control" id="numeroFactura" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="rucCliente" class="form-label">RUC Cliente</label>
-                                <input type="text" class="form-control" id="rucCliente" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="fechaFactura" class="form-label">Fecha</label>
-                                <input type="date" class="form-control" id="fechaFactura" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="montoTotal" class="form-label">Monto Total</label>
-                                <input type="number" class="form-control" id="montoTotal" required>
-                            </div>                                                                                       
-                            <button type="submit" class="btn btn-primary">Guardar Factura</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/listFacturas.js"></script>
+    <!-- Incluye Inputmask desde un CDN antes de tu script factura.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.7/inputmask.min.js"></script>
     <script src="../../Seguridad y Gestion de Usuarios/js/SessionManager.js"></script>
 </body>
 </html>

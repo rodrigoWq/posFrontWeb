@@ -16,3 +16,7 @@ h1 {
 .form-label {
     font-weight: bold;
 }
+.editable-cell {
+    background-color: #eaffea;
+    border: 1px solid #5cb85c;
+}

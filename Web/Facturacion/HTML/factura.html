@@ -62,26 +62,35 @@
             <h3>Detalles de Productos</h3>
             <div class="row g-3 mb-3">
                 <div class="col-md-2">
+                    <label for="codigo_producto" class="form-label">Código</label>
                     <input type="text" class="form-control" id="codigo_producto" placeholder="Código">
                 </div>
                 <div class="col-md-3">
+                    <label for="descripcion_producto" class="form-label">Descripción</label>
                     <input type="text" class="form-control" id="descripcion_producto" placeholder="Descripción">
                 </div>
                 <div class="col-md-2">
+                    <label for="cantidad_producto" class="form-label">Cantidad</label>
                     <input type="number" class="form-control" id="cantidad_producto" placeholder="Cantidad">
                 </div>
                 <div class="col-md-2">
+                    <label for="valor_unitario_producto" class="form-label">Valor Unitario</label>
                     <input type="number" class="form-control" id="valor_unitario_producto" placeholder="Valor Unitario">
                 </div>
-                <div class="col-md-1">
-                    <input type="number" class="form-control" id="exenta_producto" placeholder="Exenta">
+                <div class="col-md-3">
+                    <label class="form-label">Tipo de Impuesto</label>
+                    <div class="btn-group" role="group" aria-label="Tipo de Impuesto">
+                        <input type="radio" class="btn-check" name="tipo_impuesto" id="exenta_producto" value="exenta" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="exenta">Exenta</label>
+                
+                        <input type="radio" class="btn-check" name="tipo_impuesto" id="iva_5_producto" value="iva_5" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="iva_5">IVA 5%</label>
+                
+                        <input type="radio" class="btn-check" name="tipo_impuesto" id="iva_10_producto" value="iva_10" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="iva_10">IVA 10%</label>
+                    </div>
                 </div>
-                <div class="col-md-1">
-                    <input type="number" class="form-control" id="iva_5_producto" placeholder="5%">
-                </div>
-                <div class="col-md-1">
-                    <input type="number" class="form-control" id="iva_10_producto" placeholder="10%">
-                </div>
+                
             </div>
 
             <div class="d-grid gap-2 mb-3">
@@ -131,9 +140,49 @@
         </form>
     </div>
 
+    <!-- Modal para registro de producto -->
+    <div class="modal fade" id="modalRegistrarProducto" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Registrar Producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="codigo_producto_modal" class="form-label">Código</label>
+                    <input type="text" id="codigo_producto_modal" class="form-control mb-2" placeholder="Código del Producto">
+
+                    <label for="descripcion_producto_modal" class="form-label">Descripción</label>
+                    <input type="text" id="descripcion_producto_modal" class="form-control mb-2" placeholder="Descripción del Producto">
+
+                    <label for="valor_unitario_producto_modal" class="form-label">Valor Unitario</label>
+                    <input type="number" id="valor_unitario_producto_modal" class="form-control mb-2" placeholder="Valor Unitario">
+
+                    <div class="col-md-12 mt-3">
+                        <label class="form-label">Tipo de Impuesto</label>
+                        <div class="btn-group d-flex" role="group" aria-label="Tipo de Impuesto">
+                            <input type="radio" class="btn-check" name="tipo_impuesto_modal" id="exenta_producto_modal" value="exenta" autocomplete="off">
+                            <label class="btn btn-outline-secondary flex-fill" for="exenta_producto_modal">Exenta</label>
+
+                            <input type="radio" class="btn-check" name="tipo_impuesto_modal" id="iva_5_producto_modal" value="iva_5" autocomplete="off">
+                            <label class="btn btn-outline-secondary flex-fill" for="iva_5_producto_modal">IVA 5%</label>
+
+                            <input type="radio" class="btn-check" name="tipo_impuesto_modal" id="iva_10_producto_modal" value="iva_10" autocomplete="off">
+                            <label class="btn btn-outline-secondary flex-fill" for="iva_10_producto_modal">IVA 10%</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="guardarProducto">Guardar Producto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Enlace al archivo JS externo -->
+    <script src="../js/codigo.js"></script>
     <script src="../js/factura.js"></script>
 </body>
 </html>

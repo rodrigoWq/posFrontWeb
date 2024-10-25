@@ -20,15 +20,15 @@ document.getElementById('agregar_producto').addEventListener('click', function()
     // Calcular el total del producto
     const totalProducto = valorUnitario * cantidad;
 
-    // Crear un objeto del producto
-    const producto = {
+     // Crear un objeto del producto
+     const producto = {
         codigo,
         descripcion,
         cantidad,
         valorUnitario,
-        exenta,
-        iva5,
-        iva10,
+        exenta: exenta > 0 ? totalProducto : 0,
+        iva5: iva5 > 0 ? totalProducto : 0,
+        iva10: iva10 > 0 ? totalProducto : 0,
         totalProducto
     };
 
@@ -64,14 +64,15 @@ function actualizarTablaProductos() {
         const valorUnitarioCell = document.createElement('td');
         valorUnitarioCell.textContent = producto.valorUnitario;
 
+        // Mostrar el total en la columna que corresponda según el tipo de impuesto
         const exentaCell = document.createElement('td');
-        exentaCell.textContent = producto.exenta;
+        exentaCell.textContent = producto.exenta > 0 ? producto.totalProducto.toFixed(2) : '';
 
         const iva5Cell = document.createElement('td');
-        iva5Cell.textContent = producto.iva5;
+        iva5Cell.textContent = producto.iva5 > 0 ? producto.totalProducto.toFixed(2) : '';
 
         const iva10Cell = document.createElement('td');
-        iva10Cell.textContent = producto.iva10;
+        iva10Cell.textContent = producto.iva10 > 0 ? producto.totalProducto.toFixed(2) : '';
 
         // Crear celda para las acciones (Editar y Eliminar)
         const accionesCell = document.createElement('td');
@@ -254,12 +255,12 @@ function cancelarEdicionFila(row, index) {
 // Función para actualizar los campos de totales
 function actualizarTotales() {
     totalFactura = productos.reduce((sum, prod) => sum + prod.totalProducto, 0);
-    totalIva5 = productos.reduce((sum, prod) => sum + prod.iva5, 0);
-    totalIva10 = productos.reduce((sum, prod) => sum + prod.iva10, 0);
-    console.log(totalFactura)
-    document.getElementById('total_factura').value = totalFactura;
-    document.getElementById('iva_5').value = totalIva5;
-    document.getElementById('iva_10').value = totalIva10;
+    totalIva5 = productos.reduce((sum, prod) => sum + (prod.iva5 > 0 ? prod.totalProducto : 0), 0);
+    totalIva10 = productos.reduce((sum, prod) => sum + (prod.iva10 > 0 ? prod.totalProducto : 0), 0);
+
+    document.getElementById('total_factura').value = totalFactura.toFixed(2);
+    document.getElementById('iva_5').value = totalIva5.toFixed(2);
+    document.getElementById('iva_10').value = totalIva10.toFixed(2);
 }
 
 // Función para limpiar los campos de entrada del producto

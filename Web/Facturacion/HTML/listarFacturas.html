@@ -15,7 +15,7 @@
             <h1>Gestión de Documentos</h1>
             <div class="header-buttons">
                 <a class="btn btn-success" href="factura.html">Registrar Factura</a>
-                <a class="btn btn-success" href="nota_remision.html">Registrar Nota de Remisión</a>
+                <a class="btn btn-success" href="nota_de_remision.html">Registrar Nota de Remisión</a>
             </div>
         </header>
         
@@ -24,24 +24,38 @@
             <div class="d-flex justify-content-start mb-3">
                 <input type="text" id="search-input" class="form-control w-25" placeholder="Buscar por número de factura o RUC...">
             </div>
+        </div>  
+        
+        <!-- Barra de Filtros -->
+        <div class="filter-section mt-4 mb-4">
+            <div class="filters d-flex justify-content-end">
+                <button class="btn btn-outline-secondary me-2 filter-type" data-type="all">Todos los Tipos</button>
+                <button class="btn btn-outline-secondary me-2 filter-type" data-type="factura">Factura</button>
+                <button class="btn btn-outline-secondary filter-type" data-type="nota_remision">Nota de Remisión</button>
+            </div>            
         </div>                 
+    
 
-        <!-- Tabla de Facturas -->
-        <h2>Lista de Documentos</h2>
+        <!-- Tabla de Comprobantes -->
+        <h2>Lista de Comprobantes</h2>
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>N° de Factura</th>
+                    <th>N° de Comprobante</th>
                     <th>RUC</th>
                     <th>Fecha</th>
                     <th>Monto Total</th>
+                    <th>Estado</th>
+                    <th>Tipo de Comprobante</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
-            <tbody id="facturasBody">
-                <!-- Aquí se listarán las facturas -->
+            <tbody id="comprobantesBody">
+                <!-- Aquí se listarán las facturas y notas de remisión -->
             </tbody>
         </table>
+            <!-- Controles de Paginación -->
+        <div id="pagination" class="d-flex justify-content-center mt-3"></div>
 
     </div>
 

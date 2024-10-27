@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nota de Remisión</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/nota_de_remision.css">
+    <link rel="icon" href="data:,">
+</head>
+<body>
+
+    <div class="container mt-5">
+        <h1 class="text-center">Nota de Remisión</h1>
+
+        <!-- Encabezado -->
+        <form>
+            <div class="row g-3 mb-3">
+                <div class="col-md-4">
+                    <label for="timbrado" class="form-label">Timbrado</label>
+                    <input type="text" class="form-control" id="timbrado" name="timbrado" placeholder="Número de timbrado">
+                </div>
+                <div class="col-md-4">
+                    <label for="razon_social" class="form-label">Razón Social</label>
+                    <input type="text" class="form-control" id="razon_social" name="razon_social" placeholder="Razón Social">
+                </div>
+                <div class="col-md-4">
+                    <label for="ruc" class="form-label">RUC</label>
+                    <input type="text" class="form-control" id="ruc" name="ruc" placeholder="RUC del destinatario">
+                </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label for="nro_nota_remision" class="form-label">N° de Nota de Remisión</label>
+                    <input type="text" class="form-control" id="nro_nota_remision" name="nro_nota_remision" placeholder="Número de Nota de Remisión">
+                </div>
+                <div class="col-md-6">
+                    <label for="fecha_emision" class="form-label">Fecha de Emisión</label>
+                    <input type="date" class="form-control" id="fecha_emision" name="fecha_emision">
+                </div>
+            </div>
+
+            <!-- Datos de la Mercadería -->
+            <h3>Datos de la Mercadería</h3>
+            <div class="row g-3 mb-3">
+                <div class="col-md-2">
+                    <label for="codigo_producto" class="form-label">Código de Barra</label>
+                    <input type="text" class="form-control" id="codigo_producto" placeholder="Código de Barra">
+                </div>
+                <div class="col-md-2">
+                    <label for="cantidad_mercaderia" class="form-label">Cantidad</label>
+                    <input type="number" class="form-control" id="cantidad_mercaderia" placeholder="Cantidad">
+                </div>
+                <div class="col-md-2">
+                    <label for="unidad_medida_mercaderia" class="form-label">Unidad de Medida</label>
+                    <input type="text" class="form-control" id="unidad_medida_mercaderia" placeholder="Unidad de medida">
+                </div>
+                <div class="col-md-6">
+                    <label for="descripcion_mercaderia" class="form-label">Descripción</label>
+                    <input type="text" class="form-control" id="descripcion_mercaderia" placeholder="Descripción de la mercadería">
+                </div>
+                
+            </div>
+
+            <!-- Botón para agregar producto -->
+            <div class="d-grid gap-2 mb-3">
+                <button type="button" class="btn btn-secondary" id="agregar_producto">Agregar Producto</button>
+            </div>
+
+            <!-- Tabla de productos agregados -->
+            <h3>Productos Agregados</h3>
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>Cantidad</th>
+                        <th>Unidad de Medida</th>
+                        <th>Descripción</th>
+                        <th>Acciones</th> <!-- Columna para el botón de eliminar -->
+                    </tr>
+                </thead>
+                <tbody id="tabla_productos">
+                    <!-- Aquí se agregarán los productos dinámicamente -->
+                </tbody>
+            </table>
+
+
+            <div class="d-grid gap-2 mt-4">
+                <button type="button" class="btn btn-success" id="guardarNotaRemision">Guardar Nota de Remisión</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/nota_remision.js"></script>
+</body>
+</html>

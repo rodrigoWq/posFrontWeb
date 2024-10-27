@@ -1,36 +1,159 @@
-/* Simulated list of invoices
-const facturas = [
+
+// Obtener los comprobantes desde localStorage o inicializar un arreglo vacío
+const comprobantes = JSON.parse(localStorage.getItem('comprobantes')) || [];
+/* Recuperar los comprobantes desde localStorage o simulación si no hay datos
+let comprobantes = JSON.parse(localStorage.getItem('comprobantes')) || [
     {
-        numeroFactura: '001-001-000000001',
+        numeroComprobante: '001-001-000000001',
         rucCliente: '0999999999',
         fecha: '2023-10-01',
-        montoTotal: 10000
+        montoTotal: 10000,
+        tipo: 'factura',
+        estado: 'activo'
     },
     {
-        numeroFactura: '001-001-000000002',
+        numeroComprobante: 'NR-000000001',
         rucCliente: '0988888888',
         fecha: '2023-10-02',
-        montoTotal: 25050
-    },
-    {
-        numeroFactura: '001-001-000000003',
-        rucCliente: '0977777777',
-        fecha: '2023-10-03',
-        montoTotal: 17575
-    },
-    // Add more invoices as needed
+        montoTotal: 25050,
+        tipo: 'nota_remision',
+        estado: 'activo'
+    }
+
 ];*/
 
-// Recuperar las facturas desde localStorage
-let facturas = JSON.parse(localStorage.getItem('facturas')) || [];
-if (facturas.length === 0) {
-    const facturasBody = document.getElementById('facturasBody');
-    facturasBody.innerHTML = '<tr><td colspan="5" class="text-center">No hay facturas registradas.</td></tr>';
-} else {
-    // Inicialmente mostrar todas las facturas
-    displayFacturas(facturas);
+
+
+class Pagination {
+    constructor(items, itemsPerPage, renderCallback) {
+        this.items = items; // Elementos a paginar
+        this.itemsPerPage = itemsPerPage; // Elementos por página
+        this.currentPage = 1; // Página actual
+        this.renderCallback = renderCallback; // Callback para renderizar los elementos de la página actual
+
+        this.paginationContainer = document.getElementById('pagination'); // Contenedor para los controles
+        this.displayPage(); // Mostrar la primera página al inicializar
+    }
+
+    // Calcular los elementos de la página actual y llamarlos al callback de renderización
+    displayPage() {
+        const start = (this.currentPage - 1) * this.itemsPerPage;
+        const end = start + this.itemsPerPage;
+        const paginatedItems = this.items.slice(start, end);
+
+        this.renderCallback(paginatedItems); // Renderizar los elementos actuales
+        this.updatePaginationControls(); // Actualizar controles de paginación
+    }
+
+    // Crear y actualizar los controles de paginación
+    updatePaginationControls() {
+        const totalPages = Math.ceil(this.items.length / this.itemsPerPage);
+        this.paginationContainer.innerHTML = ''; // Limpiar controles existentes
+
+        // Botón "Anterior"
+        const prevButton = document.createElement('button');
+        prevButton.classList.add('btn', 'btn-secondary', 'me-2');
+        prevButton.textContent = 'Anterior';
+        prevButton.disabled = this.currentPage === 1;
+        prevButton.addEventListener('click', () => this.changePage(this.currentPage - 1));
+        this.paginationContainer.appendChild(prevButton);
+
+        // Botones de número de página
+        for (let i = 1; i <= totalPages; i++) {
+            const pageButton = document.createElement('button');
+            pageButton.classList.add('btn', 'btn-outline-secondary', 'me-2');
+            pageButton.textContent = i;
+            pageButton.disabled = i === this.currentPage;
+            pageButton.addEventListener('click', () => this.changePage(i));
+            this.paginationContainer.appendChild(pageButton);
+        }
+
+        // Botón "Siguiente"
+        const nextButton = document.createElement('button');
+        nextButton.classList.add('btn', 'btn-secondary');
+        nextButton.textContent = 'Siguiente';
+        nextButton.disabled = this.currentPage === totalPages;
+        nextButton.addEventListener('click', () => this.changePage(this.currentPage + 1));
+        this.paginationContainer.appendChild(nextButton);
+    }
+
+    // Cambiar de página
+    changePage(pageNumber) {
+        this.currentPage = pageNumber;
+        this.displayPage();
+    }
 }
 
+// Inicialización de la paginación
+const itemsPerPage = 5;
+const pagination = new Pagination(comprobantes, itemsPerPage, displayComprobantes);
+
+// Inicialmente mostrar todos los comprobantes
+displayComprobantes(comprobantes);
+
+// Función para mostrar los comprobantes en la tabla
+function displayComprobantes(comprobantesList) {
+    const comprobantesBody = document.getElementById('comprobantesBody');
+    comprobantesBody.innerHTML = ''; // Limpiar las filas existentes
+
+    comprobantesList.forEach((comprobante, index) => {
+        const row = document.createElement('tr');
+
+        // Crear celdas
+        const numeroComprobanteCell = document.createElement('td');
+        numeroComprobanteCell.textContent = comprobante.numeroComprobante;
+
+        const rucClienteCell = document.createElement('td');
+        rucClienteCell.textContent = comprobante.rucCliente;
+
+        const fechaCell = document.createElement('td');
+        fechaCell.textContent = comprobante.fecha;
+
+        const montoTotalCell = document.createElement('td');
+        montoTotalCell.textContent = formatearMonto(comprobante.montoTotal);
+
+        const estadoCell = document.createElement('td');
+        estadoCell.textContent = comprobante.estado;
+
+        const tipoCell = document.createElement('td');
+        tipoCell.textContent = comprobante.tipo === 'factura' ? 'Factura' : 'Nota de Remisión';
+
+        const accionesCell = document.createElement('td');
+
+        // Botón Ver
+        const verButton = document.createElement('button');
+        verButton.textContent = 'Ver';
+        verButton.classList.add('btn', 'btn-primary', 'btn-sm', 'me-1');
+        verButton.addEventListener('click', function() {
+            verDetalleComprobante(index);
+        });
+
+        // Botón Anular
+        const anularButton = document.createElement('button');
+        anularButton.textContent = 'Anular';
+        anularButton.classList.add('btn', 'btn-danger', 'btn-sm');
+        anularButton.disabled = comprobante.estado === 'anulado'; // Desactivar si ya está anulado
+        anularButton.addEventListener('click', function() {
+            anularComprobante(index);
+        });
+
+        // Agregar botones a la celda de acciones
+        accionesCell.appendChild(verButton);
+        accionesCell.appendChild(anularButton);
+
+        // Agregar celdas a la fila
+        row.appendChild(numeroComprobanteCell);
+        row.appendChild(rucClienteCell);
+        row.appendChild(fechaCell);
+        row.appendChild(montoTotalCell);
+        row.appendChild(estadoCell);
+        row.appendChild(tipoCell);
+        row.appendChild(accionesCell);
+
+        // Agregar la fila al cuerpo de la tabla
+        comprobantesBody.appendChild(row);
+    });
+}
 
 // Función para mostrar las facturas en la tabla
 function displayFacturas(facturasList) {
@@ -88,30 +211,41 @@ function displayFacturas(facturasList) {
 }
 
 
-// Initially display all invoices
-displayFacturas(facturas);
-
 // Evento para el campo de búsqueda
 const searchInput = document.getElementById('search-input');
-searchInput.addEventListener('input', function() {
-    actualizarListaFacturas();
+searchInput.addEventListener('input', actualizarListaComprobantes);
+
+// Evento para los botones de filtro por tipo
+const filterButtons = document.querySelectorAll('.filter-type');
+filterButtons.forEach(button => {
+    button.addEventListener('click', function() {
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        this.classList.add('active');
+        actualizarListaComprobantes();
+    });
 });
 
-// Función para actualizar la lista de facturas según el término de búsqueda
-function actualizarListaFacturas() {
-    const searchTerm = searchInput.value.trim().toLowerCase();
 
-    // Filtrar facturas por número de factura o RUC
-    const filteredFacturas = facturas.filter(factura => {
-        return factura.nroFactura.toLowerCase().includes(searchTerm) ||
-               factura.ruc.toLowerCase().includes(searchTerm);
+// Función para actualizar la lista de comprobantes según el término de búsqueda y filtro de tipo
+function actualizarListaComprobantes() {
+    const searchTerm = searchInput.value.trim().toLowerCase();
+    const activeFilter = document.querySelector('.filter-type.active').getAttribute('data-type');
+
+    // Filtrar comprobantes por número de comprobante, RUC, y tipo de comprobante
+    const filteredComprobantes = comprobantes.filter(comprobante => {
+        const matchesSearch = comprobante.numeroComprobante.toLowerCase().includes(searchTerm) ||
+                              comprobante.rucCliente.toLowerCase().includes(searchTerm);
+        const matchesFilter = activeFilter === 'all' ||
+                              (activeFilter === 'factura' && comprobante.tipo === 'factura') ||
+                              (activeFilter === 'nota_remision' && comprobante.tipo === 'nota_remision');
+        return matchesSearch && matchesFilter;
     });
 
-    if (filteredFacturas.length === 0) {
-        const facturasBody = document.getElementById('facturasBody');
-        facturasBody.innerHTML = '<tr><td colspan="5" class="text-center">No se encontraron facturas.</td></tr>';
+    if (filteredComprobantes.length === 0) {
+        const comprobantesBody = document.getElementById('comprobantesBody');
+        comprobantesBody.innerHTML = '<tr><td colspan="7" class="text-center">No se encontraron comprobantes.</td></tr>';
     } else {
-        displayFacturas(filteredFacturas);
+        displayComprobantes(filteredComprobantes);
     }
 }
 
@@ -129,26 +263,23 @@ function formatearMonto(monto) {
     return parteEntera + parteDecimal;
 }
 
-// Función para eliminar una factura
-function eliminarFactura(index) {
-    if (confirm('¿Está seguro de que desea eliminar esta factura?')) {
-        // Eliminar la factura del arreglo
-        facturas.splice(index, 1);
+// Función para anular un comprobante en el array simulado
+function anularComprobante(index) {
+    if (confirm('¿Está seguro de que desea anular este comprobante?')) {
+        // Cambiar el estado del comprobante a "anulado" en el array simulado
+        comprobantes[index].estado = 'anulado';
 
-        // Actualizar el localStorage con el arreglo modificado
-        localStorage.setItem('facturas', JSON.stringify(facturas));
+        // Actualizar la lista de comprobantes en pantalla
+        displayComprobantes(comprobantes);
 
-        // Actualizar la lista de facturas según el término de búsqueda actual
-        actualizarListaFacturas();
-
-        alert('Factura eliminada correctamente.');
+        alert('Comprobante anulado correctamente.');
     }
 }
 
 
 
-function verDetalleFactura(index) {
-    const factura = facturas[index];
-    alert(`Detalle de la factura N° ${factura.nroFactura}:\n\nRUC: ${factura.ruc}\nRazón Social: ${factura.razonSocial}\nFecha de Emisión: ${factura.fechaEmision}\nTotal Factura: ${factura.totalFactura}`);
-    // Aquí puedes implementar una mejor visualización, como abrir una nueva página o mostrar un modal.
+// Función para ver el detalle de un comprobante
+function verDetalleComprobante(index) {
+    const comprobante = comprobantes[index];
+    alert(`Detalle del comprobante N° ${comprobante.numeroComprobante}:\n\nRUC: ${comprobante.rucCliente}\nFecha: ${comprobante.fecha}\nTotal: ${comprobante.montoTotal}\nTipo: ${comprobante.tipo === 'factura' ? 'Factura' : 'Nota de Remisión'}\nEstado: ${comprobante.estado}`);
 }

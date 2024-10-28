@@ -8,21 +8,23 @@ let totalIva10 = 0;
 // Autocompletar formulario si hay datos guardados
 document.addEventListener('DOMContentLoaded', () => {
     const savedFacturaData = JSON.parse(localStorage.getItem('facturaData'));
-    
+
     if (savedFacturaData) {
-        document.getElementById('ruc').value = savedFacturaData.ruc;
-        document.getElementById('razon_social').value = savedFacturaData.razonSocial;
-        document.getElementById('fecha_emision').value = savedFacturaData.fechaEmision;
-        document.getElementById('direccion').value = savedFacturaData.direccion;
-        document.getElementById('total_factura').value = savedFacturaData.totalFactura;
-        
+        document.getElementById('ruc').value = savedFacturaData.ruc || '';
+        document.getElementById('razon_social').value = savedFacturaData.razonSocial || ''; // Autocompletar razón social
+        document.getElementById('fecha_emision').value = savedFacturaData.fechaEmision || '';
+        document.getElementById('direccion').value = savedFacturaData.direccion || '';
+        document.getElementById('total_factura').value = savedFacturaData.totalFactura || '';
+        document.getElementById('timbrado').value = savedFacturaData.timbrado || ''; // Autocompletar timbrado
+
         // Cargar los productos en la tabla
         savedFacturaData.productos.forEach(producto => agregarProductoATabla(producto));
-        
+
         // Limpiar los datos de localStorage después de cargarlos
         localStorage.removeItem('facturaData');
     }
 });
+
 
 // Función para agregar cada producto a la tabla de productos
 function agregarProductoATabla(producto) {
@@ -348,31 +350,31 @@ document.querySelector('form').addEventListener('submit', function(event) {
 
     // Recopilar todos los datos del formulario y los productos
     const facturaData = {
+        nroFactura: document.getElementById('nro_factura').value.trim(),
         ruc: document.getElementById('ruc').value.trim(),
         razonSocial: document.getElementById('razon_social').value.trim(),
         fechaEmision: document.getElementById('fecha_emision').value,
         timbrado: document.getElementById('timbrado').value.trim(),
-        nroFactura: document.getElementById('nro_factura').value.trim(),
-        condicionVenta: document.getElementById('condicion_venta').value,
         direccion: document.getElementById('direccion').value.trim(),
-        productos: productos,
-        totalFactura: document.getElementById('total_factura').value.trim(),
+        condicionVenta: document.getElementById('condicion_venta').value,
+        productos: productos,  // Todos los productos de la factura
+        totalFactura: parseFloat(document.getElementById('total_factura').value) || 0,
         iva5: totalIva5,
         iva10: totalIva10
     };
 
     // Obtener las facturas existentes en localStorage
-    let facturasGuardadas = JSON.parse(localStorage.getItem('facturas')) || [];
+    let comprobantes = JSON.parse(localStorage.getItem('comprobantes')) || [];
 
-    // Agregar la nueva factura al arreglo
-    facturasGuardadas.push(facturaData);
+    // Agregar la nueva factura al arreglo de facturas guardadas
+    comprobantes.push(facturaData);
 
     // Guardar el arreglo actualizado en localStorage
-    localStorage.setItem('facturas', JSON.stringify(facturasGuardadas));
+    localStorage.setItem('comprobantes', JSON.stringify(comprobantes));
 
-    // Reiniciar el formulario y los datos
+    // Limpiar formulario y datos
     this.reset();
-    productos = [];
+    productos = [];  // Reinicia el arreglo de productos para una nueva factura
     totalFactura = 0;
     totalIva5 = 0;
     totalIva10 = 0;
@@ -381,4 +383,3 @@ document.querySelector('form').addEventListener('submit', function(event) {
 
     alert('Factura guardada correctamente.');
 });
-

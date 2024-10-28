@@ -265,6 +265,7 @@ function actualizarListaComprobantes() {
 
 
 function formatearMonto(monto) {
+    if (monto === undefined || monto === null) return "0,00"; // Valor predeterminado si no hay monto
     // Convierte el monto en un string, separa la parte entera de la decimal si hay decimales
     let partes = monto.toString().split('.');
     let parteEntera = partes[0];
@@ -276,6 +277,7 @@ function formatearMonto(monto) {
     // Retornar la parte entera con puntos de miles y la parte decimal si la hay
     return parteEntera + parteDecimal;
 }
+
 
 // Función para anular un comprobante en el array simulado
 function anularComprobante(index) {
@@ -302,12 +304,13 @@ function verDetalleComprobante(index) {
 function generarFacturaDesdeNotaRemision(notaRemision) {
     const facturaData = {
         ruc: notaRemision.rucCliente,
-        razonSocial: notaRemision.razonSocial,
+        razonSocial: notaRemision.razonSocial || '',  // Añadir razonSocial con valor vacío si no está definido
         fechaEmision: new Date().toISOString().split('T')[0],
         productos: notaRemision.productos || [],
         totalFactura: notaRemision.montoTotal,
-        condicionVenta: 'contado', // Asignado por defecto
-        direccion: notaRemision.direccion || 'Sin dirección'
+        condicionVenta: 'contado',  // Asignado por defecto
+        direccion: notaRemision.direccion || 'Sin dirección',
+        timbrado: notaRemision.timbrado || ''  // Añadir timbrado con valor vacío si no está definido
     };
 
     // Guardar los datos en localStorage
@@ -316,3 +319,5 @@ function generarFacturaDesdeNotaRemision(notaRemision) {
     // Redireccionar a factura.html para que cargue los datos
     window.location.href = 'factura.html';
 }
+
+

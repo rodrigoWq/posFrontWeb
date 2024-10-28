@@ -98,6 +98,8 @@ document.getElementById('guardarNotaRemision').addEventListener('click', functio
     const rucCliente = document.getElementById('ruc').value.trim(); // Asegúrate de tener este campo en el HTML
     const fecha = document.getElementById('fecha_emision').value; // Asegúrate de tener este campo en el HTML
     const tipo = 'nota_remision';
+    const razonSocial = document.getElementById('razon_social').value;
+    const timbrado = document.getElementById('timbrado').value;
     const estado = 'activo';
     const montoTotal = 0; // Ajusta este valor si tienes un cálculo para el monto total de productos
 
@@ -109,7 +111,9 @@ document.getElementById('guardarNotaRemision').addEventListener('click', functio
         montoTotal,
         estado,
         tipo,
-        productos
+        productos,
+        timbrado,
+        razonSocial
     };
 
     // Obtener las notas de remisión existentes en localStorage o inicializar una lista vacía

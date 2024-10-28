@@ -5,6 +5,46 @@ let totalFactura = 0;
 let totalIva5 = 0;
 let totalIva10 = 0;
 
+// Autocompletar formulario si hay datos guardados
+document.addEventListener('DOMContentLoaded', () => {
+    const savedFacturaData = JSON.parse(localStorage.getItem('facturaData'));
+    
+    if (savedFacturaData) {
+        document.getElementById('ruc').value = savedFacturaData.ruc;
+        document.getElementById('razon_social').value = savedFacturaData.razonSocial;
+        document.getElementById('fecha_emision').value = savedFacturaData.fechaEmision;
+        document.getElementById('direccion').value = savedFacturaData.direccion;
+        document.getElementById('total_factura').value = savedFacturaData.totalFactura;
+        
+        // Cargar los productos en la tabla
+        savedFacturaData.productos.forEach(producto => agregarProductoATabla(producto));
+        
+        // Limpiar los datos de localStorage después de cargarlos
+        localStorage.removeItem('facturaData');
+    }
+});
+
+// Función para agregar cada producto a la tabla de productos
+function agregarProductoATabla(producto) {
+    const tablaBody = document.getElementById('tabla_productos');
+    const row = document.createElement('tr');
+    
+    // Crear y rellenar celdas
+    row.innerHTML = `
+        <td>${producto.codigo}</td>
+        <td>${producto.descripcion}</td>
+        <td>${producto.cantidad}</td>
+        <td>${producto.valorUnitario}</td>
+        <td>${producto.exenta || 0}</td>
+        <td>${producto.iva5 || 0}</td>
+        <td>${producto.iva10 || 0}</td>
+        
+        <td><button class="btn btn-danger btn-sm">Eliminar</button></td>
+    `;
+    tablaBody.appendChild(row);
+}
+
+
 // Función para agregar producto a la tabla
 document.getElementById('agregar_producto').addEventListener('click', function() {
     // Obtener detalles del producto desde los campos de entrada

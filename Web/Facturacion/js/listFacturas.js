@@ -141,6 +141,20 @@ function displayComprobantes(comprobantesList) {
         accionesCell.appendChild(verButton);
         accionesCell.appendChild(anularButton);
 
+        // En la función displayComprobantes que muestra las filas de comprobantes
+        const generarFacturaButton = document.createElement('button');
+        generarFacturaButton.textContent = 'Generar Factura';
+        generarFacturaButton.classList.add('btn', 'btn-info', 'btn-sm');
+        generarFacturaButton.disabled = comprobante.tipo !== 'nota_remision';
+        generarFacturaButton.addEventListener('click', function() {
+            generarFacturaDesdeNotaRemision(comprobante);
+        });
+
+        // Agregar el botón al cell de acciones solo para notas de remisión
+        if (comprobante.tipo === 'nota_remision') {
+            accionesCell.appendChild(generarFacturaButton);
+        }
+
         // Agregar celdas a la fila
         row.appendChild(numeroComprobanteCell);
         row.appendChild(rucClienteCell);
@@ -282,4 +296,23 @@ function anularComprobante(index) {
 function verDetalleComprobante(index) {
     const comprobante = comprobantes[index];
     alert(`Detalle del comprobante N° ${comprobante.numeroComprobante}:\n\nRUC: ${comprobante.rucCliente}\nFecha: ${comprobante.fecha}\nTotal: ${comprobante.montoTotal}\nTipo: ${comprobante.tipo === 'factura' ? 'Factura' : 'Nota de Remisión'}\nEstado: ${comprobante.estado}`);
+}
+
+// Función para generar factura desde nota de remisión
+function generarFacturaDesdeNotaRemision(notaRemision) {
+    const facturaData = {
+        ruc: notaRemision.rucCliente,
+        razonSocial: notaRemision.razonSocial,
+        fechaEmision: new Date().toISOString().split('T')[0],
+        productos: notaRemision.productos || [],
+        totalFactura: notaRemision.montoTotal,
+        condicionVenta: 'contado', // Asignado por defecto
+        direccion: notaRemision.direccion || 'Sin dirección'
+    };
+
+    // Guardar los datos en localStorage
+    localStorage.setItem('facturaData', JSON.stringify(facturaData));
+
+    // Redireccionar a factura.html para que cargue los datos
+    window.location.href = 'factura.html';
 }

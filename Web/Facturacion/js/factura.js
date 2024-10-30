@@ -360,7 +360,8 @@ document.querySelector('form').addEventListener('submit', function(event) {
         productos: productos,  // Todos los productos de la factura
         totalFactura: parseFloat(document.getElementById('total_factura').value) || 0,
         iva5: totalIva5,
-        iva10: totalIva10
+        iva10: totalIva10,
+        tipo: 'factura' 
     };
 
     // Obtener las facturas existentes en localStorage

@@ -1,4 +1,4 @@
-
+let filtroTipo = 'all'; // Valor por defecto
 // Obtener los comprobantes desde localStorage o inicializar un arreglo vacío
 const comprobantes = JSON.parse(localStorage.getItem('comprobantes')) || [];
 /* Recuperar los comprobantes desde localStorage o simulación si no hay datos
@@ -21,8 +21,6 @@ let comprobantes = JSON.parse(localStorage.getItem('comprobantes')) || [
     }
 
 ];*/
-
-
 
 class Pagination {
     constructor(items, itemsPerPage, renderCallback) {
@@ -99,24 +97,32 @@ function displayComprobantes(comprobantesList) {
     comprobantesList.forEach((comprobante, index) => {
         const row = document.createElement('tr');
 
+        // Obtener los datos comunes entre facturas y notas de remisión
+        const numeroComprobante = comprobante.numeroComprobante || comprobante.nroFactura || 'N/A';
+        const rucCliente = comprobante.rucCliente || comprobante.ruc || 'N/A';
+        const fecha = comprobante.fecha || comprobante.fechaEmision || 'N/A';
+        const montoTotal = comprobante.montoTotal || comprobante.totalFactura || 0;
+        const estado = comprobante.estado || 'activo';
+        const tipo = comprobante.tipo === 'nota_remision' ? 'Nota de Remisión' : 'Factura';
+
         // Crear celdas
         const numeroComprobanteCell = document.createElement('td');
-        numeroComprobanteCell.textContent = comprobante.numeroComprobante;
+        numeroComprobanteCell.textContent = numeroComprobante;
 
         const rucClienteCell = document.createElement('td');
-        rucClienteCell.textContent = comprobante.rucCliente;
+        rucClienteCell.textContent = rucCliente;
 
         const fechaCell = document.createElement('td');
-        fechaCell.textContent = comprobante.fecha;
+        fechaCell.textContent = fecha;
 
         const montoTotalCell = document.createElement('td');
-        montoTotalCell.textContent = formatearMonto(comprobante.montoTotal);
+        montoTotalCell.textContent = formatearMonto(montoTotal);
 
         const estadoCell = document.createElement('td');
-        estadoCell.textContent = comprobante.estado;
+        estadoCell.textContent = estado;
 
         const tipoCell = document.createElement('td');
-        tipoCell.textContent = comprobante.tipo === 'factura' ? 'Factura' : 'Nota de Remisión';
+        tipoCell.textContent = tipo;
 
         const accionesCell = document.createElement('td');
 
@@ -132,7 +138,7 @@ function displayComprobantes(comprobantesList) {
         const anularButton = document.createElement('button');
         anularButton.textContent = 'Anular';
         anularButton.classList.add('btn', 'btn-danger', 'btn-sm');
-        anularButton.disabled = comprobante.estado === 'anulado'; // Desactivar si ya está anulado
+        anularButton.disabled = estado === 'anulado'; // Desactivar si ya está anulado
         anularButton.addEventListener('click', function() {
             anularComprobante(index);
         });
@@ -141,17 +147,14 @@ function displayComprobantes(comprobantesList) {
         accionesCell.appendChild(verButton);
         accionesCell.appendChild(anularButton);
 
-        // En la función displayComprobantes que muestra las filas de comprobantes
-        const generarFacturaButton = document.createElement('button');
-        generarFacturaButton.textContent = 'Generar Factura';
-        generarFacturaButton.classList.add('btn', 'btn-info', 'btn-sm');
-        generarFacturaButton.disabled = comprobante.tipo !== 'nota_remision';
-        generarFacturaButton.addEventListener('click', function() {
-            generarFacturaDesdeNotaRemision(comprobante);
-        });
-
-        // Agregar el botón al cell de acciones solo para notas de remisión
+        // Botón Generar Factura solo para notas de remisión
         if (comprobante.tipo === 'nota_remision') {
+            const generarFacturaButton = document.createElement('button');
+            generarFacturaButton.textContent = 'Generar Factura';
+            generarFacturaButton.classList.add('btn', 'btn-info', 'btn-sm', 'ms-1');
+            generarFacturaButton.addEventListener('click', function() {
+                generarFacturaDesdeNotaRemision(comprobante);
+            });
             accionesCell.appendChild(generarFacturaButton);
         }
 
@@ -168,6 +171,7 @@ function displayComprobantes(comprobantesList) {
         comprobantesBody.appendChild(row);
     });
 }
+
 
 // Función para mostrar las facturas en la tabla
 function displayFacturas(facturasList) {
@@ -233,8 +237,9 @@ searchInput.addEventListener('input', actualizarListaComprobantes);
 const filterButtons = document.querySelectorAll('.filter-type');
 filterButtons.forEach(button => {
     button.addEventListener('click', function() {
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        this.classList.add('active');
+        // Obtener el tipo de filtro desde el atributo data-type
+        filtroTipo = this.getAttribute('data-type');
+        // Actualizar la lista de comprobantes
         actualizarListaComprobantes();
     });
 });
@@ -243,25 +248,39 @@ filterButtons.forEach(button => {
 // Función para actualizar la lista de comprobantes según el término de búsqueda y filtro de tipo
 function actualizarListaComprobantes() {
     const searchTerm = searchInput.value.trim().toLowerCase();
-    const activeFilter = document.querySelector('.filter-type.active').getAttribute('data-type');
 
-    // Filtrar comprobantes por número de comprobante, RUC, y tipo de comprobante
     const filteredComprobantes = comprobantes.filter(comprobante => {
-        const matchesSearch = comprobante.numeroComprobante.toLowerCase().includes(searchTerm) ||
-                              comprobante.rucCliente.toLowerCase().includes(searchTerm);
-        const matchesFilter = activeFilter === 'all' ||
-                              (activeFilter === 'factura' && comprobante.tipo === 'factura') ||
-                              (activeFilter === 'nota_remision' && comprobante.tipo === 'nota_remision');
+        // Obtener las propiedades que pueden variar entre facturas y notas de remisión
+        const numero = (comprobante.numeroComprobante || comprobante.nroFactura || '').toLowerCase();
+        const ruc = (comprobante.rucCliente || comprobante.ruc || '').toLowerCase();
+        const tipo = comprobante.tipo || '';
+
+        // Verificar si coincide con el término de búsqueda
+        const matchesSearch = numero.includes(searchTerm) || ruc.includes(searchTerm);
+
+        // Verificar si coincide con el filtro de tipo
+        let matchesFilter = true; // Por defecto, todos coinciden
+        if (filtroTipo === 'factura') {
+            matchesFilter = tipo === 'factura';
+        } else if (filtroTipo === 'nota_remision') {
+            matchesFilter = tipo === 'nota_remision';
+        }
+        // Si filtroTipo es 'all', matchesFilter se mantiene true
+
         return matchesSearch && matchesFilter;
     });
 
     if (filteredComprobantes.length === 0) {
         const comprobantesBody = document.getElementById('comprobantesBody');
         comprobantesBody.innerHTML = '<tr><td colspan="7" class="text-center">No se encontraron comprobantes.</td></tr>';
+        pagination.paginationContainer.innerHTML = ''; // Limpiar controles de paginación
     } else {
-        displayComprobantes(filteredComprobantes);
+        pagination.items = filteredComprobantes;
+        pagination.currentPage = 1; // Reiniciar a la primera página
+        pagination.displayPage();
     }
 }
+
 
 
 function formatearMonto(monto) {

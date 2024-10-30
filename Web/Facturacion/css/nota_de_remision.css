@@ -46,13 +46,10 @@ input[type="number"] {
     border: 1px solid #ced4da;
 }
 
-/* Botón de Guardar */
-.btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-    font-size: 18px;
-    font-weight: bold;
-    padding: 10px 0;
+
+
+.btn-accion {
+    width: 80px; /* Puedes ajustar el valor según tus necesidades */
 }
 
 .btn-primary:hover {

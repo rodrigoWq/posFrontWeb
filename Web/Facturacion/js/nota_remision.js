@@ -1,26 +1,56 @@
 // Variables para almacenar los productos de la nota de remisión
 let productos = [];
 
+// Cargar la base de datos de productos desde localStorage o inicializar con algunos productos de ejemplo
+let productDatabase = JSON.parse(localStorage.getItem('productDatabase')) || [
+    {
+        codigo: '12345',
+        descripcion: 'Producto A',
+        unidadMedida: 'kg'
+    },
+    {
+        codigo: '54321',
+        descripcion: 'Producto B',
+        unidadMedida: 'lt'
+    },
+];
+
 // Función para agregar producto a la tabla
 document.getElementById('agregar_producto').addEventListener('click', function() {
     // Obtener detalles del producto desde los campos de entrada
     const codigo = document.getElementById('codigo_producto').value.trim();
-    const cantidad = parseFloat(document.getElementById('cantidad_mercaderia').value);
-    const unidadMedida = document.getElementById('unidad_medida_mercaderia').value.trim();
-    const descripcion = document.getElementById('descripcion_mercaderia').value.trim();
+    const descripcion = document.getElementById('descripcion_producto').value.trim();
+    const cantidad = parseFloat(document.getElementById('cantidad_producto').value);
+    const unidadMedida = document.getElementById('unidad_medida_producto').value.trim();
+
 
     // Crear un objeto del producto
     const producto = {
         codigo,
+        descripcion,
         cantidad,
-        unidadMedida,
-        descripcion
+        unidadMedida
     };
 
-    // Agregar el producto al arreglo
+    // Agregar el producto al arreglo de productos de la nota de remisión
     productos.push(producto);
 
-    // Actualizar la tabla de productos
+    // Verificar si el producto ya existe en la base de datos
+    const existingProduct = productDatabase.find(p => p.codigo === codigo);
+    if (!existingProduct) {
+        // Producto nuevo, agregar a la base de datos
+        const newProduct = {
+            codigo,
+            descripcion,
+            unidadMedida
+        };
+        productDatabase.push(newProduct);
+        // Guardar la base de datos actualizada en localStorage
+        localStorage.setItem('productDatabase', JSON.stringify(productDatabase));
+        alert('Producto registrado en la base de datos.');
+    }
+
+    // Actualizar la tabla de productos y los totales
     actualizarTablaProductos();
 
     // Limpiar los campos de entrada del producto
@@ -82,7 +112,6 @@ function actualizarTablaProductos() {
         tablaBody.appendChild(row);
     });
 }
-
 // Función para habilitar la edición en línea de una fila
 function habilitarEdicionFila(row, index) {
     // Obtener las celdas de la fila
@@ -204,9 +233,9 @@ function cancelarEdicionFila(row, index) {
 // Función para limpiar los campos de entrada del producto
 function limpiarCamposProducto() {
     document.getElementById('codigo_producto').value = '';
-    document.getElementById('cantidad_mercaderia').value = '';
-    document.getElementById('unidad_medida_mercaderia').value = '';
-    document.getElementById('descripcion_mercaderia').value = '';
+    document.getElementById('descripcion_producto').value = '';
+    document.getElementById('cantidad_producto').value = '';
+    document.getElementById('unidad_medida_producto').value = '';
 }
 
 // Función para eliminar un producto de la lista
@@ -258,4 +287,50 @@ document.getElementById('guardarNotaRemision').addEventListener('click', functio
     productos = []; // Vaciar la lista de productos
     actualizarTablaProductos(); // Limpiar la tabla de productos
     document.querySelector('form').reset(); // Limpiar el formulario
+});
+
+// Event listener para cuando se pierde el foco en el campo de código de producto
+document.getElementById('codigo_producto').addEventListener('blur', function() {
+    const codigo = this.value.trim();
+    if (codigo) {
+        // Buscar el producto en la base de datos
+        const product = productDatabase.find(p => p.codigo === codigo);
+        if (product) {
+            // Producto encontrado, autocompletar los campos
+            document.getElementById('descripcion_producto').value = product.descripcion;
+            document.getElementById('unidad_medida_producto').value = product.unidadMedida;
+        } else {
+            // Producto no encontrado, permitir al usuario ingresar los detalles
+            alert('Producto no encontrado. Por favor, ingrese los datos del producto para registrarlo.');
+
+            new bootstrap.Modal(document.getElementById('modalRegistrarProducto')).show();
+            // Limpiar los campos para que el usuario pueda ingresar los datos
+            document.getElementById('descripcion_producto').value = '';
+            document.getElementById('unidad_medida_producto').value = '';
+        }
+    }
+});
+
+// Guardar el nuevo producto desde el modal
+document.getElementById('guardarNuevoProducto').addEventListener('click', function() {
+    const nuevoCodigo = document.getElementById('nuevoCodigo').value.trim();
+    const nuevaDescripcion = document.getElementById('nuevaDescripcion').value.trim();
+    const nuevaUnidadMedida = document.getElementById('nuevaUnidadMedida').value.trim();
+
+    if (nuevoCodigo && nuevaDescripcion && nuevaUnidadMedida) {
+        // Agregar el nuevo producto a la base de datos local
+        const newProduct = {
+            codigo: nuevoCodigo,
+            descripcion: nuevaDescripcion,
+            unidadMedida: nuevaUnidadMedida
+        };
+        productDatabase.push(newProduct);
+        localStorage.setItem('productDatabase', JSON.stringify(productDatabase));
+
+        alert('Producto registrado correctamente.');
+        document.getElementById('formRegistrarProducto').reset();
+        bootstrap.Modal.getInstance(document.getElementById('modalRegistrarProducto')).hide();
+    } else {
+        alert('Por favor, complete todos los campos.');
+    }
 });

@@ -4,18 +4,20 @@ let productos = [];
 let totalFactura = 0;
 let totalIva5 = 0;
 let totalIva10 = 0;
+let totalIvaExenta = 0;
+
 
 // Autocompletar formulario si hay datos guardados
 document.addEventListener('DOMContentLoaded', () => {
     const savedFacturaData = JSON.parse(localStorage.getItem('facturaData'));
 
     if (savedFacturaData) {
+
         document.getElementById('ruc').value = savedFacturaData.ruc || '';
-        document.getElementById('razon_social').value = savedFacturaData.razonSocial || ''; // Autocompletar razón social
+        document.getElementById('razon_social').value = savedFacturaData.razonSocial || '';
         document.getElementById('fecha_emision').value = savedFacturaData.fechaEmision || '';
         document.getElementById('direccion').value = savedFacturaData.direccion || '';
         document.getElementById('total_factura').value = savedFacturaData.totalFactura || '';
-        document.getElementById('timbrado').value = savedFacturaData.timbrado || ''; // Autocompletar timbrado
 
         // Cargar los productos en la tabla
         savedFacturaData.productos.forEach(producto => agregarProductoATabla(producto));
@@ -30,8 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
 function agregarProductoATabla(producto) {
     const tablaBody = document.getElementById('tabla_productos');
     const row = document.createElement('tr');
-    
-    // Crear y rellenar celdas
+
+    // Crear y rellenar celdas con datos del producto
     row.innerHTML = `
         <td>${producto.codigo}</td>
         <td>${producto.descripcion}</td>
@@ -40,11 +42,36 @@ function agregarProductoATabla(producto) {
         <td>${producto.exenta || 0}</td>
         <td>${producto.iva5 || 0}</td>
         <td>${producto.iva10 || 0}</td>
-        
-        <td><button class="btn btn-danger btn-sm">Eliminar</button></td>
     `;
+
+    // Crear celda para las acciones (Editar y Eliminar)
+    const accionesCell = document.createElement('td');
+
+    // Botón Editar
+    const editarButton = document.createElement('button');
+    editarButton.textContent = 'Editar';
+    editarButton.classList.add('btn', 'btn-primary', 'btn-sm', 'me-2');
+    editarButton.addEventListener('click', function() {
+        habilitarEdicionFila(row, productos.indexOf(producto));
+    });
+
+    // Botón Eliminar
+    const eliminarButton = document.createElement('button');
+    eliminarButton.textContent = 'Eliminar';
+    eliminarButton.classList.add('btn', 'btn-danger', 'btn-sm');
+    eliminarButton.addEventListener('click', function() {
+        eliminarProducto(productos.indexOf(producto));
+    });
+
+    // Agregar los botones a la celda de acciones
+    accionesCell.appendChild(editarButton);
+    accionesCell.appendChild(eliminarButton);
+    row.appendChild(accionesCell);
+
+    // Agregar la fila al cuerpo de la tabla
     tablaBody.appendChild(row);
 }
+
 
 
 // Función para agregar producto a la tabla
@@ -155,17 +182,19 @@ function actualizarTablaProductos() {
 }
 
 // Función para habilitar la edición en línea de una fila
+// Función para habilitar la edición en línea de una fila
 function habilitarEdicionFila(row, index) {
-    // Obtener las celdas de la fila
     const cells = row.querySelectorAll('td');
 
-    // Hacer que las celdas sean editables excepto la última (acciones)
+    // Permitir que las celdas sean editables, excepto las de IVA
     for (let i = 0; i < cells.length - 1; i++) {
-        cells[i].setAttribute('contenteditable', 'true');
-        cells[i].classList.add('editable-cell');
+        if (i <= 3) { // Hacemos editables solo las primeras cuatro celdas
+            cells[i].setAttribute('contenteditable', 'true');
+            cells[i].classList.add('editable-cell');
+        }
     }
 
-    // Reemplazar botones de acciones por "Guardar" y "Cancelar"
+    // Reemplazar los botones de acciones por "Guardar" y "Cancelar"
     const accionesCell = cells[cells.length - 1];
     accionesCell.innerHTML = '';
 
@@ -187,6 +216,7 @@ function habilitarEdicionFila(row, index) {
     accionesCell.appendChild(cancelarButton);
 }
 
+
 // Función para guardar los cambios de edición en una fila
 function guardarEdicionFila(row, index) {
     const cells = row.querySelectorAll('td');
@@ -200,33 +230,29 @@ function guardarEdicionFila(row, index) {
     const iva5 = parseFloat(cells[5].textContent) || 0;
     const iva10 = parseFloat(cells[6].textContent) || 0;
 
-    // Validar los nuevos valores
-    if (!codigo || !descripcion || isNaN(cantidad) || isNaN(valorUnitario)) {
-        alert('Por favor, ingrese valores válidos en todos los campos.');
-        return;
-    }
-
-    // Actualizar el producto en el arreglo
+    // Calcular el total del producto
     const totalProducto = valorUnitario * cantidad;
 
-    productos[index] = {
+    // Asignar el valor al tipo de impuesto correspondiente
+    const producto = {
         codigo,
         descripcion,
         cantidad,
         valorUnitario,
-        exenta,
-        iva5,
-        iva10,
+        exenta: exenta > 0 ? totalProducto : 0,
+        iva5: iva5 > 0 ? totalProducto : 0,
+        iva10: iva10 > 0 ? totalProducto : 0,
         totalProducto
     };
 
-    // Deshabilitar la edición de las celdas
+    // Actualizar el producto en el arreglo
+    productos[index] = producto;
+
+    // Deshabilitar la edición y restaurar botones de acciones
     for (let i = 0; i < cells.length - 1; i++) {
         cells[i].setAttribute('contenteditable', 'false');
         cells[i].classList.remove('editable-cell');
     }
-
-    // Restaurar los botones de acciones
     const accionesCell = cells[cells.length - 1];
     accionesCell.innerHTML = '';
 
@@ -247,9 +273,10 @@ function guardarEdicionFila(row, index) {
     accionesCell.appendChild(editarButton);
     accionesCell.appendChild(eliminarButton);
 
-    // Actualizar los totales
+    // Actualizar los totales después de guardar
     actualizarTotales();
 }
+
 
 // Función para cancelar la edición en una fila
 function cancelarEdicionFila(row, index) {
@@ -299,11 +326,14 @@ function actualizarTotales() {
     totalFactura = productos.reduce((sum, prod) => sum + prod.totalProducto, 0);
     totalIva5 = productos.reduce((sum, prod) => sum + (prod.iva5 > 0 ? prod.totalProducto : 0), 0);
     totalIva10 = productos.reduce((sum, prod) => sum + (prod.iva10 > 0 ? prod.totalProducto : 0), 0);
+    totalIvaExenta = productos.reduce((sum, prod) => sum + (prod.exenta > 0 ? prod.totalProducto : 0), 0);
 
     document.getElementById('total_factura').value = totalFactura.toFixed(2);
     document.getElementById('iva_5').value = totalIva5.toFixed(2);
     document.getElementById('iva_10').value = totalIva10.toFixed(2);
+    document.getElementById('iva_exenta').value = totalIvaExenta.toFixed(2);
 }
+
 
 // Función para limpiar los campos de entrada del producto
 function limpiarCamposProducto() {
@@ -314,6 +344,7 @@ function limpiarCamposProducto() {
     document.getElementById('exenta_producto').value = '';
     document.getElementById('iva_5_producto').value = '';
     document.getElementById('iva_10_producto').value = '';
+    document.getElementById('iva_exenta').value = '';
 }
 
 // Función para editar un producto existente

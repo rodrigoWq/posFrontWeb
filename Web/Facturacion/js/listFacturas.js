@@ -321,22 +321,25 @@ function verDetalleComprobante(index) {
 
 // Función para generar factura desde nota de remisión
 function generarFacturaDesdeNotaRemision(notaRemision) {
-    const facturaData = {
-        ruc: notaRemision.rucCliente,
-        razonSocial: notaRemision.razonSocial || '',  // Añadir razonSocial con valor vacío si no está definido
-        fechaEmision: new Date().toISOString().split('T')[0],
-        productos: notaRemision.productos || [],
-        totalFactura: notaRemision.montoTotal,
-        condicionVenta: 'contado',  // Asignado por defecto
-        direccion: notaRemision.direccion || 'Sin dirección',
-        timbrado: notaRemision.timbrado || ''  // Añadir timbrado con valor vacío si no está definido
-    };
+    if (confirm('¿Desea generar una factura a partir de esta nota de remisión?')) {
+        const facturaData = {
+            ruc: notaRemision.rucCliente,
+            razonSocial: notaRemision.razonSocial || 'Nombre desconocido',
+            fechaEmision: new Date().toISOString().split('T')[0],
+            productos: notaRemision.productos || [],  // Incluye los productos de la nota de remisión
+            totalFactura: notaRemision.montoTotal,
+            condicionVenta: 'contado',  // Valor predeterminado
+            direccion: notaRemision.direccion || 'Sin dirección',
+            tipoOriginal: 'nota_remision' // Rastreo del origen
+        };
 
-    // Guardar los datos en localStorage
-    localStorage.setItem('facturaData', JSON.stringify(facturaData));
-
-    // Redireccionar a factura.html para que cargue los datos
-    window.location.href = 'factura.html';
+        // Guardar los datos en localStorage
+        localStorage.setItem('facturaData', JSON.stringify(facturaData));
+        
+        // Redirigir a factura.html para que se autocompleten los datos
+        window.location.href = 'factura.html';
+    }
 }
+
 
 
